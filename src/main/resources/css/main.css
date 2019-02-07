@@ -35,6 +35,23 @@
     -fx-font-weight: BOLD;
 }
 
+.pane-title-label{
+    -fx-font-size: 28.0;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(256, 256, 256, 1.0);
+}
+
+.pane-title-background{
+      -fx-background-color: rgba(26, 100, 156, 0.9);
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: rgba(26, 100, 156, 0.9);
+}
+
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: rgba(26, 100, 156, 0.9);
+}
 
 /*******************************************************************************
  *                                                                             *

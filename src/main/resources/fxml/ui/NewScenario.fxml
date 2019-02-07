@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<?import com.jfoenix.controls.JFXListView?>
-<BorderPane xmlns:fx="http://javafx.com/fxml">
-    <left>
-        <AnchorPane maxWidth="500" minWidth="100">
-        <JFXListView fx:id="list1" styleClass="custom-jfx-list-view">
-            <Label>State 1</Label>
-            <JFXListView fx:id="subList" styleClass="sublist">
-                <groupnode>
-                    <Label styleClass="sub-label">State 2</Label>
-                </groupnode>
-                <Label>Cenas aleatórias</Label>
-                <Label>Mais cenas aleatórias</Label>
-            </JFXListView>
-        </JFXListView>
-        </AnchorPane>
-
-    </left>
-    <center>
-        <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
-                   xmlns="http://javafx.com/javafx/2.2">
-
-            <ScrollPane fitToWidth="true" fx:id="scrollPane" hbarPolicy="NEVER">
-                <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
-                    <padding>
-                        <Insets top="16" right="16" bottom="16" left="16"/>
-                    </padding>
-                </JFXMasonryPane>
-            </ScrollPane>
+<SplitPane dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <items>
+        <StackPane>
+            <StackPane styleClass="pane-title-background">
+                <padding>
+                    <Insets top="52"/>
+                </padding>
+                <ScrollPane fx:id="statesScrollPane" fitToWidth="true" hbarPolicy="NEVER">
+                    <content>
+                        <JFXMasonryPane fx:id="statesMasonryPane" HSpacing="10" VSpacing="10">
+                            <padding>
+                                <Insets bottom="16" left="16" right="16" top="16"/>
+                            </padding>
+                        </JFXMasonryPane>
+                    </content>
+                </ScrollPane>
+            </StackPane>
+            <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="10"/>
+                </padding>
+                STATES
+            </Label>
 
         </StackPane>
-    </center>
-</BorderPane>
+        <StackPane>
+            <StackPane styleClass="pane-title-background">
+                <padding>
+                    <Insets top="52"/>
+                </padding>
+                <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER">
+                    <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
+                        <padding>
+                            <Insets bottom="16" left="16" right="16" top="16"/>
+                        </padding>
+                    </JFXMasonryPane>
+                </ScrollPane>
+            </StackPane>
+            <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="10"/>
+                </padding>
+                ACTIONS
+            </Label>
+        </StackPane>
+    </items>
+</SplitPane>
