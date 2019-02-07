@@ -1,4 +1,4 @@
-package datafx;
+package ui.datafx;
 
 import io.datafx.controller.context.ViewContext;
 import io.datafx.controller.flow.FlowContainer;

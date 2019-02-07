@@ -1,22 +1,17 @@
-package sidemenu;
+package ui.sidemenu;
 
 import com.jfoenix.controls.JFXListView;
-import uicomponents.*;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;
-import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.action.ActionTrigger;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import io.datafx.controller.util.VetoException;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 import javax.annotation.PostConstruct;
-import java.util.Objects;
 
 @ViewController(value = "/fxml/SideMenu.fxml", title = "Side Menu Title")
 public class SideMenuController {

@@ -1,10 +1,10 @@
-package main;
+package ui.controllers.main;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
-import datafx.ExtendedAnimatedFlowContainer;
-import sidemenu.SideMenuController;
+import ui.datafx.ExtendedAnimatedFlowContainer;
+import ui.sidemenu.SideMenuController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
@@ -16,14 +16,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import uicomponents.NewScenarioController;
+import ui.controllers.NewScenarioController;
 
 import javax.annotation.PostConstruct;
 
 import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT;
 
-@ViewController(value = "/fxml/Main.fxml", title = "Main Controller Title")
-public final class MainController {
+@ViewController(value = "/fxml/Main.fxml", title = "MainApplication Controller Title")
+public final class MainApplicationController {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;

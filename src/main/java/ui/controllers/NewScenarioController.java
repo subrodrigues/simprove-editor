@@ -1,4 +1,4 @@
-package uicomponents;
+package ui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
@@ -49,17 +49,16 @@ public class NewScenarioController {
         ArrayList<Node> children = getRandomCards();
 
         masonryPane.getChildren().addAll(children);
-        Platform.runLater(() -> scrollPane.requestLayout());
-
-        JFXScrollPane.smoothScrolling(scrollPane);
-
 
         ArrayList<Node> children2 = getRandomCards();
 
-//        statesMasonryPane.getChildren().addAll(children2);
-//        Platform.runLater(() -> statesScrollPane.requestLayout());
-//
-//        JFXScrollPane.smoothScrolling(statesScrollPane);
+        statesMasonryPane.getChildren().addAll(children2);
+
+        Platform.runLater(() -> scrollPane.requestLayout());
+        JFXScrollPane.smoothScrolling(scrollPane);
+
+        Platform.runLater(() -> statesScrollPane.requestLayout());
+        JFXScrollPane.smoothScrolling(statesScrollPane);
     }
 
     private String getDefaultColor(int i) {

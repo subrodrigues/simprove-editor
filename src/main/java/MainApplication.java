@@ -1,6 +1,6 @@
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
-import main.MainController;
+import ui.controllers.main.MainApplicationController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class MainApplication extends Application {
 
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Flow flow = new Flow(MainController.class);
+        Flow flow = new Flow(MainApplicationController.class);
         DefaultFlowContainer container = new DefaultFlowContainer();
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);
@@ -46,9 +46,9 @@ public class Main extends Application {
 
         Scene scene = new Scene(decorator, width, height);
         final ObservableList<String> stylesheets = scene.getStylesheets();
-        stylesheets.addAll(Main.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-                Main.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                Main.class.getResource("/css/main.css").toExternalForm());
+        stylesheets.addAll(MainApplication.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                MainApplication.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                MainApplication.class.getResource("/css/main.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
