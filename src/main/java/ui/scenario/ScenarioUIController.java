@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
 import dao.model.ScenarioModel;
+import dao.model.StateModel;
 import io.datafx.controller.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -18,18 +19,28 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
+import ui.scenario.controllers.StateItemController;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
@@ -125,68 +136,82 @@ public class ScenarioUIController {
         return color;
     }
 
-    private ArrayList<Node> getRandomCards(){
-        ArrayList<Node> children = new ArrayList<>();
+    private Node getStateUICardView(int indexDelay, StateModel state){
 
-        for (int i = 0; i < 20; i++) {
-            StackPane child = new StackPane();
-            double width = Math.random() * 100 + 100;
-            child.setPrefWidth(width);
-            double height = Math.random() * 100 + 100;
-            child.setPrefHeight(height);
-            JFXDepthManager.setDepth(child, 1);
-            children.add(child);
+        StackPane child = new StackPane();
+        double width = 150;
+        child.setPrefWidth(width);
+        double height = 150;
+        child.setPrefHeight(height);
+        JFXDepthManager.setDepth(child, 1);
 
-            // create content
-            StackPane header = new StackPane();
-            String headerColor = getDefaultColor(i % 12);
-            header.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + headerColor);
-            VBox.setVgrow(header, Priority.ALWAYS);
-            StackPane body = new StackPane();
-            body.setMinHeight(Math.random() * 20 + 50);
-            VBox content = new VBox();
-            content.getChildren().addAll(header, body);
-            body.setStyle("-fx-background-radius: 0 0 5 5; -fx-background-color: rgb(255,255,255,0.87);");
+        // create content
+        Text title = new Text();
+        title.setFill(Color.WHITE);
+        title.setFont(Font.font("Roboto", FontWeight.BOLD, FontPosture.REGULAR, 14));
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setMargin(title, new Insets(10, 10, 10,10));
 
+        title.setText(state.getName());
+        //setting the position of the text
+        title.setX(1);
+        title.setY(1);
 
-            // create button
-            JFXButton button = new JFXButton("");
-            button.setButtonType(ButtonType.RAISED);
-            button.setStyle("-fx-background-radius: 40;-fx-background-color: " + getDefaultColor((int) ((Math.random() * 12) % 12)));
-            button.setPrefSize(40, 40);
-            button.setRipplerFill(Color.valueOf(headerColor));
-            button.setScaleX(0);
-            button.setScaleY(0);
-            SVGGlyph glyph = new SVGGlyph(-1,
-                    "test",
-                    "M1008 6.286q18.857 13.714 15.429 36.571l-146.286 877.714q-2.857 16.571-18.286 25.714-8 4.571-17.714 4.571-6.286 "
-                            + "0-13.714-2.857l-258.857-105.714-138.286 168.571q-10.286 13.143-28 13.143-7.429 "
-                            + "0-12.571-2.286-10.857-4-17.429-13.429t-6.571-20.857v-199.429l493.714-605.143-610.857 "
-                            + "528.571-225.714-92.571q-21.143-8-22.857-31.429-1.143-22.857 18.286-33.714l950.857-548.571q8.571-5.143 18.286-5.143"
-                            + " 11.429 0 20.571 6.286z",
-                    Color.WHITE);
-            glyph.setSize(20, 20);
-            button.setGraphic(glyph);
-            button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
-                return header.getBoundsInParent().getHeight() - button.getHeight() / 2;
-            }, header.boundsInParentProperty(), button.heightProperty()));
-            StackPane.setMargin(button, new Insets(0, 12, 0, 0));
-            StackPane.setAlignment(button, Pos.TOP_RIGHT);
+        StackPane header = new StackPane();
+        String headerColor = getDefaultColor(new Random().nextInt(13));
+        header.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + headerColor);
 
-            Timeline animation = new Timeline(new KeyFrame(Duration.millis(240),
-                    new KeyValue(button.scaleXProperty(),
-                            1,
-                            EASE_BOTH),
-                    new KeyValue(button.scaleYProperty(),
-                            1,
-                            EASE_BOTH)));
-            animation.setDelay(Duration.millis(100 * i + 1000));
-            animation.play();
-            child.getChildren().addAll(content, button);
-        }
+        VBox.setVgrow(header, Priority.ALWAYS);
+        StackPane body = new StackPane();
+        body.setMinHeight(60);
+        VBox content = new VBox();
+        content.getChildren().addAll(header, body);
+        body.setStyle("-fx-background-radius: 0 0 5 5; -fx-background-color: rgb(255,255,255,0.87);");
 
-        return children;
+        // create button
+        JFXButton button = new JFXButton("");
+        button.setButtonType(ButtonType.RAISED);
+        button.setStyle("-fx-background-radius: 40;-fx-background-color: " + getDefaultColor(new Random().nextInt(13)));
+        button.setPrefSize(40, 40);
+        button.setRipplerFill(Color.valueOf(headerColor));
+        button.setScaleX(0);
+        button.setScaleY(0);
+        SVGGlyph glyph = new SVGGlyph(-1,
+                "test",
+                "M1008 6.286q18.857 13.714 15.429 36.571l-146.286 877.714q-2.857 16.571-18.286 25.714-8 4.571-17.714 4.571-6.286 "
+                        + "0-13.714-2.857l-258.857-105.714-138.286 168.571q-10.286 13.143-28 13.143-7.429 "
+                        + "0-12.571-2.286-10.857-4-17.429-13.429t-6.571-20.857v-199.429l493.714-605.143-610.857 "
+                        + "528.571-225.714-92.571q-21.143-8-22.857-31.429-1.143-22.857 18.286-33.714l950.857-548.571q8.571-5.143 18.286-5.143"
+                        + " 11.429 0 20.571 6.286z",
+                Color.WHITE);
+        glyph.setSize(20, 20);
+        button.setGraphic(glyph);
+        button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
+            return header.getBoundsInParent().getHeight() - button.getHeight() / 2;
+        }, header.boundsInParentProperty(), button.heightProperty()));
+        StackPane.setMargin(button, new Insets(0, 12, 0, 0));
+        StackPane.setAlignment(button, Pos.TOP_RIGHT);
+
+        Timeline animation = new Timeline(new KeyFrame(Duration.millis(240),
+                new KeyValue(button.scaleXProperty(),
+                        1,
+                        EASE_BOTH),
+                new KeyValue(button.scaleYProperty(),
+                        1,
+                        EASE_BOTH)));
+        animation.setDelay(Duration.millis(100 * indexDelay + 1000));
+        animation.play();
+        child.getChildren().addAll( content, button, title);
+
+        return child;
     }
+
+//    Node getInflatableStateItem(StateModel state) throws IOException {
+//        AnchorPane statusUICard = null;
+//
+//        statusUICard = (AnchorPane) FXMLLoader.load(getClass().getResource("StateItem.fxml"));
+////        StateItemController controller = statusUICard.getController();
+//    }
 
     /**
      * Invoked by the Presenter.
@@ -198,7 +223,10 @@ public class ScenarioUIController {
         // TODO: fill scenario related data
 
         // Fill States
-
+        for(int i = 0; i < scenario.getStates().size(); i++){
+            Node state = getStateUICardView(i, scenario.getStates().get(i));
+            statesMasonryPane.getChildren().add(state);
+        }
     }
 
     /**

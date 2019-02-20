@@ -4,6 +4,13 @@
 
 package dao;
 
+import dao.model.*;
+import events.ScenarioEvent;
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ScenarioDAO
  * Class that implements the Repository Pattern (DAO).
@@ -22,15 +29,49 @@ public class ScenarioDAO {
      *
      */
     public void requestScenarioById(int scenarioId) {
+        //TODO: Database
+
+        // TODO: DELETE THIS MOCKED DATA
+
+        /** MOCKED STATES **/
+        List<StateModel> mockedStates = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            List<SignalModel> signals = new ArrayList<SignalModel>();
+            signals.add(new SignalModel(0, new SignalTypeModel(0, 1), "Heart Rate", 120f));
+            List<TipModel> tips = new ArrayList<TipModel>();
+
+            mockedStates.add(new StateModel(i, "State " + i, new TypeModel(0, 1, "Tipo Cenas"),
+                    signals, new TransitionModel(0, 10, 1), tips));
+        }
+        /** MOCKED ACTIONS **/
+        List<ActionModel> mockedActions = new ArrayList<>();
+
+        ScenarioModel mockedScenario = new ScenarioModel(0, "Mocked Data",
+                "First comes the Universe, then comes the prayer.",
+                mockedStates, mockedActions);
+
+        EventBus.getDefault().post(new ScenarioEvent(mockedScenario));
+
 //
-//
-//        var context = this;
-//        experienceService.getExperience()
-//                .then(function (experience) {
-//            var experienceModel = context._jsonDeserializerHelper.deserializeExperience(experience);
-//            EventBus.dispatch(Events.EXPERIENCE_EVENT, context._callback, experienceModel);
-//        }).catch(function (error) {
-//            EventBus.dispatch(Events.NO_EXPERIENCE_EVENT, context.callback);
-//        })
+//         TODO API/DB
+/*       getServiceAdapter().getScenario(getContext().getString(R.string.api_header_access_token, accessToken), scenarioid);
+            call.enqueue(new Callback<BaseResponse<ScenarioStatus>>() {
+
+            @Override
+            public void onSuccess(BaseResponse<ScenarioStatus> response) {
+                removeRequest(call);
+
+                EventBus.getDefault().post(new ScenarioEvent(response.getData()));
+            }
+
+            @Override
+            public void onFailure(ResponseError errorDetails) {
+                removeRequest(call);
+
+                EventBus.getDefault().post(new ScenarioEvent(errorDetails));
+            }
+        });
+
+        addRequest(call);*/
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ~ Created by Filipe André Rodrigues on 20-02-2019 19:50
+  -->
+
+
+<AnchorPane prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5 5 5 5;"  xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Text id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="State Name" StackPane.alignment="TOP_CENTER">
+                           <StackPane.margin>
+                              <Insets top="10.0" />
+                           </StackPane.margin>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 0 0 5 5; -fx-background-color: #fafafa;" />
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

@@ -8,13 +8,15 @@ import java.util.List;
 
 public class StateModel {
     private int id;
+    private String name;
     private TypeModel type;
     private List<SignalModel> signals;
     private TransitionModel transition;
     private List<TipModel> tips;
 
-    public StateModel(int id, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
+    public StateModel(int id, String name, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.signals = signals;
         this.transition = transition;
@@ -59,5 +61,13 @@ public class StateModel {
 
     public void setTips(List<TipModel> tips) {
         this.tips = tips;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -11,14 +11,14 @@ public class ScenarioModel {
     private String name;
     private String briefing;
     private List<StateModel> states;
-    private List<StateModel> actions;
+    private List<ActionModel> actions;
 
-    public ScenarioModel(int id, String name, String briefing, List<StateModel> states, List<StateModel> ãctions) {
+    public ScenarioModel(int id, String name, String briefing, List<StateModel> states, List<ActionModel> actions) {
         this.id = id;
         this.name = name;
         this.briefing = briefing;
         this.states = states;
-        this.actions = ãctions;
+        this.actions = actions;
     }
 
     public int getId() {
@@ -53,11 +53,11 @@ public class ScenarioModel {
         this.states = states;
     }
 
-    public List<StateModel> getActions() {
+    public List<ActionModel> getActions() {
         return actions;
     }
 
-    public void setActions(List<StateModel> actions) {
+    public void setActions(List<ActionModel> actions) {
         this.actions = actions;
     }
 }
