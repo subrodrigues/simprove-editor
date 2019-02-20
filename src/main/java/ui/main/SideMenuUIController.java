@@ -1,4 +1,8 @@
-package ui.sidemenu;
+/*
+ * Created by Filipe André Rodrigues on 20-02-2019 19:40
+ */
+
+package ui.main;
 
 import com.jfoenix.controls.JFXListView;
 import io.datafx.controller.ViewController;
@@ -14,7 +18,7 @@ import javafx.scene.control.Label;
 import javax.annotation.PostConstruct;
 
 @ViewController(value = "/fxml/SideMenu.fxml", title = "Side Menu Title")
-public class SideMenuController {
+public class SideMenuUIController {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;
@@ -52,7 +56,7 @@ public class SideMenuController {
 //            }).start();
 //        });
 //        Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
-//        bindNodeToController(newScenario, NewScenarioController.class, contentFlow, contentFlowHandler);
+//        bindNodeToController(newScenario, ScenarioUIController.class, contentFlow, contentFlowHandler);
 //        bindNodeToController(loadScenario, CheckboxController.class, contentFlow, contentFlowHandler);
 
     }

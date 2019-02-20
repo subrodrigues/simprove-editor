@@ -1,25 +1,23 @@
-plugins {
-    id 'java'
+repositories {
+    jcenter()
+    mavenCentral()
 }
 
-group 'feup.dei'
+apply plugin: 'application'
+
+mainClassName = '.MainApplication'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
 dependencies {
-    compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-    compile 'io.datafx:ui.datafx:8.0.1'
+    compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
     compile 'io.datafx:flow:8.0.1'
 
+    compile 'org.greenrobot:eventbus:3.1.1'
+    
     // FontAwesome (Bintray)
 //    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
-
 }

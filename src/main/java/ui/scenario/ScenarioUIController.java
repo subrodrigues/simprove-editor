@@ -1,4 +1,8 @@
-package ui.controllers;
+/*
+ * Created by Filipe André Rodrigues on 20-02-2019 19:40
+ */
+
+package ui.scenario;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
@@ -6,6 +10,7 @@ import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.svg.SVGGlyph;
+import dao.model.ScenarioModel;
 import io.datafx.controller.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -28,9 +33,12 @@ import java.util.ArrayList;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
-@ViewController(value = "/fxml/ui/NewScenario.fxml", title = "New Scenario Title")
-public class NewScenarioController {
+@ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
+public class ScenarioUIController {
 
+    private ScenarioPresenter mPresenter;
+
+    // UI Bind variables
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -46,20 +54,28 @@ public class NewScenarioController {
      */
     @PostConstruct
     public void init() {
-        ArrayList<Node> children = getRandomCards();
+        mPresenter = new ScenarioPresenter(this);
+        setupUI();
+    }
 
-        masonryPane.getChildren().addAll(children);
-
-        ArrayList<Node> children2 = getRandomCards();
-
-        statesMasonryPane.getChildren().addAll(children2);
-
+    /**
+     * Setups the UI and init needed variables
+     */
+    private void setupUI() {
         Platform.runLater(() -> scrollPane.requestLayout());
         JFXScrollPane.smoothScrolling(scrollPane);
 
         Platform.runLater(() -> statesScrollPane.requestLayout());
         JFXScrollPane.smoothScrolling(statesScrollPane);
     }
+
+//    ArrayList<Node> children = getRandomCards();
+//
+//        masonryPane.getChildren().addAll(children);
+//
+//    ArrayList<Node> children2 = getRandomCards();
+//
+//        statesMasonryPane.getChildren().addAll(children2);
 
     private String getDefaultColor(int i) {
         String color = "#FFFFFF";
@@ -172,4 +188,48 @@ public class NewScenarioController {
         return children;
     }
 
+    /**
+     * Invoked by the Presenter.
+     * Updates the view with a whole new Scenario.
+     *
+     * @param scenario
+     */
+    void updateScenarioData(ScenarioModel scenario) {
+        // TODO: fill scenario related data
+
+        // Fill States
+
+    }
+
+    /**
+     * Shows the loading view.
+     *
+     */
+    void showLoading() {
+        //TODO: Deal with this
+    }
+
+    /**
+     * Hides the loading view.
+     *
+     */
+    void hideLoading() {
+        //TODO: Deal with this
+    }
+
+    /**
+     * Shows the connection error view.
+     * When a connection error occurs, while trying to acquire data from the API.
+     */
+    void showConnectionError() {
+        //TODO: Deal with this
+    }
+
+    /**
+     * Shows the generic error view.
+     * When any error occurs.
+     */
+    void showGenericErrorView() {
+        //TODO: Deal with this
+    }
 }

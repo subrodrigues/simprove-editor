@@ -1,10 +1,13 @@
-package ui.controllers.main;
+/*
+ * Created by Filipe André Rodrigues on 20-02-2019 19:41
+ */
+
+package ui.main;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import ui.datafx.ExtendedAnimatedFlowContainer;
-import ui.sidemenu.SideMenuController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
@@ -16,14 +19,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import ui.controllers.NewScenarioController;
+import ui.scenario.ScenarioUIController;
 
 import javax.annotation.PostConstruct;
 
 import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT;
 
-@ViewController(value = "/fxml/Main.fxml", title = "MainApplication Controller Title")
-public final class MainApplicationController {
+@ViewController(value = "/fxml/Main.fxml", title = "ui.main.MainApplication Controller Title")
+public final class MainApplicationUIController {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;
@@ -82,7 +85,7 @@ public final class MainApplicationController {
         // create the inner flow and content
         context = new ViewFlowContext();
         // set the default controller
-        Flow innerFlow = new Flow(NewScenarioController.class);
+        Flow innerFlow = new Flow(ScenarioUIController.class);
 
         final FlowHandler flowHandler = innerFlow.createHandler(context);
         context.register("ContentFlowHandler", flowHandler);
@@ -92,7 +95,7 @@ public final class MainApplicationController {
         context.register("ContentPane", drawer.getContent().get(0));
 
         // side controller will add links to the content flow
-        Flow sideMenuFlow = new Flow(SideMenuController.class);
+        Flow sideMenuFlow = new Flow(SideMenuUIController.class);
         final FlowHandler sideMenuFlowHandler = sideMenuFlow.createHandler(context);
         drawer.setSidePane(sideMenuFlowHandler.start(new ExtendedAnimatedFlowContainer(containerAnimationDuration,
                                                                                        SWIPE_LEFT)));

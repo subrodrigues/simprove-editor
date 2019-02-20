@@ -5,6 +5,10 @@
 <?import java.lang.String?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Label?>
+<!--
+  ~ Created by Filipe André Rodrigues on 20-02-2019 19:43
+  -->
+
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
     <styleClass>
         <String fx:value="side-menu"/>

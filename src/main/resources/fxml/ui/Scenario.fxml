@@ -7,6 +7,10 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.StackPane?>
 
+<!--
+  ~ Created by Filipe André Rodrigues on 20-02-2019 19:42
+  -->
+
 <SplitPane dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <items>
         <StackPane>

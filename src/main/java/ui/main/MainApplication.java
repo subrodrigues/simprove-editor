@@ -1,6 +1,11 @@
+/*
+ * Created by Filipe André Rodrigues on 20-02-2019 19:41
+ */
+
+package ui.main;
+
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyph;
-import ui.controllers.main.MainApplicationController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -24,7 +29,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Flow flow = new Flow(MainApplicationController.class);
+        Flow flow = new Flow(MainApplicationUIController.class);
         DefaultFlowContainer container = new DefaultFlowContainer();
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);
@@ -32,7 +37,8 @@ public class MainApplication extends Application {
 
         JFXDecorator decorator = new JFXDecorator(stage, container.getView());
         decorator.setCustomMaximize(true);
-        decorator.setGraphic(new SVGGlyph(""));
+        decorator.setGraphic(new SVGGlyph(
+                ""));
         
         stage.setTitle("Simprove");
 
@@ -46,7 +52,7 @@ public class MainApplication extends Application {
 
         Scene scene = new Scene(decorator, width, height);
         final ObservableList<String> stylesheets = scene.getStylesheets();
-        stylesheets.addAll(MainApplication.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+        stylesheets.addAll(MainApplication.class.getResource(       "/css/jfoenix-fonts.css").toExternalForm(),
                 MainApplication.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                 MainApplication.class.getResource("/css/main.css").toExternalForm());
         stage.setScene(scene);
