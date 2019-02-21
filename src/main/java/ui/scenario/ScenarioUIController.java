@@ -64,11 +64,11 @@ public class ScenarioUIController {
      *
      * @throws IOException
      */
-    Node getInflatableStateItem(int indexDelay, StateModel state) throws IOException {
-        StateItemController item = new StateItemController();
+    Node getInflatableStateItem(int index, StateModel state) throws IOException {
+        StateItemController item = new StateItemController(index);
         item.setStateName(state.getName());
 
-        item.setupAnimatedEditFab(Duration.millis(100 * indexDelay + 1000)); // TODO: better calculation
+        item.setupAnimatedEditFab(Duration.millis(100 * index + 1000)); // TODO: better calculation
 
         return item.getStateItemRootPane();
     }

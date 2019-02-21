@@ -51,12 +51,32 @@ public class StateItemController {
             throw new RuntimeException(e);
         }
 
-        setupUI();
+        setupUI(DisplayUtils.NUM_COLORS);
     }
 
-    private void setupUI(){
+    /**
+     * Constructor with index in order to avoid the consecutive creation of same header color
+     *
+     * @param indexColor
+     */
+    public StateItemController(int indexColor) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
+        fxmlLoader.setController(this);
+        try
+        {
+            stateItemRoot = fxmlLoader.load();
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        setupUI(indexColor);
+    }
+
+    private void setupUI(int indexColor){
         // Random header color
-        mHeaderColor = DisplayUtils.getRandomColor();
+        mHeaderColor = DisplayUtils.getColorByIndex(indexColor);
         headerPane.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + mHeaderColor);
     }
 

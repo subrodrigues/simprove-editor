@@ -7,6 +7,7 @@ package utils;
 import java.util.Random;
 
 public class DisplayUtils {
+    public static int NUM_COLORS = 13;
 
     public static String getRandomColor(){
         int index = new Random().nextInt(13);
@@ -14,8 +15,12 @@ public class DisplayUtils {
         return getColorByIndex(index);
     }
 
-    public static String getColorByIndex(int i) {
+    public static String getRandomColorByIndex(int index){
+        int i = index % (NUM_COLORS -1);
+        return getColorByIndex(i);
+    }
 
+    public static String getColorByIndex(int i) {
         String color = "#FFFFFF";
         switch (i) {
             case 0:
