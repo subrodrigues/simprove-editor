@@ -29,7 +29,7 @@ import static javafx.animation.Interpolator.EASE_BOTH;
 public class StateItemController {
     // UI Bind variables
     @FXML
-    private AnchorPane stateItemRoot;
+    private StackPane stateItemRoot;
 
     @FXML
     private StackPane headerPane;
@@ -88,7 +88,7 @@ public class StateItemController {
         this.stateName.setText(stateName);
     }
 
-    public AnchorPane getStateItemRootPane(){
+    public StackPane getStateItemRootPane(){
         return stateItemRoot;
     }
 
