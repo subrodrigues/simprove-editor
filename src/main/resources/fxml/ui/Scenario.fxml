@@ -20,7 +20,7 @@
                 </padding>
                 <ScrollPane fx:id="statesScrollPane" fitToWidth="true" hbarPolicy="NEVER">
                     <content>
-                        <JFXMasonryPane fx:id="statesMasonryPane" HSpacing="10" VSpacing="10">
+                        <JFXMasonryPane fx:id="statesGridView" HSpacing="10" VSpacing="10">
                             <padding>
                                 <Insets bottom="16" left="16" right="16" top="16"/>
                             </padding>
@@ -41,8 +41,8 @@
                 <padding>
                     <Insets top="52"/>
                 </padding>
-                <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER">
-                    <JFXMasonryPane fx:id="masonryPane" HSpacing="10" VSpacing="10">
+                <ScrollPane fx:id="actionsScrollPane" fitToWidth="true" hbarPolicy="NEVER">
+                    <JFXMasonryPane fx:id="actionsGridView" HSpacing="10" VSpacing="10">
                         <padding>
                             <Insets bottom="16" left="16" right="16" top="16"/>
                         </padding>

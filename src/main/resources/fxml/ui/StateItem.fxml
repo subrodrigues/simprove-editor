@@ -9,22 +9,22 @@
   -->
 
 
-<AnchorPane prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5 5 5 5;"  xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="stateItemRoot" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5 5 5 5;"  xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow">
+      <StackPane prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="200.0" prefWidth="150.0">
                <children>
-                  <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
+                  <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
                      <children>
-                        <Text id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="State Name" StackPane.alignment="TOP_CENTER">
+                        <Text fx:id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="State Name" StackPane.alignment="TOP_CENTER">
                            <StackPane.margin>
                               <Insets top="10.0" />
                            </StackPane.margin>
                         </Text>
                      </children>
                   </StackPane>
-                  <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="200.0" style="-fx-background-radius: 0 0 5 5; -fx-background-color: #fafafa;" />
+                  <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 0 0 5 5; -fx-background-color: #fafafa;" />
                </children>
             </VBox>
          </children>
