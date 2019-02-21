@@ -6,15 +6,18 @@ package ui.scenario.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
+import dao.model.StateModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,7 +25,6 @@ import javafx.util.Duration;
 import utils.DisplayUtils;
 
 import java.io.IOException;
-import java.util.Random;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
@@ -37,6 +39,7 @@ public class StateItemController {
     @FXML
     private Text stateName;
 
+    private int mStateId = -1;
     private String mHeaderColor;
 
     public StateItemController() {
@@ -84,6 +87,11 @@ public class StateItemController {
         return stateName;
     }
 
+    private void setupState(StateModel state){
+        this.mStateId = state.getId();
+        this.setStateName(state.getName());
+    }
+
     public void setStateName(String stateName) {
         this.stateName.setText(stateName);
     }
@@ -103,13 +111,9 @@ public class StateItemController {
         button.setScaleY(0);
         SVGGlyph glyph = new SVGGlyph(-1,
                 "test",
-                "M1008 6.286q18.857 13.714 15.429 36.571l-146.286 877.714q-2.857 16.571-18.286 25.714-8 4.571-17.714 4.571-6.286 "
-                        + "0-13.714-2.857l-258.857-105.714-138.286 168.571q-10.286 13.143-28 13.143-7.429 "
-                        + "0-12.571-2.286-10.857-4-17.429-13.429t-6.571-20.857v-199.429l493.714-605.143-610.857 "
-                        + "528.571-225.714-92.571q-21.143-8-22.857-31.429-1.143-22.857 18.286-33.714l950.857-548.571q8.571-5.143 18.286-5.143"
-                        + " 11.429 0 20.571 6.286z",
+                "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
                 Color.WHITE);
-        glyph.setSize(20, 20);
+        glyph.setSize(18, 18);
         button.setGraphic(glyph);
         button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
             return headerPane.getBoundsInParent().getHeight() - button.getHeight() / 2;
@@ -131,5 +135,16 @@ public class StateItemController {
         animation.play();
 
         stateItemRoot.getChildren().add(button);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("State Edit");
+                alert.setHeaderText("Look, an Information Dialog");
+                alert.setContentText("You clicked the state: " + stateName.getText());
+
+                alert.showAndWait();
+            }
+        });
     }
 }
