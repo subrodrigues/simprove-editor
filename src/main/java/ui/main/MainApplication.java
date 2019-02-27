@@ -29,7 +29,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Flow flow = new Flow(MainApplicationUIController.class);
+        Flow flow = new Flow(MainApplicationUIView.class);
         DefaultFlowContainer container = new DefaultFlowContainer();
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);

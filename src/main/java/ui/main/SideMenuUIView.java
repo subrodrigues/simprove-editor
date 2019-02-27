@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javax.annotation.PostConstruct;
 
 @ViewController(value = "/fxml/SideMenu.fxml", title = "Side Menu Title")
-public class SideMenuUIController {
+public class SideMenuUIView {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;
@@ -56,7 +56,7 @@ public class SideMenuUIController {
 //            }).start();
 //        });
 //        Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
-//        bindNodeToController(newScenario, ScenarioUIController.class, contentFlow, contentFlowHandler);
+//        bindNodeToController(newScenario, ScenarioUIView.class, contentFlow, contentFlowHandler);
 //        bindNodeToController(loadScenario, CheckboxController.class, contentFlow, contentFlowHandler);
 
     }

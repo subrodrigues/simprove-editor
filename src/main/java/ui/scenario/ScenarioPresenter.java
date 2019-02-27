@@ -12,12 +12,12 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class ScenarioPresenter {
-    private ScenarioUIController mView;
+    private ScenarioUIView mView;
     private ScenarioDAO mDAO;
 
     private ScenarioModel mScenario = null;
 
-    public ScenarioPresenter(ScenarioUIController view) {
+    public ScenarioPresenter(ScenarioUIView view) {
         this.mView = view;
 
         EventBus.getDefault().register(this);

@@ -2,7 +2,7 @@
  * Created by Filipe André Rodrigues on 20-02-2019 21:20
  */
 
-package ui.scenario.controllers;
+package ui.scenario.inflatables;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
 import dao.model.StateModel;
@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
-public class StateItemController {
+public class StateItemViewController {
     // UI Bind variables
     @FXML
     private StackPane stateItemRoot;
@@ -47,7 +47,7 @@ public class StateItemController {
         void onStateSelectClicked(String stateId);
     }
 
-    public StateItemController() {
+    public StateItemViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
         fxmlLoader.setController(this);
         try
@@ -67,7 +67,7 @@ public class StateItemController {
      *
      * @param indexColor
      */
-    public StateItemController(int indexColor, OnScenarioStateClickListener listener) {
+    public StateItemViewController(int indexColor, OnScenarioStateClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));

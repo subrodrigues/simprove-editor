@@ -19,14 +19,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import ui.scenario.ScenarioUIController;
+import ui.scenario.ScenarioUIView;
 
 import javax.annotation.PostConstruct;
 
 import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT;
 
 @ViewController(value = "/fxml/Main.fxml", title = "ui.main.MainApplication Controller Title")
-public final class MainApplicationUIController {
+public final class MainApplicationUIView {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;
@@ -85,7 +85,7 @@ public final class MainApplicationUIController {
         // create the inner flow and content
         context = new ViewFlowContext();
         // set the default controller
-        Flow innerFlow = new Flow(ScenarioUIController.class);
+        Flow innerFlow = new Flow(ScenarioUIView.class);
 
         final FlowHandler flowHandler = innerFlow.createHandler(context);
         context.register("ContentFlowHandler", flowHandler);
@@ -95,7 +95,7 @@ public final class MainApplicationUIController {
         context.register("ContentPane", drawer.getContent().get(0));
 
         // side controller will add links to the content flow
-        Flow sideMenuFlow = new Flow(SideMenuUIController.class);
+        Flow sideMenuFlow = new Flow(SideMenuUIView.class);
         final FlowHandler sideMenuFlowHandler = sideMenuFlow.createHandler(context);
         drawer.setSidePane(sideMenuFlowHandler.start(new ExtendedAnimatedFlowContainer(containerAnimationDuration,
                                                                                        SWIPE_LEFT)));

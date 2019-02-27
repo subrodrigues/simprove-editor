@@ -12,19 +12,20 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ui.scenario.controllers.StateItemController;
+import ui.scenario.inflatables.EditStateViewController;
+import ui.scenario.inflatables.StateItemViewController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
-public class ScenarioUIController implements StateItemController.OnScenarioStateClickListener {
+public class ScenarioUIView implements StateItemViewController.OnScenarioStateClickListener,
+        EditStateViewController.OnScenarioEditStateClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -69,7 +70,7 @@ public class ScenarioUIController implements StateItemController.OnScenarioState
      * @throws IOException
      */
     Node getInflatableStateItem(int index, StateModel state) throws IOException {
-        StateItemController item = new StateItemController(index, this);
+        StateItemViewController item = new StateItemViewController(index, this);
         item.setupState(state);
         item.setupAnimatedEditFab(Duration.millis(100 * index + 1000)); // TODO: better calculation
 
@@ -106,33 +107,18 @@ public class ScenarioUIController implements StateItemController.OnScenarioState
      * @param stateId
      */
     void showStateEditDialog(int stateId){
-        JFXAlert alert = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+        EditStateViewController editStateDialog = new EditStateViewController(this);
 
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setOverlayClose(false);
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Edit the State with ID: " + stateId));
-        layout.setBody(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
-                + " sed do eiusmod tempor incididunt ut labore et dolore magna"
-                + " aliqua. Utenim ad minim veniam, quis nostrud exercitation"
-                + " ullamco laboris nisi ut aliquip ex ea commodo consequat."));
-        JFXButton closeButton = new JFXButton("ACCEPT");
-        closeButton.getStyleClass().add("dialog-accept");
-        closeButton.setOnAction(event -> alert.hideWithAnimation());
-        layout.setActions(closeButton);
-        alert.setContent(layout);
-        alert.show();
+        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 
-//        FXMLLoader pane = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
-//        StackPane stackPane = new StackPane();
-//        JFXDialog mLoad = null;
-//        try {
-//            mLoad = new JFXDialog(stackPane, pane.load(), JFXDialog.DialogTransition.CENTER);
-//            mLoad.show();
-//
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(editStateDialog.getEditStateItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
     }
 
     /**
