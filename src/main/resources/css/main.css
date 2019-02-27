@@ -58,6 +58,17 @@
     -fx-font-weight: BOLD;
     -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
 }
+.edit-dialog-title{
+    -fx-font-size: 18.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+
+.edit-dialog-parameter-title{
+    -fx-font-size: 16.0;
+    -fx-font-weight: MEDIUM;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
 
 .background-shadow{
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2);
