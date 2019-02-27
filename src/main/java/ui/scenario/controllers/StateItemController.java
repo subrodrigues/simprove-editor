@@ -3,7 +3,6 @@
  */
 
 package ui.scenario.controllers;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
 import dao.model.StateModel;
@@ -17,13 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import utils.DisplayUtils;
-
 import java.io.IOException;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
@@ -39,8 +36,16 @@ public class StateItemController {
     @FXML
     private Text stateName;
 
+    // Private variables
+    private StateModel mStateModel;
+    private OnScenarioStateClickListener mListener;
     private int mStateId = -1;
     private String mHeaderColor;
+
+    public interface OnScenarioStateClickListener {
+        void onStateEditClicked(int stateId);
+        void onStateSelectClicked(String stateId);
+    }
 
     public StateItemController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
@@ -62,7 +67,9 @@ public class StateItemController {
      *
      * @param indexColor
      */
-    public StateItemController(int indexColor) {
+    public StateItemController(int indexColor, OnScenarioStateClickListener listener) {
+        this.mListener = listener;
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
         fxmlLoader.setController(this);
         try
@@ -83,16 +90,12 @@ public class StateItemController {
         headerPane.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + mHeaderColor);
     }
 
-    public Text getStateName() {
-        return stateName;
+    public void setupState(StateModel state){
+        this.mStateModel = state;
+        this.setStateName(this.mStateModel.getName());
     }
 
-    private void setupState(StateModel state){
-        this.mStateId = state.getId();
-        this.setStateName(state.getName());
-    }
-
-    public void setStateName(String stateName) {
+    private void setStateName(String stateName) {
         this.stateName.setText(stateName);
     }
 
@@ -136,15 +139,18 @@ public class StateItemController {
 
         stateItemRoot.getChildren().add(button);
 
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("State Edit");
-                alert.setHeaderText("Look, an Information Dialog");
-                alert.setContentText("You clicked the state: " + stateName.getText());
+        button.setOnAction(getStateEditClickListener());
+    }
 
-                alert.showAndWait();
+    /**
+     * Method that implements the StateEdit click listener behavior
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getStateEditClickListener(){
+        return new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                mListener.onStateEditClicked(mStateModel.getId());
             }
-        });
+        };
     }
 }

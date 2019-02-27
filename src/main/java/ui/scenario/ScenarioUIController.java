@@ -4,15 +4,19 @@
 
 package ui.scenario;
 
-import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.*;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import ui.scenario.controllers.StateItemController;
 
@@ -20,7 +24,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
-public class ScenarioUIController {
+public class ScenarioUIController implements StateItemController.OnScenarioStateClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -58,16 +62,15 @@ public class ScenarioUIController {
     /**
      * Helper method that creates a UI State Card and returns the node to be inflate in the list.
      *
-     * @param indexDelay
-     * @param state
-     * @return
+     * @param index the element position index on the Grid (used to create the alternate colors)
+     * @param state the StateModel to fill the UIController
+     * @return Node
      *
      * @throws IOException
      */
     Node getInflatableStateItem(int index, StateModel state) throws IOException {
-        StateItemController item = new StateItemController(index);
-        item.setStateName(state.getName());
-
+        StateItemController item = new StateItemController(index, this);
+        item.setupState(state);
         item.setupAnimatedEditFab(Duration.millis(100 * index + 1000)); // TODO: better calculation
 
         return item.getStateItemRootPane();
@@ -94,6 +97,42 @@ public class ScenarioUIController {
             }
             statesGridView.getChildren().add(state);
         }
+    }
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view of an edit state event.
+     *
+     * @param stateId
+     */
+    void showStateEditDialog(int stateId){
+        JFXAlert alert = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Edit the State with ID: " + stateId));
+        layout.setBody(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
+                + " sed do eiusmod tempor incididunt ut labore et dolore magna"
+                + " aliqua. Utenim ad minim veniam, quis nostrud exercitation"
+                + " ullamco laboris nisi ut aliquip ex ea commodo consequat."));
+        JFXButton closeButton = new JFXButton("ACCEPT");
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setOnAction(event -> alert.hideWithAnimation());
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
+
+//        FXMLLoader pane = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
+//        StackPane stackPane = new StackPane();
+//        JFXDialog mLoad = null;
+//        try {
+//            mLoad = new JFXDialog(stackPane, pane.load(), JFXDialog.DialogTransition.CENTER);
+//            mLoad.show();
+//
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
     }
 
     /**
@@ -126,5 +165,20 @@ public class ScenarioUIController {
      */
     void showGenericErrorView() {
         //TODO: Deal with this
+    }
+
+    /**
+     * Gets notified by the grid items when an element is clicked with a request to edit the StateModel with id {stateId}.
+     *
+     * @param stateId
+     */
+    @Override
+    public void onStateEditClicked(int stateId) {
+        mPresenter.requestStateEdit(stateId);
+    }
+
+    @Override
+    public void onStateSelectClicked(String stateId) {
+
     }
 }
