@@ -58,7 +58,7 @@
                 </StackPane>
                 <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #fafafa;">
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
             </StackPane>
             </children>

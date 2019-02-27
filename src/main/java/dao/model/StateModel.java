@@ -14,6 +14,10 @@ public class StateModel {
     private TransitionModel transition;
     private List<TipModel> tips;
 
+    public StateModel(int id) {
+        this.id = id;
+    }
+
     public StateModel(int id, String name, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
         this.id = id;
         this.name = name;
@@ -69,5 +73,26 @@ public class StateModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!StateModel.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final StateModel other = (StateModel) obj;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.id;
+        return hash;
     }
 }

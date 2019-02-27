@@ -6,6 +6,7 @@ package ui.scenario.inflatables;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.svg.SVGGlyph;
 import dao.model.StateModel;
 import javafx.animation.KeyFrame;
@@ -35,11 +36,11 @@ public class EditStateViewController {
     private StackPane editStateRoot;
 
     @FXML
-    private Text inputName;
+    private JFXTextField inputName;
     @FXML
-    private Text inputType;
+    private JFXTextField inputType;
     @FXML
-    private Text inputTransition;
+    private JFXTextField inputTransition;
 
     // Private variables
     private StateModel mStateModel;
@@ -68,7 +69,7 @@ public class EditStateViewController {
      *
      * @param listener
      */
-    public EditStateViewController(OnScenarioEditStateClickListener listener) {
+    public EditStateViewController(StateModel state, OnScenarioEditStateClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
@@ -82,17 +83,18 @@ public class EditStateViewController {
             throw new RuntimeException(e);
         }
 
+        setupState(state);
         setupUI();
     }
 
-    private void setupUI(){
-        //
+    private void setupState(StateModel state){
+        this.mStateModel = state;
     }
 
-    public void setupState(StateModel state){
-        this.mStateModel = state;
-
-
+    private void setupUI(){
+        this.inputName.setText(mStateModel.getName());
+        this.inputType.setText(mStateModel.getType().getType() + "");
+        //TODO
     }
 
     public StackPane getEditStateItemRootDialog(){

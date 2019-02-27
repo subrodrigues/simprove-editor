@@ -104,10 +104,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Invoked by the Presenter.
      * Notifies the view of an edit state event.
      *
-     * @param stateId
+     * @param state
      */
-    void showStateEditDialog(int stateId){
-        EditStateViewController editStateDialog = new EditStateViewController(this);
+    void showStateEditDialog(StateModel state){
+        EditStateViewController editStateDialog = new EditStateViewController(state, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 

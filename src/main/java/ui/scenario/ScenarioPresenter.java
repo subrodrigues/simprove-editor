@@ -6,6 +6,7 @@ package ui.scenario;
 
 import dao.ScenarioDAO;
 import dao.model.ScenarioModel;
+import dao.model.StateModel;
 import events.ScenarioEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +58,10 @@ public class ScenarioPresenter {
      * @param stateId
      */
     void requestStateEdit(int stateId) {
+        int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
-        this.mView.showStateEditDialog(stateId);
+        if(stateIndex != -1){
+            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex));
+        }
     }
 }
