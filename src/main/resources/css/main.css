@@ -35,45 +35,6 @@
     -fx-font-weight: BOLD;
 }
 
-.pane-title-label{
-    -fx-font-size: 28.0;
-    -fx-font-weight: 400;
-    -fx-text-fill: rgba(256, 256, 256, 1.0);
-}
-
-.pane-title-background{
-      -fx-background-color: rgba(26, 100, 156, 0.9);
-}
-
-.split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: rgba(26, 100, 156, 0.9);
-}
-
-.split-pane:vertical > .split-pane-divider {
-   -fx-background-color: rgba(26, 100, 156, 0.9);
-}
-
-.card-name-title{
-    -fx-font-size: 16.0;
-    -fx-font-weight: BOLD;
-    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
-}
-.edit-dialog-title{
-    -fx-font-size: 18.0;
-    -fx-font-weight: BOLD;
-    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
-}
-
-.edit-dialog-parameter-title{
-    -fx-font-size: 16.0;
-    -fx-font-weight: MEDIUM;
-    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
-}
-
-.background-shadow{
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2);
-}
-
 /*******************************************************************************
  *                                                                             *
  * JFX Drawer                                                                  *
@@ -1107,4 +1068,60 @@
 
 .jfx-chips-popup .autocomplete-list .jfx-list-cell{
     -fx-text-fill: rgba(0,0,0,.87);
+}
+
+
+/*******************************************************************************
+*                                                                              *
+* Custom Variables                                                             *
+*                                                                              *
+*******************************************************************************/
+
+.pane-title-label{
+    -fx-font-size: 28.0;
+    -fx-font-weight: 400;
+    -fx-text-fill: rgba(256, 256, 256, 1.0);
+}
+
+.pane-title-background{
+      -fx-background-color: rgba(26, 100, 156, 0.9);
+}
+
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: rgba(26, 100, 156, 0.9);
+}
+
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: rgba(26, 100, 156, 0.9);
+}
+
+.card-name-title{
+    -fx-font-size: 16.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+
+.edit-dialog-title{
+    -fx-font-size: 18.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+
+.edit-dialog-parameter-title{
+    -fx-font-size: 16.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+
+.edit-dialog-parameter-input{
+    -fx-font-size: 18.0;
+    -fx-font-weight: NORMAL;
+    -fx-text-fill: rgba(256.0, 256.0, 256.0, 0.90);
+    -fx-prompt-text-fill: rgba(256.0, 256.0, 256.0, 0.4);
+    -jfx-focus-color: rgba(256.0, 256.0, 256.0, 0.90);
+    -jfx-unfocus-color: rgba(256.0, 256.0, 256.0, 0.40);
+}
+
+.background-shadow{
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2);
 }

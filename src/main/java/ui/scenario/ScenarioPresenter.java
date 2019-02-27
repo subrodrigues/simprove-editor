@@ -56,7 +56,8 @@ public class ScenarioPresenter {
      *
      * @param stateId
      */
-    public void requestStateEdit(int stateId) {
+    void requestStateEdit(int stateId) {
+
         this.mView.showStateEditDialog(stateId);
     }
 }

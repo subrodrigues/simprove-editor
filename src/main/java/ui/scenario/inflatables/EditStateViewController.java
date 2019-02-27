@@ -21,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import utils.DisplayUtils;
 
@@ -34,7 +35,11 @@ public class EditStateViewController {
     private StackPane editStateRoot;
 
     @FXML
-    private Label titleLabel;
+    private Text inputName;
+    @FXML
+    private Text inputType;
+    @FXML
+    private Text inputTransition;
 
     // Private variables
     private StateModel mStateModel;
@@ -86,6 +91,7 @@ public class EditStateViewController {
 
     public void setupState(StateModel state){
         this.mStateModel = state;
+
 
     }
 
