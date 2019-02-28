@@ -31,6 +31,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import ui.widgets.JFXNumericTextField;
 import utils.DisplayUtils;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class EditStateViewController {
     private JFXComboBox<StateModel> transitionComboBox;
 
     @FXML
-    private JFXTextField inputTransitionDuration;
+    private JFXNumericTextField inputTransitionDuration;
 
     // Private variables
     private StateModel mStateModel;
@@ -113,16 +114,6 @@ public class EditStateViewController {
             this.transitionComboBox.getSelectionModel().select(mStateModel.getTransition().getStateId());
             this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
         }
-
-        this.inputTransitionDuration.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    inputTransitionDuration.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
 
         //TODO
     }

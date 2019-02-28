@@ -16,6 +16,7 @@
   ~ Created by Filipe André Rodrigues on 27-02-2019 14:09
   -->
 
+<?import ui.widgets.JFXNumericTextField?>
 <StackPane fx:id="editStateRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2F65A5;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -44,10 +45,10 @@
                              <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select State" styleClass="combo-box">
                             </JFXComboBox>
 
-                             <JFXTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
+                             <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
                                  <HBox.margin>
                                  <Insets left="10.0" />
-                              </HBox.margin></JFXTextField>
+                              </HBox.margin></JFXNumericTextField>
 
                              <VBox.margin>
                               <Insets top="28.0" />
