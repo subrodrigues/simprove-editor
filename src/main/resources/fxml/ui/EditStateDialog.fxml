@@ -34,28 +34,35 @@
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                 <Text fx:id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />
                              </VBox>
-                             <JFXTextField fx:id="inputName" promptText="State name" styleClass="edit-dialog-parameter-input" />
+                             <JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="State name" styleClass="edit-dialog-parameter-input" />
                          </HBox>
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                  <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
                              </VBox>
-                             <JFXComboBox fx:id="transitionComboBox" prefWidth="200" promptText="Select State" styleClass="combo-box" />
-                           <VBox.margin>
-                              <Insets top="4.0" />
+                             <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select State" styleClass="combo-box">
+                            </JFXComboBox>
+
+                             <JFXTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
+                                 <HBox.margin>
+                                 <Insets left="10.0" />
+                              </HBox.margin></JFXTextField>
+
+                             <VBox.margin>
+                              <Insets top="28.0" />
                            </VBox.margin>
 
-                             <!--<JFXTextField fx:id="inputTransition" promptText="State transition" styleClass="edit-dialog-parameter-input" />-->
                          </HBox>
-
-
-                                    <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: " />
+                            <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
+                           <VBox.margin>
+                              <Insets top="28.0" />
+                           </VBox.margin></Text>
 
                                     <Text fx:id="stateTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips: " />
                      </children>
                      <StackPane.margin>
-                        <Insets left="10.0" right="10.0" top="46.0" />
+                        <Insets left="22.0" right="22.0" top="46.0" />
                      </StackPane.margin>
                   </VBox>
                     </children>

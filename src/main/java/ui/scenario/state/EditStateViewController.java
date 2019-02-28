@@ -18,6 +18,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -46,6 +48,9 @@ public class EditStateViewController {
 
     @FXML
     private JFXComboBox<StateModel> transitionComboBox;
+
+    @FXML
+    private JFXTextField inputTransitionDuration;
 
     // Private variables
     private StateModel mStateModel;
@@ -102,9 +107,22 @@ public class EditStateViewController {
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().addAll(states);
-        // Set selected Transition
-        this.transitionComboBox.getSelectionModel().select(mStateModel.getTransition().getStateId());
 
+        // Set selected Transition
+        if(mStateModel.getTransition() != null) {
+            this.transitionComboBox.getSelectionModel().select(mStateModel.getTransition().getStateId());
+            this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
+        }
+
+        this.inputTransitionDuration.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    inputTransitionDuration.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         //TODO
     }
