@@ -10,18 +10,17 @@ import dao.model.StateModel;
 import io.datafx.controller.ViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import ui.scenario.inflatables.EditStateViewController;
+import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
 public class ScenarioUIView implements StateItemViewController.OnScenarioStateClickListener,
@@ -105,9 +104,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Notifies the view of an edit state event.
      *
      * @param state
+     * @param states
      */
-    void showStateEditDialog(StateModel state){
-        EditStateViewController editStateDialog = new EditStateViewController(state, this);
+    void showStateEditDialog(StateModel state, List<StateModel> states){
+        EditStateViewController editStateDialog = new EditStateViewController(state, states, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 

@@ -1,10 +1,15 @@
 /*
+ * Created by Filipe André Rodrigues on 28-02-2019 18:10
+ */
+
+/*
  * Created by Filipe André Rodrigues on 27-02-2019 15:00
  */
 
-package ui.scenario.inflatables;
+package ui.scenario.state;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.svg.SVGGlyph;
@@ -27,6 +32,7 @@ import javafx.util.Duration;
 import utils.DisplayUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
 
@@ -37,10 +43,9 @@ public class EditStateViewController {
 
     @FXML
     private JFXTextField inputName;
+
     @FXML
-    private JFXTextField inputType;
-    @FXML
-    private JFXTextField inputTransition;
+    private JFXComboBox<StateModel> transitionComboBox;
 
     // Private variables
     private StateModel mStateModel;
@@ -67,9 +72,10 @@ public class EditStateViewController {
     /**
      * Constructor with respective click listener.
      *
+     * @param states
      * @param listener
      */
-    public EditStateViewController(StateModel state, OnScenarioEditStateClickListener listener) {
+    public EditStateViewController(StateModel state, List<StateModel> states, OnScenarioEditStateClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
@@ -84,16 +90,22 @@ public class EditStateViewController {
         }
 
         setupState(state);
-        setupUI();
+        setupUI(states);
     }
 
     private void setupState(StateModel state){
         this.mStateModel = state;
     }
 
-    private void setupUI(){
+    private void setupUI(List<StateModel> states){
         this.inputName.setText(mStateModel.getName());
-        this.inputType.setText(mStateModel.getType().getType() + "");
+
+        // Init Transition ComboBox
+        this.transitionComboBox.getItems().addAll(states);
+        // Set selected Transition
+        this.transitionComboBox.getSelectionModel().select(mStateModel.getTransition().getStateId());
+
+
         //TODO
     }
 

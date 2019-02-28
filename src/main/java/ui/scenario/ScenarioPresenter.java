@@ -61,7 +61,7 @@ public class ScenarioPresenter {
         int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
         if(stateIndex != -1){
-            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex));
+            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
         }
     }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
@@ -7,6 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<!--
+  ~ Created by Filipe André Rodrigues on 28-02-2019 18:13
+  -->
 <!--
   ~ Created by Filipe André Rodrigues on 27-02-2019 14:09
   -->
@@ -34,15 +39,14 @@
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="stateType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Type: " />
+                                 <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
                              </VBox>
-                             <JFXTextField fx:id="inputType" promptText="State type" styleClass="edit-dialog-parameter-input" />
-                         </HBox>
-                         <HBox>
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition: " />
-                             </VBox>
-                             <JFXTextField fx:id="inputTransition" promptText="State transition" styleClass="edit-dialog-parameter-input" />
+                             <JFXComboBox fx:id="transitionComboBox" prefWidth="200" promptText="Select State" styleClass="combo-box" />
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+
+                             <!--<JFXTextField fx:id="inputTransition" promptText="State transition" styleClass="edit-dialog-parameter-input" />-->
                          </HBox>
 
 
@@ -56,7 +60,21 @@
                   </VBox>
                     </children>
                 </StackPane>
-                <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #fafafa;">
+                <StackPane style="-fx-background-color: #fafafa;">
+                    <HBox alignment="CENTER" StackPane.alignment="CENTER">
+                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100" styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin></JFXButton>
+
+                        <JFXButton fx:id="applyButton" buttonType="RAISED" prefHeight="40" prefWidth="100" styleClass="apply-jfx-button-raised" text="Apply" StackPane.alignment="CENTER_RIGHT">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin></JFXButton>
+                    </HBox>
+                    <StackPane.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </StackPane.margin>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>

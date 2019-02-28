@@ -95,4 +95,9 @@ public class StateModel {
         hash = 53 * hash + this.id;
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
