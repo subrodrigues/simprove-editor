@@ -102,7 +102,7 @@ public class EditStateViewController {
 
         // Set selected Transition
         if(mStateModel.getTransition() != null) {
-            this.transitionComboBox.getSelectionModel().select(mStateModel.getTransition().getStateId());
+            this.transitionComboBox.getSelectionModel().select(new StateModel(mStateModel.getTransition().getStateId(), ""));
             this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
         }
 
