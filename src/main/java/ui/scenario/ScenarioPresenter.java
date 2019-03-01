@@ -31,6 +31,10 @@ public class ScenarioPresenter {
         this.mDAO.requestScenarioById(id);
     }
 
+    /*******************************************************************************************************************
+     * DAO Events                                                                                               *
+     *******************************************************************************************************************/
+
     /**
      * Receives a Scenario Event from the DAO
      *
@@ -52,16 +56,36 @@ public class ScenarioPresenter {
         }
     };
 
+    /*******************************************************************************************************************
+     * View Requests                                                                                              *
+     *******************************************************************************************************************/
+
     /**
      * Method that requests the presenter to launch the Edit State view
      *
      * @param stateId
      */
-    void requestStateEdit(int stateId) {
+    void requestLaunchStateEditView(int stateId) {
         int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
         if(stateIndex != -1){
             this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
+        }
+    }
+
+    /**
+     * Method that receives a StateModel to be updated at the DB
+     *
+     * @param stateToUpdate
+     */
+    void requestStateUpdate(StateModel stateToUpdate){
+        //TODO: request DAO to update this state
+
+        int indexToUpdate = this.mScenario.getStates().indexOf(stateToUpdate);
+
+        if(indexToUpdate != -1){
+            this.mScenario.getStates().set(indexToUpdate, stateToUpdate);
+            this.mView.updateStateViewItem(indexToUpdate, stateToUpdate);
         }
     }
 }

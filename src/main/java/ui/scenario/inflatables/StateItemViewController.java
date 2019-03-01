@@ -47,6 +47,10 @@ public class StateItemViewController {
         void onStateSelectClicked(String stateId);
     }
 
+    public StateItemViewController(int stateId) {
+        mStateId = stateId;
+    }
+
     public StateItemViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
         fxmlLoader.setController(this);
@@ -92,6 +96,7 @@ public class StateItemViewController {
 
     public void setupState(StateModel state){
         this.mStateModel = state;
+        this.mStateId = mStateModel.getId();
         this.setStateName(this.mStateModel.getName());
     }
 
@@ -153,4 +158,5 @@ public class StateItemViewController {
             }
         };
     }
+
 }

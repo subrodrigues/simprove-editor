@@ -1183,3 +1183,14 @@
     -fx-pref-width: 200.0;
     -fx-text-fill: WHITE;
 }
+
+.jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error, .jfx-combo-box:error {
+    -jfx-focus-color: #ef5350;
+    -jfx-unfocus-color: #ef5350;
+}
+
+.jfx-text-field .error-label, .jfx-password-field .error-label, .jfx-text-area .error-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ef5350;
+    -fx-font-size: 10pt;
+}

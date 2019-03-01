@@ -15,6 +15,11 @@ public class TransitionModel {
         this.stateId = stateId;
     }
 
+    public TransitionModel(int duration, int stateId) {
+        this.duration = duration;
+        this.stateId = stateId;
+    }
+
     public int getId() {
         return id;
     }

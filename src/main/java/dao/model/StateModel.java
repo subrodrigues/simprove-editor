@@ -18,6 +18,12 @@ public class StateModel {
         this.id = id;
     }
 
+    public StateModel(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
     public StateModel(int id, String name, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
         this.id = id;
         this.name = name;

@@ -2,21 +2,13 @@
  * Created by Filipe André Rodrigues on 28-02-2019 18:10
  */
 
-/*
- * Created by Filipe André Rodrigues on 27-02-2019 15:00
- */
-
 package ui.scenario.state;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.svg.SVGGlyph;
 import dao.model.StateModel;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import dao.model.TransitionModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,20 +16,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
-import utils.DisplayUtils;
 
 import java.io.IOException;
 import java.util.List;
-
-import static javafx.animation.Interpolator.EASE_BOTH;
 
 public class EditStateViewController {
     // UI Bind variables
@@ -53,13 +37,19 @@ public class EditStateViewController {
     @FXML
     private JFXNumericTextField inputTransitionDuration;
 
+    @FXML
+    private JFXButton applyButton;
+
+    @FXML
+    private JFXButton cancelButton;
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioEditStateClickListener mListener;
     private int mStateId = -1;
 
     public interface OnScenarioEditStateClickListener {
-        // TODO
+        void onStateEditApplyClicked(StateModel newStateModel);
     }
 
     public EditStateViewController() {
@@ -107,6 +97,7 @@ public class EditStateViewController {
         this.inputName.setText(mStateModel.getName());
 
         // Init Transition ComboBox
+        this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
 
         // Set selected Transition
@@ -115,61 +106,94 @@ public class EditStateViewController {
             this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
         }
 
+        /*
+         * Set Listeners and Bindings
+         */
+        this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
+            @Override
+            public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
+                if(newValue.getId() == -1){
+                    inputTransitionDuration.setDisable(true);
+                } else{
+                    inputTransitionDuration.setDisable(false);
+                }
+            }
+        });
+
+        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                this.inputName.validate();
+            }
+        });
+
+        this.applyButton.disableProperty().bind(
+                Bindings.isEmpty(this.inputName.textProperty())
+        );
+
+        this.applyButton.setOnAction(getApplyClickListener());
         //TODO
+    }
+
+    /**
+     * Method that returns the current Transition duration in case it is defined, -1 otherwise.
+     *
+     * @return duration value or -1
+     */
+    private int getCurrentTransitionDuration(){
+        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
     }
 
     public StackPane getEditStateItemRootDialog(){
         return editStateRoot;
     }
 
-    public void setupAnimatedEditFab(Duration delayToAnimate) {
-//        JFXButton button = new JFXButton("");
-//        button.setButtonType(JFXButton.ButtonType.RAISED);
-//        button.setStyle("-fx-background-radius: 40;-fx-background-color: " + DisplayUtils.getRandomColor());
-//        button.setPrefSize(40, 40);
-//        button.setRipplerFill(Color.valueOf(mHeaderColor));
-//
-//        button.setScaleX(0);
-//        button.setScaleY(0);
-//        SVGGlyph glyph = new SVGGlyph(-1,
-//                "test",
-//                "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
-//                Color.WHITE);
-//        glyph.setSize(18, 18);
-//        button.setGraphic(glyph);
-//        button.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
-//            return headerPane.getBoundsInParent().getHeight() - button.getHeight() / 2;
-//        }, headerPane.boundsInParentProperty(), button.heightProperty()));
-//
-//        StackPane.setMargin(button, new Insets(0, 12, 0, 0));
-//        StackPane.setAlignment(button, Pos.TOP_RIGHT);
-//
-//        Timeline animation = new Timeline(new KeyFrame(Duration.millis(240),
-//                new KeyValue(button.scaleXProperty(),
-//                        1,
-//                        EASE_BOTH),
-//                new KeyValue(button.scaleYProperty(),
-//                        1,
-//                        EASE_BOTH)));
-//
-//
-//        animation.setDelay(delayToAnimate);
-//        animation.play();
-//
-//        stateItemRoot.getChildren().add(button);
-
-//        button.setOnAction(getStateEditClickListener());
+    /**
+     * Method that closes this DialogWindow view
+     */
+    private void closeDialogWindow(){
+        // get a handle to the stage
+        Stage stage = (Stage) editStateRoot.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 
     /**
-     * Method that implements the StateEdit click listener behavior
+     * Method that implements the Apply changes click listener behavior.
+     * It updates the mStateModel with new content and returns it.
+     *
      * @return the EventHandler with correspondent behavior
      */
-//    private EventHandler<ActionEvent> getStateEditClickListener(){
-//        return new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//                mListener.onStateEditClicked(mStateModel.getId());
-//            }
-//        };
-//    }
+    private EventHandler<ActionEvent> getApplyClickListener(){
+        return new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+
+                // Set state name
+                mStateModel.setName(inputName.getText());
+
+                // Set/Update transition model
+                if(mStateModel.getTransition() != null){
+
+                    // If we removed the Transition
+                    if(transitionComboBox.getValue().getId() == -1){
+                        mStateModel.setTransition(null);
+                    }
+                    else { // If we updated the existing Transition
+                        mStateModel.getTransition().setDuration(getCurrentTransitionDuration());
+                        mStateModel.getTransition().setStateId(transitionComboBox.getValue().getId());
+                    }
+                } else { // If we didn't have a transition
+                    // And we are adding a Transition
+                    if(transitionComboBox.getValue().getId() != -1){
+                        mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
+                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
+                                transitionComboBox.getValue().getId()));
+                    }
+                }
+
+                mListener.onStateEditApplyClicked(mStateModel);
+
+                closeDialogWindow();
+            }
+        };
+    }
 }

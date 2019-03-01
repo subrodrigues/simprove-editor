@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -90,7 +92,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             Node state = null;
 
             try {
-                state = getInflatableStateItem(i, scenario.getStates().get(i));
+                StateModel stateTemp = scenario.getStates().get(i);
+                state = getInflatableStateItem(i, stateTemp);
             } catch (IOException e) {
                 e.printStackTrace();
                 // TODO: Deal with this
@@ -119,6 +122,20 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
 
         dialog.show();
+    }
+
+    /**
+     * Method that updates a specific State Item on the StateGridView
+     *
+     * @param index to be update
+     * @param state new StateModel data
+     */
+    void updateStateViewItem(int index, StateModel state){
+        try {
+            statesGridView.getChildren().set(index, getInflatableStateItem(index, state));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -160,11 +177,21 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     @Override
     public void onStateEditClicked(int stateId) {
-        mPresenter.requestStateEdit(stateId);
+        mPresenter.requestLaunchStateEditView(stateId);
     }
 
     @Override
     public void onStateSelectClicked(String stateId) {
 
+    }
+
+    /**
+     * Gets notifies of a StateModel edition
+     *
+     * @param newStateModel
+     */
+    @Override
+    public void onStateEditApplyClicked(StateModel newStateModel) {
+        this.mPresenter.requestStateUpdate(newStateModel);
     }
 }

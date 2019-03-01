@@ -3,11 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ui.widgets.JFXNumericTextField?>
 
 <!--
   ~ Created by Filipe André Rodrigues on 28-02-2019 18:13
@@ -16,7 +19,6 @@
   ~ Created by Filipe André Rodrigues on 27-02-2019 14:09
   -->
 
-<?import ui.widgets.JFXNumericTextField?>
 <StackPane fx:id="editStateRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2F65A5;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -35,7 +37,13 @@
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                 <Text fx:id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />
                              </VBox>
-                             <JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="State name" styleClass="edit-dialog-parameter-input" />
+                             <JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="State name" styleClass="edit-dialog-parameter-input">
+                             <validators>
+                                 <RequiredFieldValidator message="Input Required!">
+                                     <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                 </RequiredFieldValidator>
+                             </validators>
+                             </JFXTextField>
                          </HBox>
 
                          <HBox>
@@ -51,13 +59,13 @@
                               </HBox.margin></JFXNumericTextField>
 
                              <VBox.margin>
-                              <Insets top="28.0" />
+                              <Insets top="32.0" />
                            </VBox.margin>
 
                          </HBox>
                             <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
                            <VBox.margin>
-                              <Insets top="28.0" />
+                              <Insets top="32.0" />
                            </VBox.margin></Text>
 
                                     <Text fx:id="stateTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips: " />
