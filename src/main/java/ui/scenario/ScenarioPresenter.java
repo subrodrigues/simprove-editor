@@ -88,4 +88,20 @@ public class ScenarioPresenter {
             this.mView.updateStateViewItem(indexToUpdate, stateToUpdate);
         }
     }
+
+    /**
+     * Method that receives a State id to be deleted.
+     *
+     * @param stateId
+     */
+    void requestDeleteStateById(int stateId) {
+        //TODO: request DAO to delete this state
+
+        int indexToRemove = this.mScenario.getStates().indexOf(new StateModel(stateId));
+
+        if(indexToRemove != -1) {
+            this.mScenario.getStates().remove(indexToRemove);
+            this.mView.removeStateViewItem(indexToRemove);
+        }
+    }
 }

@@ -56,24 +56,39 @@
  ******************************************************************************/
 
 .jfx-dialog-overlay-pane {
-    -fx-background-color: rgba(0.0, 0.0, 0.0, 0.1);
+    -fx-background-color: #fafafa;
 }
 
 .dialog-trigger {
-    -fx-background-color: WHITE;
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-background-color: #fafafa;
     -jfx-button-type: RAISED;
     -fx-font-size: 14.0px;
 }
 
 .jfx-layout-heading .label {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
     -fx-font-size: 20.0px;
 }
 
-.dialog-accept {
-    -fx-text-fill: #03A9F4;
+.alert-accept {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #212121;
     -fx-font-weight: BOLD;
     -fx-padding: 0.7em 0.8em;
 }
+
+.alert-cancel{
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #212121;
+    -fx-font-weight: BOLD;
+    -fx-padding: 0.7em 0.8em;
+}
+
 
 /*******************************************************************************
  *                                                                             *
@@ -1184,13 +1199,33 @@
     -fx-text-fill: WHITE;
 }
 
+.delete-jfx-button-flat .jfx-rippler {
+    -jfx-rippler-fill: #F44336;
+}
+
+.cancel-jfx-button-flat {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 16.0px;
+    -fx-font-weight: BOLD;
+    -jfx-button-type: FLAT;
+    -fx-pref-width: 200.0;
+    -fx-text-fill: #F44336;
+}
+
 .jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error, .jfx-combo-box:error {
-    -jfx-focus-color: #ef5350;
-    -jfx-unfocus-color: #ef5350;
+    -jfx-focus-color: #b00020;
+    -jfx-unfocus-color: #b00020;
 }
 
 .jfx-text-field .error-label, .jfx-password-field .error-label, .jfx-text-area .error-label {
     -fx-font-weight: bold;
-    -fx-text-fill: #ef5350;
+    -fx-text-fill: #b00020;
     -fx-font-size: 10pt;
 }
+
+/******************************************************************************************
+* DIALOG STYLING                                                                          *
+*******************************************************************************************/
+

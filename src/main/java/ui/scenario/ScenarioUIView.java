@@ -12,8 +12,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -70,10 +68,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @throws IOException
      */
-    Node getInflatableStateItem(int index, StateModel state) throws IOException {
+    Node getInflatableStateItem(int index, int animEnterDelay, StateModel state) throws IOException {
         StateItemViewController item = new StateItemViewController(index, this);
         item.setupState(state);
-        item.setupAnimatedEditFab(Duration.millis(100 * index + 1000)); // TODO: better calculation
+        item.setupAnimatedEditFab(Duration.millis(100 * animEnterDelay + 600)); // TODO: better calculation
 
         return item.getStateItemRootPane();
     }
@@ -93,7 +91,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
             try {
                 StateModel stateTemp = scenario.getStates().get(i);
-                state = getInflatableStateItem(i, stateTemp);
+                state = getInflatableStateItem(i, i, stateTemp);
             } catch (IOException e) {
                 e.printStackTrace();
                 // TODO: Deal with this
@@ -132,10 +130,19 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     void updateStateViewItem(int index, StateModel state){
         try {
-            statesGridView.getChildren().set(index, getInflatableStateItem(index, state));
+            statesGridView.getChildren().set(index, getInflatableStateItem(index, 0, state));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Method that removes a specific State Item on the StateGridView by index
+     *
+     * @param index to be removed
+     */
+    void removeStateViewItem(int index){
+        statesGridView.getChildren().remove(index);
     }
 
     /**
@@ -193,5 +200,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @Override
     public void onStateEditApplyClicked(StateModel newStateModel) {
         this.mPresenter.requestStateUpdate(newStateModel);
+    }
+
+    /**
+     * Gets notifies of a delete StateModel action
+     *
+     * @param stateId is the ID to be deleted
+     */
+    @Override
+    public void onStateDeleteClicked(int stateId) {
+        mPresenter.requestDeleteStateById(stateId);
     }
 }

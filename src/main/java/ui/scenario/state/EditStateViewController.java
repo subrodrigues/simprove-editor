@@ -4,9 +4,7 @@
 
 package ui.scenario.state;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import dao.model.StateModel;
 import dao.model.TransitionModel;
 import javafx.beans.binding.Bindings;
@@ -16,7 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
 
@@ -38,6 +40,9 @@ public class EditStateViewController {
     private JFXNumericTextField inputTransitionDuration;
 
     @FXML
+    private JFXButton deleteButton;
+
+    @FXML
     private JFXButton applyButton;
 
     @FXML
@@ -50,17 +55,16 @@ public class EditStateViewController {
 
     public interface OnScenarioEditStateClickListener {
         void onStateEditApplyClicked(StateModel newStateModel);
+
+        void onStateDeleteClicked(int stateId);
     }
 
     public EditStateViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
         fxmlLoader.setController(this);
-        try
-        {
+        try {
             editStateRoot = fxmlLoader.load();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -76,12 +80,9 @@ public class EditStateViewController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
         fxmlLoader.setController(this);
-        try
-        {
+        try {
             editStateRoot = fxmlLoader.load();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -89,11 +90,11 @@ public class EditStateViewController {
         setupUI(states);
     }
 
-    private void setupState(StateModel state){
+    private void setupState(StateModel state) {
         this.mStateModel = state;
     }
 
-    private void setupUI(List<StateModel> states){
+    private void setupUI(List<StateModel> states) {
         this.inputName.setText(mStateModel.getName());
 
         // Init Transition ComboBox
@@ -101,7 +102,7 @@ public class EditStateViewController {
         this.transitionComboBox.getItems().addAll(states);
 
         // Set selected Transition
-        if(mStateModel.getTransition() != null) {
+        if (mStateModel.getTransition() != null) {
             this.transitionComboBox.getSelectionModel().select(new StateModel(mStateModel.getTransition().getStateId(), ""));
             this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
         }
@@ -112,9 +113,9 @@ public class EditStateViewController {
         this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
             @Override
             public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
-                if(newValue.getId() == -1){
+                if (newValue.getId() == -1) {
                     inputTransitionDuration.setDisable(true);
-                } else{
+                } else {
                     inputTransitionDuration.setDisable(false);
                 }
             }
@@ -131,6 +132,8 @@ public class EditStateViewController {
         );
 
         this.applyButton.setOnAction(getApplyClickListener());
+
+        this.deleteButton.setOnAction(getDeleteClickListener());
         //TODO
     }
 
@@ -139,18 +142,18 @@ public class EditStateViewController {
      *
      * @return duration value or -1
      */
-    private int getCurrentTransitionDuration(){
+    private int getCurrentTransitionDuration() {
         return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
     }
 
-    public StackPane getEditStateItemRootDialog(){
+    public StackPane getEditStateItemRootDialog() {
         return editStateRoot;
     }
 
     /**
      * Method that closes this DialogWindow view
      */
-    private void closeDialogWindow(){
+    private void closeDialogWindow() {
         // get a handle to the stage
         Stage stage = (Stage) editStateRoot.getScene().getWindow();
         // do what you have to do
@@ -163,27 +166,27 @@ public class EditStateViewController {
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getApplyClickListener(){
+    private EventHandler<ActionEvent> getApplyClickListener() {
         return new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
 
                 // Set state name
                 mStateModel.setName(inputName.getText());
 
                 // Set/Update transition model
-                if(mStateModel.getTransition() != null){
+                if (mStateModel.getTransition() != null) {
 
                     // If we removed the Transition
-                    if(transitionComboBox.getValue().getId() == -1){
+                    if (transitionComboBox.getValue().getId() == -1) {
                         mStateModel.setTransition(null);
-                    }
-                    else { // If we updated the existing Transition
+                    } else { // If we updated the existing Transition
                         mStateModel.getTransition().setDuration(getCurrentTransitionDuration());
                         mStateModel.getTransition().setStateId(transitionComboBox.getValue().getId());
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
-                    if(transitionComboBox.getValue().getId() != -1){
+                    if (transitionComboBox.getValue().getId() != -1) {
                         mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
                                 inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
                                 transitionComboBox.getValue().getId()));
@@ -192,6 +195,55 @@ public class EditStateViewController {
 
                 mListener.onStateEditApplyClicked(mStateModel);
 
+                closeDialogWindow();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the Delete click listener behavior with confirmation alert.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getDeleteClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                JFXAlert alert = new JFXAlert((Stage) deleteButton.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setOverlayClose(false);
+                JFXDialogLayout layout = new JFXDialogLayout();
+                layout.setHeading(new Label("Confirmation"));
+                layout.setBody(new Label("Are you sure you want to delete " + inputName.getText() + "? \n"));
+
+                JFXButton noButton = new JFXButton("No");
+
+                JFXButton yesButton = new JFXButton("Yes");
+
+                noButton.getStyleClass().add("alert-cancel");
+                noButton.setOnAction(event -> alert.hideWithAnimation());
+
+                yesButton.getStyleClass().add("alert-accept");
+                yesButton.setOnAction(getDeletePositiveConfirmationClickListener());
+
+                layout.setActions(noButton, yesButton);
+
+                alert.setContent(layout);
+                alert.show();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the positive confirmation to delete the state.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getDeletePositiveConfirmationClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mListener.onStateDeleteClicked(mStateModel.getId());
                 closeDialogWindow();
             }
         };
