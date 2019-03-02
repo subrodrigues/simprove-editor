@@ -9,6 +9,8 @@ import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
+import ui.scenario.state.NewStateViewController;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -24,7 +27,7 @@ import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
 public class ScenarioUIView implements StateItemViewController.OnScenarioStateClickListener,
-        EditStateViewController.OnScenarioEditStateClickListener {
+        EditStateViewController.OnScenarioEditStateClickListener, NewStateViewController.OnScenarioNewStateClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -36,8 +39,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private ScrollPane statesScrollPane;
+
     @FXML
     private JFXMasonryPane statesGridView;
+
+    @FXML
+    private JFXButton addStateButton;
 
     /**
      * init fxml when loaded.
@@ -57,6 +64,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         Platform.runLater(() -> statesScrollPane.requestLayout());
         JFXScrollPane.smoothScrolling(statesScrollPane);
+
+        this.addStateButton.setOnAction(getNewStateClickListener());
     }
 
     /**
@@ -123,6 +132,28 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
+     * Invoked by the Presenter.
+     * Notifies the view of a new state event.
+     *
+     * @param states
+     */
+    void showNewStateDialog(List<StateModel> states) {
+        NewStateViewController newStateDialog = new NewStateViewController(states, this);
+
+        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
+    }
+
+
+    /**
      * Method that updates a specific State Item on the StateGridView
      *
      * @param index to be update
@@ -131,6 +162,22 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     void updateStateViewItem(int index, StateModel state){
         try {
             statesGridView.getChildren().set(index, getInflatableStateItem(index, 0, state));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method that creates a specific State Item on the StateGridView
+     *
+     * @param newStateModel new StateModel data
+     */
+    void addStateViewItem(StateModel newStateModel) {
+        try {
+            statesGridView.getChildren().add(getInflatableStateItem(statesGridView.getChildren().size(), 0, newStateModel));
+
+            Platform.runLater(() -> statesScrollPane.requestLayout());
+            JFXScrollPane.smoothScrolling(statesScrollPane);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -178,6 +225,24 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
+     * Method that implements the new State click listener behavior
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewStateClickListener(){
+        return new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                mPresenter.requestLaunchNewEditView();
+            }
+        };
+    }
+
+
+    /********************************************************************************************************************
+     * PRESENTER INTERFACE                                                                                              *
+     ********************************************************************************************************************/
+
+    /**
      * Gets notified by the grid items when an element is clicked with a request to edit the StateModel with id {stateId}.
      *
      * @param stateId
@@ -210,5 +275,16 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @Override
     public void onStateDeleteClicked(int stateId) {
         mPresenter.requestDeleteStateById(stateId);
+    }
+
+
+    /**
+     * Gets notifies of the creation of a new StateModel
+     *
+     * @param newStateModel
+     */
+    @Override
+    public void onNewStateAcceptClicked(StateModel newStateModel) {
+        mPresenter.requestStateCreation(newStateModel);
     }
 }

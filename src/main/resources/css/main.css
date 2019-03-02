@@ -1093,21 +1093,22 @@
 *******************************************************************************/
 
 .pane-title-label{
+    -fx-font-family: "Roboto";
     -fx-font-size: 28.0;
     -fx-font-weight: 400;
     -fx-text-fill: rgba(256, 256, 256, 1.0);
 }
 
 .pane-title-background{
-      -fx-background-color: rgba(26, 100, 156, 0.9);
+      -fx-background-color: #1565C0;
 }
 
 .split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: rgba(26, 100, 156, 0.9);
+   -fx-background-color: #1565C0;
 }
 
 .split-pane:vertical > .split-pane-divider {
-   -fx-background-color: rgba(26, 100, 156, 0.9);
+   -fx-background-color: #1565C0;
 }
 
 .card-name-title{
@@ -1164,7 +1165,7 @@
 }
 
 .combo-box .cell:selected {
-    -fx-text-fill: red;
+    -fx-text-fill: WHITE;
 }
 
 .apply-jfx-button-raised .jfx-rippler {
@@ -1223,6 +1224,11 @@
     -fx-font-weight: bold;
     -fx-text-fill: #b00020;
     -fx-font-size: 10pt;
+}
+
+.fab-add-icon{
+    -fx-fill: #fafafa;
+    -fx-cursor: hand;
 }
 
 /******************************************************************************************

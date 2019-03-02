@@ -104,4 +104,22 @@ public class ScenarioPresenter {
             this.mView.removeStateViewItem(indexToRemove);
         }
     }
+
+    /**
+     * Method that requests the presenter to launch the New State view
+     *
+     */
+    void requestLaunchNewEditView() {
+        this.mView.showNewStateDialog(this.mScenario.getStates());
+    }
+
+    /**
+     * Method that receives a StateModel to be created at the DB
+     *
+     * @param newStateModel
+     */
+    void requestStateCreation(StateModel newStateModel) {
+        this.mScenario.getStates().add(newStateModel);
+        this.mView.addStateViewItem(newStateModel);
+    }
 }

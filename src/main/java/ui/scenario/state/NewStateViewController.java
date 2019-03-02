@@ -1,6 +1,7 @@
 /*
- * Created by Filipe André Rodrigues on 28-02-2019 18:10
+ * Created by Filipe André Rodrigues on 01-03-2019 23:00
  */
+
 
 package ui.scenario.state;
 
@@ -23,10 +24,10 @@ import ui.widgets.JFXNumericTextField;
 import java.io.IOException;
 import java.util.List;
 
-public class EditStateViewController {
+public class NewStateViewController {
     // UI Bind variables
     @FXML
-    private StackPane editStateRoot;
+    private StackPane newStateRoot;
 
     @FXML
     private JFXTextField inputName;
@@ -38,30 +39,25 @@ public class EditStateViewController {
     private JFXNumericTextField inputTransitionDuration;
 
     @FXML
-    private JFXButton deleteButton;
-
-    @FXML
-    private JFXButton applyButton;
+    private JFXButton acceptButton;
 
     @FXML
     private JFXButton cancelButton;
 
     // Private variables
     private StateModel mStateModel;
-    private OnScenarioEditStateClickListener mListener;
+    private OnScenarioNewStateClickListener mListener;
     private int mStateId = -1;
 
-    public interface OnScenarioEditStateClickListener {
-        void onStateEditApplyClicked(StateModel newStateModel);
-
-        void onStateDeleteClicked(int stateId);
+    public interface OnScenarioNewStateClickListener {
+        void onNewStateAcceptClicked(StateModel newStateModel);
     }
 
-    public EditStateViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
+    public NewStateViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewStateDialog.fxml"));
         fxmlLoader.setController(this);
         try {
-            editStateRoot = fxmlLoader.load();
+            newStateRoot = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,37 +69,28 @@ public class EditStateViewController {
      * @param states
      * @param listener
      */
-    public EditStateViewController(StateModel state, List<StateModel> states, OnScenarioEditStateClickListener listener) {
+    public NewStateViewController(List<StateModel> states, OnScenarioNewStateClickListener listener) {
         this.mListener = listener;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewStateDialog.fxml"));
         fxmlLoader.setController(this);
         try {
-            editStateRoot = fxmlLoader.load();
+            newStateRoot = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        setupState(state);
+        mStateModel = new StateModel(states.size());
+
         setupUI(states);
     }
 
-    private void setupState(StateModel state) {
-        this.mStateModel = state;
-    }
-
     private void setupUI(List<StateModel> states) {
-        this.inputName.setText(mStateModel.getName());
+        this.inputName.setText(mStateModel.getName() != null ? mStateModel.getName() : "");
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
-
-        // Set selected Transition
-        if (mStateModel.getTransition() != null) {
-            this.transitionComboBox.getSelectionModel().select(new StateModel(mStateModel.getTransition().getStateId(), ""));
-            this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
-        }
 
         /*
          * Set Listeners and Bindings
@@ -125,13 +112,12 @@ public class EditStateViewController {
             }
         });
 
-        this.applyButton.disableProperty().bind(
+        this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.inputName.textProperty())
         );
 
-        this.applyButton.setOnAction(getApplyClickListener());
+        this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
-        this.deleteButton.setOnAction(getDeleteClickListener());
         //TODO
     }
 
@@ -144,8 +130,8 @@ public class EditStateViewController {
         return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
     }
 
-    public StackPane getEditStateItemRootDialog() {
-        return editStateRoot;
+    public StackPane getNewStateItemRootDialog() {
+        return newStateRoot;
     }
 
     /**
@@ -153,18 +139,18 @@ public class EditStateViewController {
      */
     private void closeDialogWindow() {
         // get a handle to the stage
-        Stage stage = (Stage) editStateRoot.getScene().getWindow();
+        Stage stage = (Stage) newStateRoot.getScene().getWindow();
         // do what you have to do
         stage.close();
     }
 
     /**
-     * Method that implements the Apply changes click listener behavior.
+     * Method that implements the Accept new State click listener behavior.
      * It updates the mStateModel with new content and returns it.
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getApplyClickListener() {
+    private EventHandler<ActionEvent> getNewStateAcceptClickListener() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -184,66 +170,18 @@ public class EditStateViewController {
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
-                    if (transitionComboBox.getValue().getId() != -1) {
+                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
                         mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
                                 inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
                                 transitionComboBox.getValue().getId()));
                     }
                 }
 
-                mListener.onStateEditApplyClicked(mStateModel);
+                mListener.onNewStateAcceptClicked(mStateModel);
 
                 closeDialogWindow();
             }
         };
     }
 
-    /**
-     * Method that implements the Delete click listener behavior with confirmation alert.
-     *
-     * @return the EventHandler with correspondent behavior
-     */
-    private EventHandler<ActionEvent> getDeleteClickListener() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                JFXAlert alert = new JFXAlert((Stage) deleteButton.getScene().getWindow());
-                alert.initModality(Modality.APPLICATION_MODAL);
-                alert.setOverlayClose(false);
-                JFXDialogLayout layout = new JFXDialogLayout();
-                layout.setHeading(new Label("Confirmation"));
-                layout.setBody(new Label("Are you sure you want to delete " + inputName.getText() + "? \n"));
-
-                JFXButton noButton = new JFXButton("No");
-
-                JFXButton yesButton = new JFXButton("Yes");
-
-                noButton.getStyleClass().add("alert-cancel");
-                noButton.setOnAction(event -> alert.hideWithAnimation());
-
-                yesButton.getStyleClass().add("alert-accept");
-                yesButton.setOnAction(getDeletePositiveConfirmationClickListener());
-
-                layout.setActions(noButton, yesButton);
-
-                alert.setContent(layout);
-                alert.show();
-            }
-        };
-    }
-
-    /**
-     * Method that implements the positive confirmation to delete the state.
-     *
-     * @return the EventHandler with correspondent behavior
-     */
-    private EventHandler<ActionEvent> getDeletePositiveConfirmationClickListener() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                mListener.onStateDeleteClicked(mStateModel.getId());
-                closeDialogWindow();
-            }
-        };
-    }
 }
