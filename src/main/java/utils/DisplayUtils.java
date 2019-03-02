@@ -4,6 +4,7 @@
 
 package utils;
 
+import java.awt.*;
 import java.util.Random;
 
 public class DisplayUtils {
@@ -66,6 +67,20 @@ public class DisplayUtils {
                 break;
         }
         return color;
+    }
+
+    public static String getRandomBrightPastelColor(){
+        Random random = new Random();
+
+        // to create lighter colours:
+        // take a random integer between 0 & 128 (rather than between 0 and 255)
+        // and then add 127 to make the colour lighter
+        byte[] colorBytes = new byte[3];
+        colorBytes[0] = (byte)(random.nextInt(156) + 60);
+        colorBytes[1] = (byte)(random.nextInt(156) + 60);
+        colorBytes[2] = (byte)(random.nextInt(156) + 60);
+
+        return String.format("#%02x%02x%02x", colorBytes[0], colorBytes[1], colorBytes[2]);
     }
 
 }

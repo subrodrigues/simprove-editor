@@ -90,7 +90,7 @@ public class StateItemViewController {
 
     private void setupUI(int indexColor){
         // Random header color
-        mHeaderColor = DisplayUtils.getColorByIndex(indexColor);
+        mHeaderColor = DisplayUtils.getRandomBrightPastelColor();
         headerPane.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + mHeaderColor);
     }
 

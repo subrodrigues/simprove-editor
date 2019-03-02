@@ -15,9 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
 
