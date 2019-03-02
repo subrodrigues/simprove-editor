@@ -8,18 +8,25 @@ import com.jfoenix.controls.*;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
+import utils.AnimationUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -74,7 +81,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param index the element position index on the Grid (used to create the alternate colors)
      * @param state the StateModel to fill the UIController
      * @return Node
-     *
      * @throws IOException
      */
     Node getInflatableStateItem(int index, int animEnterDelay, StateModel state) throws IOException {
@@ -95,7 +101,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         // TODO: fill scenario related data
 
         // Fill States
-        for(int i = 0; i < scenario.getStates().size(); i++){
+        for (int i = 0; i < scenario.getStates().size(); i++) {
             Node state = null;
 
             try {
@@ -116,7 +122,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param state
      * @param states
      */
-    void showStateEditDialog(StateModel state, List<StateModel> states){
+    void showStateEditDialog(StateModel state, List<StateModel> states) {
         EditStateViewController editStateDialog = new EditStateViewController(state, states, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
@@ -159,11 +165,39 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param index to be update
      * @param state new StateModel data
      */
-    void updateStateViewItem(int index, StateModel state){
+    void updateStateViewItem(int index, StateModel state) {
         try {
             statesGridView.getChildren().set(index, getInflatableStateItem(index, 0, state));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method that ease in an highlight on a specific State Item on the StateGridView
+     *
+     * @param indexToHighlight to be update
+     */
+    void easeInHighlightStateViewItem(int indexToHighlight) {
+        Node stateView = statesGridView.getChildren().get(indexToHighlight);
+        for (Node node : ((StackPane) stateView).getChildren()) {
+            if (node.getId() != null && node.getId().equals("highlightCard")) {
+                AnimationUtils.itemEaseInHighlight((Pane) node);
+            }
+        }
+    }
+
+    /**
+     * Method that ease out an highlight on a specific State Item on the StateGridView
+     *
+     * @param indexToHighlight to be update
+     */
+    public void easeOutHighlightStateViewItem(int indexToHighlight) {
+        Node stateView = statesGridView.getChildren().get(indexToHighlight);
+        for (Node node : ((StackPane) stateView).getChildren()) {
+            if (node.getId() != null && node.getId().equals("highlightCard")) {
+                AnimationUtils.itemEaseOutHighlight((Pane) node);
+            }
         }
     }
 
@@ -188,13 +222,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @param index to be removed
      */
-    void removeStateViewItem(int index){
+    void removeStateViewItem(int index) {
         statesGridView.getChildren().remove(index);
     }
 
     /**
      * Shows the loading view.
-     *
      */
     void showLoading() {
         //TODO: Deal with this
@@ -202,7 +235,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     /**
      * Hides the loading view.
-     *
      */
     void hideLoading() {
         //TODO: Deal with this
@@ -229,9 +261,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getNewStateClickListener(){
+    private EventHandler<ActionEvent> getNewStateClickListener() {
         return new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
                 mPresenter.requestLaunchNewEditView();
             }
         };
@@ -253,7 +286,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     @Override
-    public void onStateSelectClicked(String stateId) {
+    public void onStateSelectClicked(int stateId) {
+        mPresenter.requestHighlightStateItem(stateId);
 
     }
 
@@ -277,7 +311,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         mPresenter.requestDeleteStateById(stateId);
     }
 
-
     /**
      * Gets notifies of the creation of a new StateModel
      *
@@ -287,4 +320,5 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     public void onNewStateAcceptClicked(StateModel newStateModel) {
         mPresenter.requestStateCreation(newStateModel);
     }
+
 }

@@ -3,12 +3,11 @@
  */
 
 package ui.scenario.inflatables;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
 import dao.model.StateModel;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,11 +15,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import utils.DisplayUtils;
+
 import java.io.IOException;
 
 import static javafx.animation.Interpolator.EASE_BOTH;
@@ -36,6 +38,9 @@ public class StateItemViewController {
     @FXML
     private Text stateName;
 
+    @FXML
+    private Pane highlightCard;
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioStateClickListener mListener;
@@ -44,7 +49,9 @@ public class StateItemViewController {
 
     public interface OnScenarioStateClickListener {
         void onStateEditClicked(int stateId);
-        void onStateSelectClicked(String stateId);
+
+        void onStateSelectClicked(int stateId);
+
     }
 
     public StateItemViewController(int stateId) {
@@ -54,12 +61,9 @@ public class StateItemViewController {
     public StateItemViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
         fxmlLoader.setController(this);
-        try
-        {
+        try {
             stateItemRoot = fxmlLoader.load();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -76,25 +80,29 @@ public class StateItemViewController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/StateItem.fxml"));
         fxmlLoader.setController(this);
-        try
-        {
+        try {
             stateItemRoot = fxmlLoader.load();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         setupUI(indexColor);
     }
 
-    private void setupUI(int indexColor){
+    private void setupUI(int indexColor) {
         // Random header color
         mHeaderColor = DisplayUtils.getRandomBrightPastelColor();
         headerPane.setStyle("-fx-background-radius: 5 5 0 0; -fx-background-color: " + mHeaderColor);
+
+        stateItemRoot.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mListener.onStateSelectClicked(mStateModel.getId());
+            }
+        });
     }
 
-    public void setupState(StateModel state){
+    public void setupState(StateModel state) {
         this.mStateModel = state;
         this.mStateId = mStateModel.getId();
         this.setStateName(this.mStateModel.getName());
@@ -104,7 +112,7 @@ public class StateItemViewController {
         this.stateName.setText(stateName);
     }
 
-    public StackPane getStateItemRootPane(){
+    public StackPane getStateItemRootPane() {
         return stateItemRoot;
     }
 
@@ -149,11 +157,13 @@ public class StateItemViewController {
 
     /**
      * Method that implements the StateEdit click listener behavior
+     *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getStateEditClickListener(){
+    private EventHandler<ActionEvent> getStateEditClickListener() {
         return new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
                 mListener.onStateEditClicked(mStateModel.getId());
             }
         };

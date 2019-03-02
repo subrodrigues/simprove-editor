@@ -10,7 +10,7 @@
 
 <StackPane fx:id="stateItemRoot" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="200.0" prefWidth="150.0">
+      <VBox fx:id="stateItemContent" prefHeight="200.0" prefWidth="150.0">
          <children>
             <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
                <children>
@@ -24,5 +24,7 @@
             <StackPane minHeight="60.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 0 0 5 5; -fx-background-color: #fafafa;" />
          </children>
       </VBox>
+      <Pane fx:id="highlightCard" prefHeight="200.0" prefWidth="150.0" style="-fx-background-radius: 5, 5, 5, 5;" />
+
    </children>
 </StackPane>

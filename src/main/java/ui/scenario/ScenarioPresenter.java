@@ -17,6 +17,7 @@ public class ScenarioPresenter {
     private ScenarioDAO mDAO;
 
     private ScenarioModel mScenario = null;
+    private int mCurrentSelectedStateItem = -1;
 
     public ScenarioPresenter(ScenarioUIView view) {
         this.mView = view;
@@ -56,6 +57,17 @@ public class ScenarioPresenter {
         }
     };
 
+    /**
+     * Aux method to clean the currently selected card.
+     */
+    private void easeOutSelectedPane() {
+        // We start by deselecting the current card
+        if(this.mCurrentSelectedStateItem != -1){
+            this.mView.easeOutHighlightStateViewItem(this.mCurrentSelectedStateItem);
+            this.mCurrentSelectedStateItem = -1;
+        }
+    }
+
     /*******************************************************************************************************************
      * View Requests                                                                                              *
      *******************************************************************************************************************/
@@ -69,6 +81,7 @@ public class ScenarioPresenter {
         int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
         if(stateIndex != -1){
+            easeOutSelectedPane();
             this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
         }
     }
@@ -122,4 +135,33 @@ public class ScenarioPresenter {
         this.mScenario.getStates().add(newStateModel);
         this.mView.addStateViewItem(newStateModel);
     }
+
+    /**
+     * Method that deals with a request to highlight a specific state view card.
+     *
+     * It checks the currently selected one, in order to deselect.
+     *
+     * @param stateId
+     */
+    void requestHighlightStateItem(int stateId) {
+        // We start by deselecting the current card
+        if(this.mCurrentSelectedStateItem != -1){
+            this.mView.easeOutHighlightStateViewItem(this.mCurrentSelectedStateItem);
+        }
+
+        // Acquire index to highlight
+        int indexToHighlight = this.mScenario.getStates().indexOf(new StateModel(stateId));
+
+        // If the new selected card is not the previously selected one
+        if(indexToHighlight != this.mCurrentSelectedStateItem && indexToHighlight != -1) {
+            this.mView.easeInHighlightStateViewItem(indexToHighlight);
+        }
+
+        // Update the currently selected flag
+        if(indexToHighlight != this.mCurrentSelectedStateItem)
+            this.mCurrentSelectedStateItem = indexToHighlight;
+        else // If we just deselected a previously selected card
+            this.mCurrentSelectedStateItem = -1;
+    }
+
 }
