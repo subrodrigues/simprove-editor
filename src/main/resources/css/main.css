@@ -424,7 +424,6 @@
     -fx-font-weight: BOLD;
     -fx-prompt-text-fill: #808080;
     -fx-alignment: top-left;
-    -fx-max-width: 300.0;
     -fx-pref-width: 300.0;
     -jfx-focus-color: #4059A9;
     -jfx-unfocus-color: #4d4d4d;
@@ -1287,14 +1286,14 @@
     -fx-cursor: hand;
 }
 
-.titled-pane > .title
-{
+.titled-pane > .title {
     -fx-font-family: "Roboto";
     -fx-font-smoothing-type: gray;
     -fx-background-color: -fx-decorator-main-color;
     -fx-padding: 16; /* 2 10 3 10 */
     -fx-font-size: 20.0;
     -fx-font-weight: bold;
+    -fx-background-radius: 0px;
 }
 
 .titled-pane > .title > .arrow-button .arrow{
