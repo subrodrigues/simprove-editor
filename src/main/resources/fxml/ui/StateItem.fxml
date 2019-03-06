@@ -8,7 +8,7 @@
   ~ Created by Filipe André Rodrigues on 20-02-2019 19:50
   -->
 
-<StackPane fx:id="stateItemRoot" prefHeight="150.0" prefWidth="150.0" style="-fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stateItemRoot" prefHeight="150.0" prefWidth="150.0" style="-fx-cursor: hand; -fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="stateItemContent" prefHeight="200.0" prefWidth="150.0">
          <children>

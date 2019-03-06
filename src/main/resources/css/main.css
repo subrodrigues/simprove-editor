@@ -198,7 +198,7 @@
 .jfx-tool-bar {
     -fx-font-size: 20.0;
     -fx-font-weight: BOLD;
-    -fx-background-color: #5264AE;
+    -fx-background-color: #003c8f;
     -fx-pref-width: 100.0%;
     -fx-pref-height: 64.0px;
 }
@@ -231,7 +231,7 @@
 }
 
 .option-jfx-list-view-icon {
-    -fx-fill: #5264AE;
+    -fx-fill: #003c8f;
     -fx-padding: 0.0 10.0 0.0 5.0;
     -fx-cursor: hand;
 }
@@ -1092,23 +1092,54 @@
 *                                                                              *
 *******************************************************************************/
 
+
+/******************************************************************************************
+* WINDOW STYLING                                                                          *
+*******************************************************************************************/
+
+.jfx-decorator {
+    -fx-decorator-color-window: #001861;
+    -fx-decorator-color-dark: #003c8f;
+    -fx-decorator-main-color: #1565C0;
+    -fx-decorator-light-color: #fafafa;
+
+    -fx-decorator-color: -fx-decorator-color-window;
+}
+
+.jfx-decorator .jfx-decorator-buttons-container {
+    -fx-background-color: -fx-decorator-color;
+
+}
+
+.jfx-decorator .resize-border {
+    -fx-border-color: -fx-decorator-color;
+    -fx-border-width: 0 2 2 2;
+}
+
+
+/******************************************************************************************
+* GENERAL STYLING                                                                          *
+*******************************************************************************************/
+
 .pane-title-label{
     -fx-font-family: "Roboto";
-    -fx-font-size: 28.0;
-    -fx-font-weight: 400;
-    -fx-text-fill: rgba(256, 256, 256, 1.0);
+    -fx-font-size: 20.0;
+    -fx-font-weight: bold;
+    -fx-text-fill: WHITE;
+    -fx-background-color: -fx-decorator-main-color;
+    -fx-padding: 16; /* 2 10 3 10 */
 }
 
 .pane-title-background{
-      -fx-background-color: #1565C0;
+      -fx-background-color: -fx-decorator-main-color;
 }
 
 .split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: #1565C0;
+   -fx-background-color: -fx-decorator-main-color;
 }
 
 .split-pane:vertical > .split-pane-divider {
-   -fx-background-color: #1565C0;
+   -fx-background-color: -fx-decorator-main-color;
 }
 
 .card-name-title{
@@ -1231,7 +1262,40 @@
     -fx-cursor: hand;
 }
 
-/******************************************************************************************
-* DIALOG STYLING                                                                          *
-*******************************************************************************************/
+.titled-pane > .title
+{
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-background-color: -fx-decorator-main-color;
+    -fx-padding: 16; /* 2 10 3 10 */
+    -fx-font-size: 20.0;
+    -fx-font-weight: bold;
+}
+
+.titled-pane > .title > .arrow-button .arrow{
+    -fx-shape: "M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z";
+    -fx-fill: #fafafa;
+    -fx-cursor: hand;
+    -fx-color-fill: #fafafa;
+    -fx-background-color: WHITE;
+     -fx-alignment: center-right;
+}
+
+.titled-pane > .title > .text{
+    -fx-fill: WHITE;
+}
+
+.titled-pane:focused > .title > .arrow-button .arrow {
+    -fx-background-color: WHITE;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: -fx-decorator-light-color;
+ }
+
+.split-pane {
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: 0;
+    -fx-padding: 1px 0px 0px 0px;
+}
 
