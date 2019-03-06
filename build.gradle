@@ -21,3 +21,10 @@ dependencies {
 //    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ui.main.MainApplication'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
