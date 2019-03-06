@@ -10,11 +10,11 @@ public class ActionModel {
     private int id;
     private TypeModel type;
 
-    public ActionModel(int id, TypeModel type, TypeModel category, String name, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.category = category;
-        this.name = name;
         this.stateConditions = stateConditions;
         this.results = results;
         this.transition = transition;

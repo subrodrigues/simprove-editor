@@ -5,6 +5,7 @@
 package ui.scenario;
 
 import com.jfoenix.controls.*;
+import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
@@ -34,7 +36,9 @@ import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
 public class ScenarioUIView implements StateItemViewController.OnScenarioStateClickListener,
-        EditStateViewController.OnScenarioEditStateClickListener, NewStateViewController.OnScenarioNewStateClickListener {
+        ActionItemViewController.OnScenarioActionClickListener,
+        EditStateViewController.OnScenarioEditStateClickListener,
+        NewStateViewController.OnScenarioNewStateClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -80,6 +84,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @param index the element position index on the Grid (used to create the alternate colors)
      * @param state the StateModel to fill the UIController
+     *
      * @return Node
      * @throws IOException
      */
@@ -91,6 +96,22 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         return item.getStateItemRootPane();
     }
 
+    /**
+     * Helper method that creates a UI Action Card and returns the node to be inflate in the list.
+     *
+     * @param index the element position index on the Grid (used to create the alternate colors)
+     * @param action the ActionModel to fill the UIController
+     *
+     * @return Node
+     * @throws IOException
+     */
+    Node getInflatableActionItem(int index, int animEnterDelay, ActionModel action) throws IOException {
+        ActionItemViewController item = new ActionItemViewController(index, this);
+        item.setupAction(action);
+        item.setupAnimatedEditFab(Duration.millis(100 * animEnterDelay + 600)); // TODO: better calculation
+
+        return item.getStateItemRootPane();
+    }
     /**
      * Invoked by the Presenter.
      * Updates the view with a whole new Scenario.
@@ -112,6 +133,20 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                 // TODO: Deal with this
             }
             statesGridView.getChildren().add(state);
+        }
+
+        // Fill Actions
+        for (int i = 0; i < scenario.getActions().size(); i++) {
+            Node action = null;
+
+            try {
+                ActionModel actionTemp = scenario.getActions().get(i);
+                action = getInflatableActionItem(i, i, actionTemp);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // TODO: Deal with this
+            }
+            actionsGridView.getChildren().add(action);
         }
     }
 
@@ -321,4 +356,18 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         mPresenter.requestStateCreation(newStateModel);
     }
 
+    /**
+     * Gets notified by the grid items when an element is clicked with a request to edit the EditModel with id {actionId}.
+     *
+     * @param actionId
+     */
+    @Override
+    public void onActionEditClicked(int actionId) {
+
+    }
+
+    @Override
+    public void onActionSelectClicked(int actionId) {
+
+    }
 }

@@ -53,7 +53,7 @@
         </TitledPane>
 
 
-        <SplitPane dividerPositions="0.5" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
+        <SplitPane dividerPositions="0.3" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
                 <StackPane>
                     <StackPane styleClass="pane-title-background">

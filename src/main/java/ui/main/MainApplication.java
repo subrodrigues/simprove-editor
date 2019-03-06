@@ -42,11 +42,11 @@ public class MainApplication extends Application {
         
         stage.setTitle("Simprove");
 
-        double width = 800;
-        double height = 600;
+        double width = 1366;
+        double height = 768;
         try {
             Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
-            width = bounds.getWidth() / 2.5;
+            width = bounds.getWidth() / 1.5;
             height = bounds.getHeight() / 1.35;
         }catch (Exception e){ }
 

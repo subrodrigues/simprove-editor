@@ -43,8 +43,22 @@ public class ScenarioDAO {
             mockedStates.add(new StateModel(i, "State " + i, new TypeModel(0, 1, "Tipo Cenas"),
                     signals, new TransitionModel(0, 10, 1), tips));
         }
+
+
         /** MOCKED ACTIONS **/
         List<ActionModel> mockedActions = new ArrayList<>();
+        for(int i = 10; i < 26; i++) {
+            List<SignalModel> results = new ArrayList<SignalModel>();
+            results.add(new SignalModel(1, new SignalTypeModel(0, 1), "Heart Rate", 120f));
+            List<StateModel> stateConditions = new ArrayList<StateModel>();
+
+            mockedActions.add(new ActionModel(i, "Action " + i, new TypeModel(0, 1, "Tipo Coiso"),
+                    new TypeModel(1, 1, "Categoria Cenas"),
+                    stateConditions,
+                    results,
+                    new TransitionModel(0, 10, 1),
+                    "Oops, you screwed it."));
+        }
 
         ScenarioModel mockedScenario = new ScenarioModel(0, "Mocked Data",
                 "First comes the Universe, then comes the prayer.",

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<!--
+  ~ Created by Filipe André Rodrigues on 06-03-2019 22:40
+  -->
+<!--
+  ~ Created by Filipe André Rodrigues on 20-02-2019 19:50
+  -->
+
+<StackPane fx:id="actionItemRoot" prefHeight="100.0" prefWidth="100.0" style="-fx-cursor: hand; -fx-background-radius: 5, 5, 5, 5;" styleClass="background-shadow" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="actionItemContent" alignment="TOP_CENTER" prefHeight="50.0" prefWidth="100.0">
+         <children>
+            <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
+               <VBox alignment="TOP_CENTER" >
+                  <StackPane.margin>
+                     <Insets top="16.0" />
+                  </StackPane.margin>
+                  <Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Action Name" StackPane.alignment="TOP_CENTER">
+                  </Text>
+                  <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Type" StackPane.alignment="TOP_CENTER">
+                  </Text>
+                  <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Category" StackPane.alignment="TOP_CENTER">
+                  </Text>
+               </VBox>
+            </StackPane>
+            <StackPane prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 0 0 5 5; -fx-background-color: #fafafa;" />
+         </children>
+
+      </VBox>
+      <Pane fx:id="highlightCard" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 5, 5, 5, 5;" />
+
+   </children>
+</StackPane>
