@@ -1169,6 +1169,31 @@
     -jfx-unfocus-color: rgba(256.0, 256.0, 256.0, 0.40);
 }
 
+.edit-dialog-parameter-title-black{
+    -fx-font-size: 16.0;
+    -fx-font-weight: BOLD;
+    -fx-fill: #555555;
+}
+
+.edit-dialog-parameter-input-black{
+    -fx-font-size: 17.0;
+    -fx-font-weight: NORMAL;
+    -fx-text-fill: #2c2c2c;
+    -fx-background-color: #fafafa;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.26), 4, 0.12, -1, 2);
+    -fx-prompt-text-fill: rgba(0.0, 0.0, 0.0, 0.4);
+    -jfx-focus-color: rgba(0.0, 0.0, 0.0, 0.90);
+    -jfx-unfocus-color: rgba(0.0, 0.0, 0.0, 0.40);
+}
+
+.text-area {
+    -text-area-background: #fafafa;
+}
+
+.text-area .content {
+    -fx-background-color: -text-area-background ;
+}
+
 .background-shadow{
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2);
 }
@@ -1290,7 +1315,6 @@
 }
 
 .titled-pane > *.content {
-    -fx-background-color: -fx-decorator-light-color;
  }
 
 .split-pane {
