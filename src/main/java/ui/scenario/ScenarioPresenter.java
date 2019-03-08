@@ -137,6 +137,7 @@ public class ScenarioPresenter {
         if(indexToRemove != -1) {
             this.mScenario.getStates().remove(indexToRemove);
             this.mView.removeStateViewItem(indexToRemove);
+            this.cleanSelectedActions();
         }
     }
 
