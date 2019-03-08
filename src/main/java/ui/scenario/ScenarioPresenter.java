@@ -5,6 +5,7 @@
 package ui.scenario;
 
 import dao.ScenarioDAO;
+import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import events.ScenarioEvent;
@@ -12,12 +13,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ScenarioPresenter {
     private ScenarioUIView mView;
     private ScenarioDAO mDAO;
 
     private ScenarioModel mScenario = null;
+
     private int mCurrentSelectedStateItem = -1;
+    private Set<Integer> selectedActions = new HashSet<>();
 
     public ScenarioPresenter(ScenarioUIView view) {
         this.mView = view;
@@ -60,11 +66,27 @@ public class ScenarioPresenter {
     /**
      * Aux method to clean the currently selected card.
      */
-    private void easeOutSelectedPane() {
+    private void deselectSelectedPane() {
         // We start by deselecting the current card
         if(this.mCurrentSelectedStateItem != -1){
-            this.mView.easeOutHighlightStateViewItem(this.mCurrentSelectedStateItem);
+            this.mView.deselectStateViewItem(this.mCurrentSelectedStateItem);
             this.mCurrentSelectedStateItem = -1;
+        }
+    }
+
+    /**
+     * Method that just deals with a request to highlight a specific action view card UI.
+     *
+     * @param actionId
+     */
+    void showSelectedActionUIItem(int actionId) {
+
+        // Acquire index to highlight
+        int selectedIndex = this.mScenario.getActions().indexOf(new ActionModel(actionId));
+
+        // If the new selected card is not a previously selected one
+        if(selectedIndex != -1) {
+            this.mView.selectActionViewItem(selectedIndex);
         }
     }
 
@@ -81,7 +103,7 @@ public class ScenarioPresenter {
         int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
         if(stateIndex != -1){
-            easeOutSelectedPane();
+            deselectSelectedPane();
             this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
         }
     }
@@ -143,10 +165,11 @@ public class ScenarioPresenter {
      *
      * @param stateId
      */
-    void requestHighlightStateItem(int stateId) {
+    void requestSelectStateItem(int stateId) {
         // We start by deselecting the current card
         if(this.mCurrentSelectedStateItem != -1){
-            this.mView.easeOutHighlightStateViewItem(this.mCurrentSelectedStateItem);
+            this.mView.deselectStateViewItem(this.mCurrentSelectedStateItem);
+            cleanSelectedActions();
         }
 
         // Acquire index to highlight
@@ -154,7 +177,14 @@ public class ScenarioPresenter {
 
         // If the new selected card is not the previously selected one
         if(indexToHighlight != this.mCurrentSelectedStateItem && indexToHighlight != -1) {
-            this.mView.easeInHighlightStateViewItem(indexToHighlight);
+            this.mView.selectStateViewItem(indexToHighlight);
+
+            for(ActionModel action: this.mScenario.getActions()){
+                if(action.getStateConditions().contains(new StateModel(stateId))){
+                    this.selectedActions.add(action.getId());
+                    this.showSelectedActionUIItem(action.getId());
+                }
+            }
         }
 
         // Update the currently selected flag
@@ -162,6 +192,59 @@ public class ScenarioPresenter {
             this.mCurrentSelectedStateItem = indexToHighlight;
         else // If we just deselected a previously selected card
             this.mCurrentSelectedStateItem = -1;
+    }
+
+    /**
+     * Method that cleans all the selected action card items from the UI
+     */
+    private void cleanSelectedActions() {
+        for(int actionId: this.selectedActions){
+            int indexToClean = this.mScenario.getActions().indexOf(new ActionModel(actionId));
+
+            if(indexToClean != -1){
+                this.mView.deselectActionViewItem(indexToClean);
+            }
+        }
+        this.selectedActions.clear();
+    }
+
+    /**
+     * Method that deals with a request to highlight a specific action view card and updates the DB.
+     *
+     * It checks the currently selected one, in order to deselect.
+     *
+     * @param actionId
+     */
+    void requestSelectActionItem(int actionId) {
+        // We start by deselecting the current card
+        if(this.mCurrentSelectedStateItem == -1){
+            return; // TODO: Show warning
+        }
+
+        // Acquire index to highlight
+        int selectedIndex = this.mScenario.getActions().indexOf(new ActionModel(actionId));
+
+        boolean isToRemove = false;
+        // If the new selected card is not a previously selected one
+        if(!selectedActions.contains(actionId) && selectedIndex != -1) {
+            this.mView.selectActionViewItem(selectedIndex);
+
+            // Update the currently selected Items and DB
+            this.selectedActions.add(actionId);
+        } else{
+            isToRemove = true;
+            this.mView.deselectActionViewItem(selectedIndex);
+
+            // Update the currently selected Items and DB
+            this.selectedActions.remove(actionId);
+        }
+
+        // TODO: Sync DB
+        if(isToRemove){
+            this.mScenario.getActions().get(selectedIndex).removeStateCondition(this.mScenario.getStates().get(this.mCurrentSelectedStateItem));
+        } else {
+            this.mScenario.getActions().get(selectedIndex).addStateCondition(this.mScenario.getStates().get(this.mCurrentSelectedStateItem));
+        }
     }
 
 }

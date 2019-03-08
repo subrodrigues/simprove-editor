@@ -9,6 +9,12 @@ import java.util.List;
 public class ActionModel {
     private int id;
     private TypeModel type;
+    private TypeModel category;
+    private String name;
+    private List<StateModel> stateConditions;
+    private List<SignalModel> results;
+    private TransitionModel transition;
+    private String errorMessage;
 
     public ActionModel(int id, String name, TypeModel type, TypeModel category, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
@@ -19,6 +25,10 @@ public class ActionModel {
         this.results = results;
         this.transition = transition;
         this.errorMessage = errorMessage;
+    }
+
+    public ActionModel(int actionId) {
+        this.id = actionId;
     }
 
     public int getId() {
@@ -61,6 +71,14 @@ public class ActionModel {
         this.stateConditions = stateConditions;
     }
 
+    public void addStateCondition(StateModel condition){
+        if(!this.stateConditions.contains(condition)) this.stateConditions.add(condition);
+    }
+
+    public void removeStateCondition(StateModel condition){
+        this.stateConditions.remove(condition);
+    }
+
     public List<SignalModel> getResults() {
         return results;
     }
@@ -85,11 +103,30 @@ public class ActionModel {
         this.errorMessage = errorMessage;
     }
 
-    private TypeModel category;
-    private String name;
-    private List<StateModel> stateConditions;
-    private List<SignalModel> results;
-    private TransitionModel transition;
-    private String errorMessage;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!ActionModel.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final ActionModel other = (ActionModel) obj;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 
 }

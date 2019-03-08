@@ -9,18 +9,12 @@ import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
-import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,7 +22,6 @@ import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
-import utils.AnimationUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -70,11 +63,11 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Setups the UI and init needed variables
      */
     private void setupUI() {
-        Platform.runLater(() -> actionsScrollPane.requestLayout());
-        JFXScrollPane.smoothScrolling(actionsScrollPane);
+        Platform.runLater(() -> this.actionsScrollPane.requestLayout());
+        JFXScrollPane.smoothScrolling(this.actionsScrollPane);
 
-        Platform.runLater(() -> statesScrollPane.requestLayout());
-        JFXScrollPane.smoothScrolling(statesScrollPane);
+        Platform.runLater(() -> this.statesScrollPane.requestLayout());
+        JFXScrollPane.smoothScrolling(this.statesScrollPane);
 
         this.addStateButton.setOnAction(getNewStateClickListener());
     }
@@ -213,27 +206,47 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @param indexToHighlight to be update
      */
-    void easeInHighlightStateViewItem(int indexToHighlight) {
+    void selectStateViewItem(int indexToHighlight) {
+        if(statesGridView.getChildren().size() == 0) return;
+
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
-        for (Node node : ((StackPane) stateView).getChildren()) {
-            if (node.getId() != null && node.getId().equals("highlightCard")) {
-                AnimationUtils.itemEaseInHighlight((Pane) node);
-            }
-        }
+        stateView.setStyle("-fx-effect: dropshadow(three-pass-box, red, 5, 10, 0, 0);");
     }
 
     /**
-     * Method that ease out an highlight on a specific State Item on the StateGridView
+     * Method that ease out an highlight on a specific State Item in the StateGridView
      *
      * @param indexToHighlight to be update
      */
-    public void easeOutHighlightStateViewItem(int indexToHighlight) {
+    public void deselectStateViewItem(int indexToHighlight) {
+        if(statesGridView.getChildren().size() == 0) return;
+
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
-        for (Node node : ((StackPane) stateView).getChildren()) {
-            if (node.getId() != null && node.getId().equals("highlightCard")) {
-                AnimationUtils.itemEaseOutHighlight((Pane) node);
-            }
-        }
+        stateView.setStyle("item-card-style");
+    }
+
+    /**
+     * Method that ease in an highlight on a specific Action Item in the ActionGridView
+     *
+     * @param indexToHighlight to be update
+     */
+    void selectActionViewItem(int indexToHighlight) {
+        if(actionsGridView.getChildren().size() == 0) return;
+
+        Node actionView = actionsGridView.getChildren().get(indexToHighlight);
+        actionView.setStyle("-fx-effect: dropshadow(three-pass-box, red, 5, 10, 0, 0);");
+    }
+
+    /**
+     * Method that ease out an highlight on a specific Action Item in the ActionGridView
+     *
+     * @param indexToHighlight to be update
+     */
+    public void deselectActionViewItem(int indexToHighlight) {
+        if(actionsGridView.getChildren().size() == 0) return;
+
+        Node stateView = actionsGridView.getChildren().get(indexToHighlight);
+        stateView.setStyle("item-card-style");
     }
 
     /**
@@ -322,7 +335,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @Override
     public void onStateSelectClicked(int stateId) {
-        mPresenter.requestHighlightStateItem(stateId);
+        mPresenter.requestSelectStateItem(stateId);
 
     }
 
@@ -368,6 +381,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @Override
     public void onActionSelectClicked(int actionId) {
+        mPresenter.requestSelectActionItem(actionId);
 
     }
 }

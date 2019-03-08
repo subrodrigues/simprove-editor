@@ -37,9 +37,6 @@ public class StateItemViewController {
     @FXML
     private Text stateName;
 
-    @FXML
-    private Pane highlightCard;
-
     // Private variables
     private StateModel mStateModel;
     private OnScenarioStateClickListener mListener;
