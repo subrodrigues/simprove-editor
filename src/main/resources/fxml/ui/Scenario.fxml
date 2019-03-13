@@ -28,12 +28,12 @@
 
     <VBox>
 
-        <SplitPane dividerPositions="0.3" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
+        <SplitPane dividerPositions="0.4" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
                 <StackPane>
                     <StackPane styleClass="pane-title-background">
                         <padding>
-                            <Insets top="56" />
+                            <Insets top="42" />
                         </padding>
                         <ScrollPane fx:id="statesScrollPane" fitToWidth="true" hbarPolicy="NEVER">
                             <content>
@@ -44,7 +44,7 @@
                                 </JFXMasonryPane>
                             </content>
                         </ScrollPane>
-                        <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" style="-fx-background-radius: 60;-fx-background-color: #1565C0" StackPane.alignment="BOTTOM_RIGHT">
+                        <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" style="-fx-cursor: hand; -fx-background-radius: 60;-fx-background-color: #1565C0" StackPane.alignment="BOTTOM_RIGHT">
                             <graphic>
                                 <StackPane>
                                     <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
@@ -56,14 +56,14 @@
 
                     </StackPane>
                     <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
-                        STATES
+                        States
                     </Label>
 
                 </StackPane>
                 <StackPane>
                     <StackPane styleClass="pane-title-background">
                         <padding>
-                            <Insets top="56" />
+                            <Insets top="42" />
                         </padding>
                         <ScrollPane fx:id="actionsScrollPane" fitToWidth="true" hbarPolicy="NEVER">
                             <JFXMasonryPane fx:id="actionsGridView" HSpacing="10" VSpacing="10">
@@ -74,7 +74,7 @@
                         </ScrollPane>
                     </StackPane>
                     <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
-                        ACTIONS
+                        Actions
                     </Label>
                 </StackPane>
             </items>
@@ -82,8 +82,8 @@
     </VBox>
 </StackPane>
 
-    <HBox fx:id="slider" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" StackPane.alignment="CENTER_LEFT">
-            <VBox fx:id="sliderContent" maxWidth="400" prefWidth="300" style="-fx-background-color: BLACK;">
+    <HBox fx:id="slider" styleClass="split-pane" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" StackPane.alignment="CENTER_LEFT">
+            <VBox fx:id="sliderContent" maxWidth="400" prefWidth="300" styleClass="sliding-content-style">
 
                 <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
 

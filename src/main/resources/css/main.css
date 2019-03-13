@@ -192,7 +192,7 @@
 .jfx-hamburger-black {
     -fx-pref-width: 30px;
     -fx-pref-height: 4px;
-    -fx-background-color: #000;
+    -fx-background-color: -fx-decorator-light-color;
     -fx-background-radius: 0px 5px 5px 0px;
 }
 
@@ -205,7 +205,7 @@
 .jfx-tool-bar {
     -fx-font-size: 20.0;
     -fx-font-weight: BOLD;
-    -fx-background-color: #003c8f;
+    -fx-background-color: -fx-decorator-main-color;
     -fx-pref-width: 100.0%;
     -fx-pref-height: 64.0px;
 }
@@ -1104,10 +1104,10 @@
 *******************************************************************************************/
 
 .jfx-decorator {
-    -fx-decorator-color-window: #001861;
-    -fx-decorator-color-dark: #003c8f;
-    -fx-decorator-main-color: #1565C0;
-    -fx-decorator-light-color: #fafafa;
+    -fx-decorator-color-window: #000000;
+    -fx-decorator-color-dark: #212121;
+    -fx-decorator-main-color: #484848;
+    -fx-decorator-light-color: #616161;
 
     -fx-decorator-color: -fx-decorator-color-window;
 }
@@ -1129,23 +1129,23 @@
 
 .pane-title-label{
     -fx-font-family: "Roboto";
-    -fx-font-size: 20.0;
-    -fx-font-weight: bold;
-    -fx-text-fill: WHITE;
-    -fx-background-color: -fx-decorator-main-color;
-    -fx-padding: 16; /* 2 10 3 10 */
+    -fx-font-size: 16.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: #fafafa;
+    -fx-background-color: -fx-decorator-light-color;
+    -fx-padding: 16 0 0 0; /* 2 10 3 10 */
 }
 
 .pane-title-background{
-      -fx-background-color: -fx-decorator-main-color;
+      -fx-background-color: -fx-decorator-light-color;
 }
 
 .split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: -fx-decorator-main-color;
+   -fx-background-color: -fx-decorator-light-color;
 }
 
 .split-pane:vertical > .split-pane-divider {
-   -fx-background-color: -fx-decorator-main-color;
+   -fx-background-color: -fx-decorator-light-color;
 }
 
 .card-name-title{
@@ -1336,7 +1336,7 @@
  }
 
 .split-pane {
-    -fx-background-color: -fx-control-inner-background;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-padding: 1px 0px 0px 0px;
 }
@@ -1348,4 +1348,8 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 
+}
+
+.sliding-content-style{
+    -fx-background-color: -fx-decorator-light-color;
 }
