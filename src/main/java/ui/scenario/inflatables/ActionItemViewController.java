@@ -131,7 +131,7 @@ public class ActionItemViewController {
     public void setupAnimatedEditFab(Duration delayToAnimate) {
         JFXButton button = new JFXButton("");
         button.setButtonType(JFXButton.ButtonType.RAISED);
-        button.setStyle("-fx-background-radius: 40;-fx-background-color: " + DisplayUtils.getRandomColor());
+        button.setStyle("-fx-background-radius: 40;-fx-background-color: -fx-decorator-lighter-color");
         button.setPrefSize(40, 40);
         button.setRipplerFill(Color.valueOf(mHeaderColor));
 

@@ -44,7 +44,7 @@
                                 </JFXMasonryPane>
                             </content>
                         </ScrollPane>
-                        <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" style="-fx-cursor: hand; -fx-background-radius: 60;-fx-background-color: #1565C0" StackPane.alignment="BOTTOM_RIGHT">
+                        <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
                             <graphic>
                                 <StackPane>
                                     <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
@@ -72,6 +72,15 @@
                                 </padding>
                             </JFXMasonryPane>
                         </ScrollPane>
+                        <JFXButton fx:id="addActionButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
+                            <graphic>
+                                <StackPane>
+                                    <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
+                                </StackPane>
+                            </graphic>
+                            <StackPane.margin>
+                                <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
+                            </StackPane.margin></JFXButton>
                     </StackPane>
                     <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
                         Actions
@@ -118,11 +127,17 @@
 
             </VBox>
         <StackPane pickOnBounds="false" styleClass="expand-btn-background">
-            <JFXRippler alignment="CENTER_LEFT" maskType="CIRCLE" maxHeight="44" maxWidth="44" ripplerFill="beige" ripplerRadius="44" style="-fx-ripple-color:WHITE;" StackPane.alignment="CENTER_LEFT">
+            <JFXRippler alignment="CENTER_LEFT" maskType="CIRCLE" maxHeight="44" maxWidth="44" ripplerFill="#fafafa" ripplerRadius="44" StackPane.alignment="CENTER_LEFT">
                     <JFXHamburger fx:id="expandButton" styleClass="jfx-hamburger-black">
                         <HamburgerBackArrowBasicTransition />
                     </JFXHamburger>
+            <StackPane.margin>
+               <Insets />
+            </StackPane.margin>
             </JFXRippler>
+         <HBox.margin>
+            <Insets left="-16.0" />
+         </HBox.margin>
         </StackPane>
             <VBox.margin>
                 <Insets />

@@ -161,8 +161,17 @@ public class ScenarioPresenter {
      * Method that requests the presenter to launch the New State view
      *
      */
-    void requestLaunchNewEditView() {
+    void requestLaunchNewStateView() {
         this.mView.showNewStateDialog(this.mScenario.getStates());
+    }
+
+
+    /**
+     * Method that requests the presenter to launch the New Action view
+     *
+     */
+    void requestLaunchNewActionView() {
+        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates());
     }
 
     /**
@@ -309,6 +318,16 @@ public class ScenarioPresenter {
             this.mView.removeActionViewItem(indexToRemove);
 //            this.cleanSelectedActions();
         }
+    }
+
+    /**
+     * Method that receives a ActionModel to be created at the DB
+     *
+     * @param newActionModel
+     */
+    void requestActionCreation(ActionModel newActionModel) {
+        this.mScenario.getActions().add(newActionModel);
+        this.mView.addActionViewItem(newActionModel);
     }
 
 }

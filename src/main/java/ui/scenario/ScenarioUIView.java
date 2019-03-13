@@ -15,19 +15,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ui.scenario.action.EditActionViewController;
+import ui.scenario.action.NewActionViewController;
 import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
@@ -42,7 +40,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         ActionItemViewController.OnScenarioActionClickListener,
         EditStateViewController.OnScenarioEditStateClickListener,
         NewStateViewController.OnScenarioNewStateClickListener,
-        EditActionViewController.OnScenarioEditActionClickListener {
+        EditActionViewController.OnScenarioEditActionClickListener,
+        NewActionViewController.OnScenarioNewActionClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -78,6 +77,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @FXML
     private JFXHamburger expandButton;
 
+    @FXML
+    private JFXButton addActionButton;
+
     private boolean isSlidingContentVisible = true;
 
     /**
@@ -100,6 +102,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         JFXScrollPane.smoothScrolling(this.statesScrollPane);
 
         this.addStateButton.setOnAction(getNewStateClickListener());
+        this.addActionButton.setOnAction(getNewActionClickListener());
 
         setupSlidingMenu();
     }
@@ -118,7 +121,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         // animation for moving the slider
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(slider.translateXProperty(), -sliderContent.getPrefWidth())),
+                new KeyFrame(Duration.ZERO, new KeyValue(slider.translateXProperty(), -sliderContent.getPrefWidth() + 16)),
                 new KeyFrame(Duration.millis(100), new KeyValue(slider.translateXProperty(), 0d))
         );
 
@@ -148,7 +151,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                 if (!playing) {
                     timeline.playFrom("end");
                 }
-                StackPane.setMargin(scenarioContent, new Insets(0,0,0, 0));
+                StackPane.setMargin(scenarioContent, new Insets(0,0,0, 16));
 
                 isSlidingContentVisible = false;
             }
@@ -337,6 +340,22 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
+     * Method that creates a specific Action Item on the ActionGridView
+     *
+     * @param newActionModel new ActionModel data
+     */
+    void addActionViewItem(ActionModel newActionModel) {
+        try {
+            actionsGridView.getChildren().add(getInflatableActionItem(actionsGridView.getChildren().size(), 0, newActionModel));
+
+            Platform.runLater(() -> actionsScrollPane.requestLayout());
+            JFXScrollPane.smoothScrolling(actionsScrollPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Method that removes a specific State Item on the StateGridView by index
      *
      * @param index to be removed
@@ -384,11 +403,24 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                mPresenter.requestLaunchNewEditView();
+                mPresenter.requestLaunchNewStateView();
             }
         };
     }
 
+    /**
+     * Method that implements the new Action click listener behavior
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewActionClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mPresenter.requestLaunchNewActionView();
+            }
+        };
+    }
 
     /********************************************************************************************************************
      * PRESENTER INTERFACE                                                                                              *
@@ -526,17 +558,18 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
      *
+     * @param actions
      * @param states
      */
-    void showNewActionDialog(List<StateModel> states) {
-        NewStateViewController newStateDialog = new NewStateViewController(states, this);
+    void showNewActionDialog(List<ActionModel> actions, List<StateModel> states) {
+        NewActionViewController newActDialog = new NewActionViewController(actions, states, this);
 
-        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+        JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 //        alert.setOverlayClose(false);
-        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
+        dialog.setContent(newActDialog.getNewActionItemRootDialog());
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
 
@@ -561,5 +594,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @Override
     public void onActionDeleteClicked(int actionId) {
         mPresenter.requestDeleteActionById(actionId);
+    }
+
+    /**
+     * Gets notifies of the creation of a new ActionModel
+     *
+     * @param newActionModel
+     */
+    @Override
+    public void onNewActionAcceptClicked(ActionModel newActionModel) {
+        mPresenter.requestActionCreation(newActionModel);
     }
 }
