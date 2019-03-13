@@ -189,6 +189,13 @@
     -fx-background-radius: 5px;
 }
 
+.jfx-hamburger-black {
+    -fx-pref-width: 30px;
+    -fx-pref-height: 4px;
+    -fx-background-color: #000;
+    -fx-background-radius: 0px 5px 5px 0px;
+}
+
 /*******************************************************************************
  *                                                                             *
  * JFX Tool Bar                                                                *
@@ -1171,7 +1178,7 @@
 .edit-dialog-parameter-title-black{
     -fx-font-size: 16.0;
     -fx-font-weight: BOLD;
-    -fx-fill: #555555;
+    -fx-fill: #fafafa;
 }
 
 .edit-dialog-parameter-input-black{
@@ -1334,3 +1341,11 @@
     -fx-padding: 1px 0px 0px 0px;
 }
 
+.expand-btn-background {
+    -fx-min-width: 44px;
+    -fx-min-height: 64px;
+    -fx-background-size: 44px 64px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
+}

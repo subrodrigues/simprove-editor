@@ -9,12 +9,21 @@ import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
 import io.datafx.controller.ViewController;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -36,8 +45,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     private ScenarioPresenter mPresenter;
 
     // UI Bind variables
+    @FXML StackPane scenarioRoot;
+
+    @FXML StackPane scenarioContent;
+
     @FXML
     private ScrollPane actionsScrollPane;
+
     @FXML
     private JFXMasonryPane actionsGridView;
 
@@ -49,6 +63,20 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private JFXButton addStateButton;
+
+    @FXML
+    private SplitPane splitPane;
+
+    @FXML
+    private HBox slider;
+
+    @FXML
+    private VBox sliderContent;
+
+    @FXML
+    private JFXHamburger expandButton;
+
+    private boolean isSlidingContentVisible = true;
 
     /**
      * init fxml when loaded.
@@ -70,6 +98,60 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         JFXScrollPane.smoothScrolling(this.statesScrollPane);
 
         this.addStateButton.setOnAction(getNewStateClickListener());
+
+        setupSlidingMenu();
+    }
+
+    /**
+     * Method that setups the behavior of the scrolling menu, that contains the Scenario general data
+     *
+     */
+    private void setupSlidingMenu() {
+        sliderContent.setPrefWidth(300);
+        StackPane.setMargin(scenarioContent, new Insets(0,0,0, sliderContent.getPrefWidth()));
+
+        final Transition animateHamburguer = expandButton.getAnimation();
+        animateHamburguer.setRate(1);
+        animateHamburguer.play();
+
+        // animation for moving the slider
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(slider.translateXProperty(), -sliderContent.getPrefWidth())),
+                new KeyFrame(Duration.millis(100), new KeyValue(slider.translateXProperty(), 0d))
+        );
+
+        expandButton.setOnMouseClicked(evt -> {
+            // adjust the direction of play and start playing, if not already done
+            boolean playing = timeline.getStatus() == Animation.Status.RUNNING;
+            if (!isSlidingContentVisible) {
+                animateHamburguer.setRate(1);
+                animateHamburguer.play();
+
+                timeline.setRate(1);
+                if (!playing) {
+                    timeline.playFromStart();
+                }
+
+                timeline.setOnFinished(event -> {
+                    if(isSlidingContentVisible)
+                        StackPane.setMargin(scenarioContent, new Insets(0,0,0, sliderContent.getPrefWidth()));
+
+                });
+
+                isSlidingContentVisible = true;
+            } else {
+                animateHamburguer.setRate(-1);
+                animateHamburguer.play();
+
+                timeline.setRate(-1);
+                if (!playing) {
+                    timeline.playFrom("end");
+                }
+                StackPane.setMargin(scenarioContent, new Insets(0,0,0, 0));
+
+                isSlidingContentVisible = false;
+            }
+        });
     }
 
     /**

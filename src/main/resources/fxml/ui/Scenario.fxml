@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
+<?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
@@ -20,38 +23,10 @@
   -->
 
 <StackPane fx:id="scenarioRoot" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane fx:id="scenarioContent">
+
     <VBox>
-        <TitledPane expanded="false" text="General Information">
-            <VBox>
-                    <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
-
-                    <JFXTextField fx:id="inputScenarioName" promptText="Choose the desired scenario name" styleClass="edit-dialog-parameter-input-black">
-                    <validators>
-                    <RequiredFieldValidator message="Input Required!">
-                    <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                    </RequiredFieldValidator>
-                    </validators>
-               <VBox.margin>
-                  <Insets top="6.0" />
-               </VBox.margin>
-                    </JFXTextField>
-
-                    <Text fx:id="scenarioBriefing" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Briefing">
-               <VBox.margin>
-                  <Insets top="24.0" />
-               </VBox.margin></Text>
-                    <JFXTextArea fx:id="inputBriefing"
-                                 minHeight="80" promptText="Write a briefing to this scenario" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
-               <VBox.margin>
-                  <Insets top="6.0" />
-               </VBox.margin></JFXTextArea>
-
-            </VBox>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-        </TitledPane>
-
 
         <SplitPane dividerPositions="0.3" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
@@ -105,4 +80,52 @@
             </items>
         </SplitPane>
     </VBox>
+</StackPane>
+
+    <HBox fx:id="slider" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" StackPane.alignment="CENTER_LEFT">
+            <VBox fx:id="sliderContent" maxWidth="400" prefWidth="300" style="-fx-background-color: BLACK;">
+
+                <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
+
+                <JFXTextField fx:id="inputScenarioName" promptText="Desired scenario name" styleClass="edit-dialog-parameter-input-black">
+                    <validators>
+                        <RequiredFieldValidator message="Input Required!">
+                            <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                        </RequiredFieldValidator>
+                    </validators>
+                    <VBox.margin>
+                        <Insets top="6.0" />
+                    </VBox.margin>
+            <padding>
+               <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+            </padding>
+                </JFXTextField>
+
+                <Text fx:id="scenarioBriefing" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Briefing">
+                    <VBox.margin>
+                        <Insets top="24.0" />
+                    </VBox.margin></Text>
+                <JFXTextArea fx:id="inputBriefing" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a briefing to this scenario" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                    <VBox.margin>
+                        <Insets top="6.0" />
+                    </VBox.margin>
+            <padding>
+               <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+            </padding></JFXTextArea>
+         <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </padding>
+
+            </VBox>
+        <StackPane pickOnBounds="false" styleClass="expand-btn-background">
+            <JFXRippler alignment="CENTER_LEFT" maskType="CIRCLE" maxHeight="44" maxWidth="44" ripplerFill="beige" ripplerRadius="44" style="-fx-ripple-color:WHITE;" StackPane.alignment="CENTER_LEFT">
+                    <JFXHamburger fx:id="expandButton" styleClass="jfx-hamburger-black">
+                        <HamburgerBackArrowBasicTransition />
+                    </JFXHamburger>
+            </JFXRippler>
+        </StackPane>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+    </HBox>
 </StackPane>
