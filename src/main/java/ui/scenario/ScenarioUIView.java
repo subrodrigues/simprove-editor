@@ -309,14 +309,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
-     * Method that removes a specific State Item on the StateGridView by index
+     * Method that removes a specific Action Item on the ActionGridView by index
      *
      * @param index to be removed
      */
-    void removeStateViewItem(int index) {
-        statesGridView.getChildren().remove(index);
+    void removeActionViewItem(int index) {
+        actionsGridView.getChildren().remove(index);
     }
-
 
     /**
      * Method that updates a specific Action Item on the ActionGridView
@@ -335,6 +334,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Method that removes a specific State Item on the StateGridView by index
+     *
+     * @param index to be removed
+     */
+    void removeStateViewItem(int index) {
+        statesGridView.getChildren().remove(index);
     }
 
     /**
@@ -545,8 +553,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         this.mPresenter.requestActionUpdate(newActionModel);
     }
 
+    /**
+     * Gets notifies of a delete ActionModel action
+     *
+     * @param actionId is the ID to be deleted
+     */
     @Override
-    public void onActionDeleteClicked(int stateId) {
-
+    public void onActionDeleteClicked(int actionId) {
+        mPresenter.requestDeleteActionById(actionId);
     }
 }

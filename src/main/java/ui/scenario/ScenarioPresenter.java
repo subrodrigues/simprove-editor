@@ -294,4 +294,21 @@ public class ScenarioPresenter {
         }
     }
 
+    /**
+     * Method that receives an Action id to be deleted.
+     *
+     * @param actionId
+     */
+    void requestDeleteActionById(int actionId) {
+        //TODO: request DAO to delete this state
+
+        int indexToRemove = this.mScenario.getActions().indexOf(new ActionModel(actionId));
+
+        if(indexToRemove != -1) {
+            this.mScenario.getActions().remove(indexToRemove);
+            this.mView.removeActionViewItem(indexToRemove);
+//            this.cleanSelectedActions();
+        }
+    }
+
 }
