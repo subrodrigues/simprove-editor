@@ -6,8 +6,10 @@
 package ui.scenario.action;
 
 import com.jfoenix.controls.*;
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 import dao.model.ActionModel;
 import dao.model.TransitionModel;
+import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
+import utils.ConstantUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +40,9 @@ public class EditActionViewController {
 
     @FXML
     private JFXNumericTextField inputTransitionDuration;
+
+    @FXML
+    private JFXComboBox<TypeModel> categoryComboBox;
 
     @FXML
     private JFXButton deleteButton;
@@ -100,11 +106,17 @@ public class EditActionViewController {
         this.transitionComboBox.getItems().add(new ActionModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(actions);
 
+        this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
+
         // Set selected Transition
         if (mActionModel.getTransition() != null) {
             this.transitionComboBox.getSelectionModel().select(new ActionModel(mActionModel.getTransition().getStateId(), ""));
             this.inputTransitionDuration.setText(mActionModel.getTransition().getDuration() + "");
         }
+
+        // Set selected Category
+        this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory().getId());
+
 
         /*
          * Set Listeners and Bindings
@@ -192,8 +204,10 @@ public class EditActionViewController {
                     }
                 }
 
-                mListener.onActionEditApplyClicked(mActionModel);
+                mActionModel.setCategory(categoryComboBox.getValue());
 
+
+                mListener.onActionEditApplyClicked(mActionModel);
                 closeDialogWindow();
             }
         };
