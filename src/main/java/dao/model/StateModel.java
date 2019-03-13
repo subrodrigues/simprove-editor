@@ -23,7 +23,6 @@ public class StateModel {
         this.name = name;
     }
 
-
     public StateModel(int id, String name, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
         this.id = id;
         this.name = name;

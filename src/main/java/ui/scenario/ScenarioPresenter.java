@@ -75,6 +75,22 @@ public class ScenarioPresenter {
     }
 
     /**
+     * Method that JUST deals with a request to highlight a specific state view card UI.
+     *
+     * @param stateId
+     */
+    void showSelectedStateUIItem(int stateId) {
+
+        // Acquire index to highlight
+        int selectedIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
+
+        // If the new selected card is not a previously selected one
+        if(selectedIndex != -1) {
+            this.mView.selectStateViewItem(selectedIndex);
+        }
+    }
+
+    /**
      * Method that just deals with a request to highlight a specific action view card UI.
      *
      * @param actionId
@@ -103,7 +119,7 @@ public class ScenarioPresenter {
         int stateIndex = this.mScenario.getStates().indexOf(new StateModel(stateId));
 
         if(stateIndex != -1){
-            deselectSelectedPane();
+            //deselectSelectedPane();
             this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
         }
     }
@@ -120,7 +136,7 @@ public class ScenarioPresenter {
 
         if(indexToUpdate != -1){
             this.mScenario.getStates().set(indexToUpdate, stateToUpdate);
-            this.mView.updateStateViewItem(indexToUpdate, stateToUpdate);
+            this.mView.updateStateViewItem(indexToUpdate, stateToUpdate, stateToUpdate.getId() == this.mCurrentSelectedStateItem);
         }
     }
 
@@ -245,6 +261,36 @@ public class ScenarioPresenter {
             this.mScenario.getActions().get(selectedIndex).removeStateCondition(this.mScenario.getStates().get(this.mCurrentSelectedStateItem));
         } else {
             this.mScenario.getActions().get(selectedIndex).addStateCondition(this.mScenario.getStates().get(this.mCurrentSelectedStateItem));
+        }
+    }
+
+    /**
+     * Method that requests the presenter to launch the Edit Action view
+     *
+     * @param actionId
+     */
+    void requestLaunchActionEditView(int actionId) {
+        int index = this.mScenario.getActions().indexOf(new ActionModel(actionId));
+
+        if(index != -1){
+//            deselectSelectedPane();
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getActions());
+        }
+    }
+
+    /**
+     * Method that receives a ActionModel to be updated at the DB
+     *
+     * @param actionToUpdate
+     */
+    void requestActionUpdate(ActionModel actionToUpdate){
+        //TODO: request DAO to update this state
+
+        int indexToUpdate = this.mScenario.getActions().indexOf(actionToUpdate);
+
+        if(indexToUpdate != -1){
+            this.mScenario.getActions().set(indexToUpdate, actionToUpdate);
+            this.mView.updateActionViewItem(indexToUpdate, actionToUpdate, selectedActions.contains(actionToUpdate.getId()));
         }
     }
 

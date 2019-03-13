@@ -1347,7 +1347,7 @@
     -fx-background-size: 44px 64px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-
+    -fx-background-color: transparent;
 }
 
 .sliding-content-style{

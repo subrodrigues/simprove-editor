@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ui.scenario.action.EditActionViewController;
 import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
@@ -40,7 +41,8 @@ import java.util.List;
 public class ScenarioUIView implements StateItemViewController.OnScenarioStateClickListener,
         ActionItemViewController.OnScenarioActionClickListener,
         EditStateViewController.OnScenarioEditStateClickListener,
-        NewStateViewController.OnScenarioNewStateClickListener {
+        NewStateViewController.OnScenarioNewStateClickListener,
+        EditActionViewController.OnScenarioEditActionClickListener {
 
     private ScenarioPresenter mPresenter;
 
@@ -104,7 +106,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     /**
      * Method that setups the behavior of the scrolling menu, that contains the Scenario general data
-     *
+     * TODO: Refactoring on this method
      */
     private void setupSlidingMenu() {
         sliderContent.setPrefWidth(300);
@@ -135,7 +137,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                 timeline.setOnFinished(event -> {
                     if(isSlidingContentVisible)
                         StackPane.setMargin(scenarioContent, new Insets(0,0,0, sliderContent.getPrefWidth()));
-
                 });
 
                 isSlidingContentVisible = true;
@@ -226,58 +227,18 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
-     * Invoked by the Presenter.
-     * Notifies the view of an edit state event.
-     *
-     * @param state
-     * @param states
-     */
-    void showStateEditDialog(StateModel state, List<StateModel> states) {
-        EditStateViewController editStateDialog = new EditStateViewController(state, states, this);
-
-        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
-
-        // TODO: Set window current size with a vertical/horizontal threshold
-        dialog.initModality(Modality.APPLICATION_MODAL);
-//        alert.setOverlayClose(false);
-        dialog.setContent(editStateDialog.getEditStateItemRootDialog());
-        dialog.setResizable(true);
-        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
-
-        dialog.show();
-    }
-
-    /**
-     * Invoked by the Presenter.
-     * Notifies the view of a new state event.
-     *
-     * @param states
-     */
-    void showNewStateDialog(List<StateModel> states) {
-        NewStateViewController newStateDialog = new NewStateViewController(states, this);
-
-        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
-
-        // TODO: Set window current size with a vertical/horizontal threshold
-        dialog.initModality(Modality.APPLICATION_MODAL);
-//        alert.setOverlayClose(false);
-        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
-        dialog.setResizable(true);
-        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
-
-        dialog.show();
-    }
-
-
-    /**
      * Method that updates a specific State Item on the StateGridView
      *
      * @param index to be update
      * @param state new StateModel data
+     * @param isSelected flags if the state is selected, in order to reselect after the update
      */
-    void updateStateViewItem(int index, StateModel state) {
+    void updateStateViewItem(int index, StateModel state, boolean isSelected) {
         try {
             statesGridView.getChildren().set(index, getInflatableStateItem(index, 0, state));
+
+            if(isSelected)
+                mPresenter.showSelectedStateUIItem(state.getId());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -356,6 +317,26 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         statesGridView.getChildren().remove(index);
     }
 
+
+    /**
+     * Method that updates a specific Action Item on the ActionGridView
+     *
+     *  @param index to be update
+     * @param action new ActionModel data
+     * @param isSelected is used to reselect the action after the update
+     */
+    void updateActionViewItem(int index, ActionModel action, boolean isSelected) {
+        try {
+            actionsGridView.getChildren().set(index, getInflatableActionItem(index, 0, action));
+
+            // If it is a selected Action, reselect it.
+            if(isSelected)
+                mPresenter.showSelectedActionUIItem(action.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Shows the loading view.
      */
@@ -404,6 +385,50 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /********************************************************************************************************************
      * PRESENTER INTERFACE                                                                                              *
      ********************************************************************************************************************/
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view of an edit state event.
+     *
+     * @param state
+     * @param states
+     */
+    void showStateEditDialog(StateModel state, List<StateModel> states) {
+        EditStateViewController editStateDialog = new EditStateViewController(state, states, this);
+
+        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(editStateDialog.getEditStateItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
+    }
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view of a new state event.
+     *
+     * @param states
+     */
+    void showNewStateDialog(List<StateModel> states) {
+        NewStateViewController newStateDialog = new NewStateViewController(states, this);
+
+        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
+    }
+
 
     /**
      * Gets notified by the grid items when an element is clicked with a request to edit the StateModel with id {stateId}.
@@ -458,12 +483,70 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     @Override
     public void onActionEditClicked(int actionId) {
-
+        mPresenter.requestLaunchActionEditView(actionId);
     }
 
     @Override
     public void onActionSelectClicked(int actionId) {
         mPresenter.requestSelectActionItem(actionId);
+
+    }
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view of an edit action event.
+     *
+     * @param action
+     * @param actions
+     */
+    public void showActionEditDialog(ActionModel action, List<ActionModel> actions) {
+        EditActionViewController editActionDialog = new EditActionViewController(action, actions, this);
+
+        JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(editActionDialog.getEditActionItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
+    }
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view of a new state event.
+     *
+     * @param states
+     */
+    void showNewActionDialog(List<StateModel> states) {
+        NewStateViewController newStateDialog = new NewStateViewController(states, this);
+
+        JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+//        alert.setOverlayClose(false);
+        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+
+        dialog.show();
+    }
+
+    /**
+     * Gets notifies of a ActionModel edition
+     *
+     * @param newActionModel
+     */
+    @Override
+    public void onActionEditApplyClicked(ActionModel newActionModel) {
+        this.mPresenter.requestActionUpdate(newActionModel);
+    }
+
+    @Override
+    public void onActionDeleteClicked(int stateId) {
 
     }
 }

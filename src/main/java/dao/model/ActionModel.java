@@ -27,6 +27,12 @@ public class ActionModel {
         this.errorMessage = errorMessage;
     }
 
+    public ActionModel(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
     public ActionModel(int actionId) {
         this.id = actionId;
     }

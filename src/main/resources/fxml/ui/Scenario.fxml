@@ -82,8 +82,8 @@
     </VBox>
 </StackPane>
 
-    <HBox fx:id="slider" styleClass="split-pane" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" StackPane.alignment="CENTER_LEFT">
-            <VBox fx:id="sliderContent" maxWidth="400" prefWidth="300" styleClass="sliding-content-style">
+    <HBox fx:id="slider" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" styleClass="split-pane" StackPane.alignment="CENTER_LEFT">
+            <VBox fx:id="sliderContent" maxWidth="400" pickOnBounds="false" prefWidth="300" styleClass="sliding-content-style">
 
                 <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
 
