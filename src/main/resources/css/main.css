@@ -1007,7 +1007,7 @@
 *******************************************************************************/
 
 .error-label {
-    -fx-text-fill: #D34336;
+    -fx-text-fill: #b00020;
     -fx-font-size: 0.75em;
     -fx-font-weight: bold;
 }
@@ -1018,8 +1018,10 @@
 }
 
 .jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error, .jfx-combo-box:error {
-    -jfx-focus-color: #D34336;
-    -jfx-unfocus-color: #D34336;
+    -jfx-focus-color: #b00020;
+    -jfx-unfocus-color: #b00020;
+    -fx-font-size: 1.1em;
+
 }
 
 .jfx-text-field .error-label, .jfx-password-field .error-label, .jfx-text-area .error-label {
@@ -1224,6 +1226,7 @@
 }
 
 .combo-box{
+    -fx-prompt-text-fill: rgba(256.0, 256.0, 256.0, 0.4);
     -jfx-focus-color: rgba(256.0, 256.0, 256.0, 0.90);
     -jfx-unfocus-color: rgba(256.0, 256.0, 256.0, 0.40);
 }

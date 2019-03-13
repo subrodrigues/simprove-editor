@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import dao.model.ActionModel;
 import dao.model.StateModel;
 import dao.model.TransitionModel;
+import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
+import utils.ConstantUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +39,9 @@ public class NewActionViewController {
 
     @FXML
     private JFXNumericTextField inputTransitionDuration;
+
+    @FXML
+    private JFXComboBox<TypeModel> categoryComboBox;
 
     @FXML
     private JFXButton acceptButton;
@@ -92,6 +97,8 @@ public class NewActionViewController {
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
 
+        this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
+
         /*
          * Set Listeners and Bindings
          */
@@ -118,7 +125,13 @@ public class NewActionViewController {
 
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
-        //TODO
+        this.categoryComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                this.categoryComboBox.validate();
+            }
+        });
+
+        // TODO
     }
 
     /**
@@ -176,6 +189,8 @@ public class NewActionViewController {
                                 transitionComboBox.getValue().getId()));
                     }
                 }
+
+                mActionModel.setCategory(categoryComboBox.getValue());
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 

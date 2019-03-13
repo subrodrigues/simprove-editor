@@ -24,8 +24,8 @@
                   </StackPane.margin>
                   <Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Action Name" StackPane.alignment="TOP_CENTER">
                   </Text>
-                  <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Type" StackPane.alignment="TOP_CENTER">
-                  </Text>
+                  <!--<Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Type" StackPane.alignment="TOP_CENTER">-->
+                  <!--</Text>-->
                   <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Category" StackPane.alignment="TOP_CENTER">
                   </Text>
                </VBox>

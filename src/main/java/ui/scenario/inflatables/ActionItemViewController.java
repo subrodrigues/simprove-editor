@@ -115,9 +115,8 @@ public class ActionItemViewController {
         this.mActionId = this.mActionModel.getId();
         this.setActionName(this.mActionModel.getName());
 
-        this.actionType.setText(action.getType().getName());
+//        this.actionType.setText(action.getType().getName());
         this.actionCategory.setText(action.getCategory().getName());
-
     }
 
     private void setActionName(String actionName) {

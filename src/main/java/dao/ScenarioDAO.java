@@ -53,7 +53,7 @@ public class ScenarioDAO {
             List<StateModel> stateConditions = new ArrayList<StateModel>();
 
             mockedActions.add(new ActionModel(i, "Action " + i, new TypeModel(0, 1, "Tipo Coiso"),
-                    new TypeModel(1, 1, "Categoria Cenas"),
+                    new TypeModel(1, 1, "Diagnosis"),
                     stateConditions,
                     results,
                     new TransitionModel(0, 10, 1),

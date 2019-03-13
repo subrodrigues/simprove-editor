@@ -59,6 +59,25 @@
                            </VBox.margin>
 
                          </HBox>
+
+                         <HBox>
+
+                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                 <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
+                             </VBox>
+                             <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select Category" styleClass="combo-box">
+                                 <validators>
+                                     <RequiredFieldValidator message="Category Required!">
+                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                     </RequiredFieldValidator>
+                                 </validators>
+                             </JFXComboBox>
+                             <VBox.margin>
+                                 <Insets top="32.0" />
+                             </VBox.margin>
+
+                         </HBox>
+
                             <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
                            <VBox.margin>
                               <Insets top="32.0" />
