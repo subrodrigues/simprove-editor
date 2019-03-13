@@ -139,7 +139,7 @@
 }
 
 .icons-rippler1 {
-    -jfx-rippler-fill: #4285F4;
+    -jfx-rippler-fill: #bebebe;
     -jfx-mask-type: CIRCLE;
 }
 
@@ -148,12 +148,12 @@
 }
 
 .animated-burgers .jfx-hamburger StackPane {
-    -fx-background-color: #5264AE;
+    -fx-background-color: -fx-decorator-main-color;
     -fx-background-radius: 4px;
 }
 
 .animated-burgers .jfx-rippler {
-    -jfx-rippler-fill: #5264AE;
+    -jfx-rippler-fill: -fx-decorator-main-color;
 }
 
 .icons-badge .badge-pane {
@@ -238,7 +238,7 @@
 }
 
 .option-jfx-list-view-icon {
-    -fx-fill: #003c8f;
+    -fx-fill: -fx-decorator-color-dark;
     -fx-padding: 0.0 10.0 0.0 5.0;
     -fx-cursor: hand;
 }
@@ -268,8 +268,8 @@
 }
 
 .custom-jfx-radio-button-blue {
-    -fx-text-fill: #5264AE;
-    -jfx-selected-color: #5264AE;
+    -fx-text-fill: -fx-decorator-main-color;
+    -jfx-selected-color: -fx-decorator-main-color;
     -jfx-unselected-color: #212121;
 }
 
@@ -303,7 +303,7 @@
 *******************************************************/
 
 .jfx-slider-colored{
-    -jfx-default-thumb: #5264AE;
+    -jfx-default-thumb: -fx-decorator-main-color;
     -jfx-default-track: #212121;
 }
 
@@ -339,7 +339,7 @@
 *******************************************************************************/
 
 /*.jfx-rippler {
-	-fx-rippler-fill: #5264AE;
+	-fx-rippler-fill: -fx-decorator-main-color;
 	-fx-mask-type: RECT;
 }*/
 .jfx-rippler:hover {
@@ -381,9 +381,9 @@
 }
 
 .custom-jfx-check-box-all-colored {
-    -jfx-checked-color: #5264AE;
-    -jfx-unchecked-color: #5264AE;
-    -fx-text-fill: #5264AE;
+    -jfx-checked-color: -fx-decorator-main-color;
+    -jfx-unchecked-color: -fx-decorator-main-color;
+    -fx-text-fill: -fx-decorator-main-color;
 }
 
 .custom-jfx-check-box-text-colored {
@@ -416,7 +416,7 @@
 }
 
 .custom-jfx-progress-bar-stroke > .bar {
-    -fx-background-color: #5264AE;
+    -fx-background-color: -fx-decorator-main-color;
     -fx-padding: 6;
 }
 
@@ -462,12 +462,12 @@
 }
 
 .jfx-list-cell .jfx-rippler {
-    -jfx-rippler-fill: #5264AE;
+    -jfx-rippler-fill: #fafafa;
 }
 
 .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
-    -fx-background-color: rgba(0.0, 0.0, 255.0, 0.2);
+    -fx-background-color: #bebebe;
 }
 
 .jfx-list-view {
@@ -480,7 +480,7 @@
 
 .custom-jfx-list-view .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .custom-jfx-list-view .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
-    -fx-background-color: rgba(255, 0, 0, 0.2);
+    -fx-background-color: #bebebe;
 }
 
 .custom-jfx-list-view {
@@ -494,7 +494,7 @@
 }
 
 .custom-jfx-list-view .jfx-rippler {
-    -jfx-rippler-fill: RED;
+    -jfx-rippler-fill: #fafafa;
 }
 
 .custom-jfx-list-view1 {
@@ -505,8 +505,8 @@
 
 .custom-jfx-list-view-icon,
 .jfx-list-cell:selected .label .custom-jfx-list-view-icon {
-    /*-fx-text-fill: #5264AE;*/
-    -fx-fill: #5264AE;
+    /*-fx-text-fill: -fx-decorator-main-color;*/
+    -fx-fill: -fx-decorator-main-color;
     -fx-padding: 0.0 10.0 0.0 5.0;
     -fx-cursor: hand;
 }
@@ -557,7 +557,7 @@
 
 .sublist .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .sublist .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
-    -fx-background-color: rgba(255, 0, 0, 0.2);
+    -fx-background-color: #bebebe;
 }
 
 .sublist .jfx-list-cell {
@@ -588,7 +588,7 @@
 }
 
 .custom-jfx-toggle-button {
-    -jfx-toggle-color: #4285F4;
+    -jfx-toggle-color: -fx-decorator-color-dark;
 }
 
 .custom-jfx-toggle-button-red {
@@ -780,12 +780,12 @@
 .combo-box-popup .list-view .jfx-list-cell .custom-jfx-list-view-icon,
 .combo-box-popup .list-view .jfx-list-cell:filled:hover .custom-jfx-list-view-icon,
 .combo-box-popup .list-view .jfx-list-cell:selected .custom-jfx-list-view-icon {
-    -fx-fill: #5264AE;
+    -fx-fill: -fx-decorator-main-color;
 }
 
 .combo-box-popup .list-view .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .combo-box-popup .list-view .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
-    -fx-background-color: rgba(0.0, 0.0, 255.0, 0.2);
+    -fx-background-color: #bebebe;
 }
 
 .combo-box-popup .list-view .jfx-list-cell {
@@ -798,7 +798,7 @@
 }
 
 .combo-box-popup .list-view .jfx-list-cell .jfx-rippler {
-    -jfx-rippler-fill: #5264AE;
+    -jfx-rippler-fill: #fafafa;
 }
 
 /*******************************************************************************
@@ -808,7 +808,7 @@
 *******************************************************************************/
 
 .jfx-decorator {
-    -fx-decorator-color: derive(#5264AE, -20%);
+    -fx-decorator-color: derive(-fx-decorator-main-color, -20%);
 }
 
 .jfx-decorator .jfx-decorator-buttons-container {
@@ -1213,7 +1213,7 @@
 
 .item-card-selected-style{
     -fx-effect: dropshadow(three-pass-box, red, 5, 10, 0, 0);
-        -fx-cursor: hand;
+     -fx-cursor: hand;
 
 }
 
