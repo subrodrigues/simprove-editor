@@ -256,7 +256,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         if(statesGridView.getChildren().size() == 0) return;
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
-        stateView.setStyle("-fx-effect: dropshadow(three-pass-box, red, 5, 10, 0, 0);");
+        //        dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2)
+        stateView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(220,0,0,0.7), 10, 0.8, 0, 0)");
     }
 
     /**
@@ -280,7 +281,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         if(actionsGridView.getChildren().size() == 0) return;
 
         Node actionView = actionsGridView.getChildren().get(indexToHighlight);
-        actionView.setStyle("-fx-effect: dropshadow(three-pass-box, red, 5, 10, 0, 0);");
+//        dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2)
+        actionView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(220,0,0,0.7), 10, 0.8, 0, 0)");
     }
 
     /**
