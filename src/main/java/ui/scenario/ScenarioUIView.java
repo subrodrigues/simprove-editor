@@ -257,7 +257,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
         //        dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2)
-        stateView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(220,0,0,0.7), 10, 0.8, 0, 0)");
+        stateView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(13, 213, 252,0.7), 10, 0.8, 0, 0)");
     }
 
     /**
@@ -325,7 +325,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Method that updates a specific Action Item on the ActionGridView
      *
-     *  @param index to be update
+     * @param index to be update
      * @param action new ActionModel data
      * @param isSelected is used to reselect the action after the update
      */
