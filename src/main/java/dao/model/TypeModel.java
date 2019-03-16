@@ -6,12 +6,12 @@ package dao.model;
 
 public class TypeModel {
     private int id;
-    private int type;
+    private int typeId;
     private String name;
 
-    public TypeModel(int id, int type, String name) {
+    public TypeModel(int id, int typeId, String name) {
         this.id = id;
-        this.type = type;
+        this.typeId = typeId;
         this.name = name;
     }
 
@@ -23,12 +23,12 @@ public class TypeModel {
         this.id = id;
     }
 
-    public int getType() {
-        return type;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public String getName() {

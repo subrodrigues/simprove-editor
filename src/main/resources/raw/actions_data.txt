@@ -1,0 +1,22 @@
+1 Check patency of the airway 
+2 Check Respiratory Rate 
+3 Pulmonary Auscultation
+4 Place oximeter 
+5 Check skin
+6 Check Pulse - Central 
+7 Check Pulse - Peripheral
+8 Check capillary nail refill 
+9 Cardiac Auscultation
+10 Place ECG electrodes 
+11 Place blood pressure (BP) cuff 
+12 Place arterial line
+13 Check bandages
+14 Check diaper
+15 Check drainage blood system
+16 Check eyes
+17 Measure temperature
+18 Check for trauma/exposure
+19 Monitor glucose
+20 Check Vomiting
+21 Arterial Blood Gas Test (Gasometry) 
+22 Check urinary output

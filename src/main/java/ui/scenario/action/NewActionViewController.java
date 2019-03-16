@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
 import utils.ConstantUtils;
 
@@ -31,8 +32,11 @@ public class NewActionViewController {
     @FXML
     private StackPane newActionRoot;
 
+//    @FXML
+//    private JFXTextField inputName;
+
     @FXML
-    private JFXTextField inputName;
+    private JFXComboBox<TypeModel> actionTypeComboBox;
 
     @FXML
     private JFXComboBox<StateModel> transitionComboBox;
@@ -72,9 +76,10 @@ public class NewActionViewController {
      * Constructor with respective click listener.
      *
      * @param actions
+     * @param actionTypes
      * @param listener
      */
-    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, OnScenarioNewActionClickListener listener) {
+    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, OnScenarioNewActionClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewActionDialog.fxml"));
@@ -87,17 +92,20 @@ public class NewActionViewController {
 
         mActionModel = new ActionModel(actions.size());
 
-        setupUI(states);
+        setupUI(states, actionTypes);
     }
 
-    private void setupUI(List<StateModel> states) {
-        this.inputName.setText(mActionModel.getName() != null ? mActionModel.getName() : "");
+    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
+//        this.inputName.setText(mActionModel.getName() != null ? mActionModel.getName() : "");
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
 
         this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
+
+        this.actionTypeComboBox.getItems().addAll(actionTypes);
+        new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
 
         /*
          * Set Listeners and Bindings
@@ -113,15 +121,15 @@ public class NewActionViewController {
             }
         });
 
-        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
-            if (!newVal) {
-                this.inputName.validate();
-            }
-        });
+//        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
+//            if (!newVal) {
+//                this.inputName.validate();
+//            }
+//        });
 
-        this.acceptButton.disableProperty().bind(
-                Bindings.isEmpty(this.inputName.textProperty())
-        );
+//        this.acceptButton.disableProperty().bind(
+//                Bindings.isEmpty(this.inputName.textProperty())
+//        );
 
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
@@ -168,8 +176,8 @@ public class NewActionViewController {
             @Override
             public void handle(ActionEvent e) {
 
-                // Set state name
-                mActionModel.setName(inputName.getText());
+                // Set state (type) name
+                mActionModel.setName(actionTypeComboBox.getValue().getName());
 
                 // Set/Update transition model
                 if (mActionModel.getTransition() != null) {

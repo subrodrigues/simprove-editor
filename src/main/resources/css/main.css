@@ -1225,7 +1225,10 @@
     -fx-text-fill: rgba(256.0, 256.0, 256.0, 0.90);
 }
 
-.combo-box{
+.combo-box, jfx-combo-box, combo-box-base {
+    -jfx-text-fill: WHITE;
+    -fx-text-fill: WHITE;
+
     -fx-prompt-text-fill: rgba(256.0, 256.0, 256.0, 0.4);
     -jfx-focus-color: rgba(256.0, 256.0, 256.0, 0.90);
     -jfx-unfocus-color: rgba(256.0, 256.0, 256.0, 0.40);
@@ -1242,7 +1245,7 @@
     -fx-text-fill: black;
 }
 
-.combo-box .cell:selected {
+.combo-box, jfx-combo-box, combo-box-base  .cell:selected {
     -fx-text-fill: WHITE;
 }
 
@@ -1366,4 +1369,8 @@
 
 .float-window-style {
     -fx-background-color: #8e8e8e;
+}
+
+.jfx-combo-box .text-input {
+     -fx-text-fill: white;
 }

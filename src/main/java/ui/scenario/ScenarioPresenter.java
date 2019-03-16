@@ -8,17 +8,23 @@ import dao.ScenarioDAO;
 import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
+import dao.model.TypeModel;
+import events.ActionTypesEvent;
 import events.ScenarioEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ScenarioPresenter {
     private ScenarioUIView mView;
     private ScenarioDAO mDAO;
+
+    private List<TypeModel> actionTypes = null;
 
     private ScenarioModel mScenario = null;
 
@@ -30,6 +36,9 @@ public class ScenarioPresenter {
 
         EventBus.getDefault().register(this);
         mDAO = new ScenarioDAO();
+
+        actionTypes = new ArrayList<TypeModel>();
+        mDAO.requestDefaultActionTypes();
 
         requestScenarioById(0);
     }
@@ -60,6 +69,24 @@ public class ScenarioPresenter {
         } else {
             this.mView.hideLoading();
             this.mView.showGenericErrorView();
+        }
+    };
+
+    /**
+     * Receives a Scenario Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ActionTypesEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            this.actionTypes = event.getActionTypes();
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
         }
     };
 
@@ -171,7 +198,7 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewActionView() {
-        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates());
+        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.actionTypes);
     }
 
     /**
