@@ -1373,4 +1373,5 @@
 
 .jfx-combo-box .text-input {
      -fx-text-fill: white;
+     -fx-font-size: 16.0;
 }

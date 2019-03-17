@@ -121,15 +121,11 @@ public class NewActionViewController {
             }
         });
 
-//        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
-//            if (!newVal) {
-//                this.inputName.validate();
-//            }
-//        });
-
-//        this.acceptButton.disableProperty().bind(
-//                Bindings.isEmpty(this.inputName.textProperty())
-//        );
+        this.actionTypeComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                this.actionTypeComboBox.validate();
+            }
+        });
 
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
@@ -138,6 +134,11 @@ public class NewActionViewController {
                 this.categoryComboBox.validate();
             }
         });
+
+        this.acceptButton.disableProperty().bind(
+                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
+                        this.categoryComboBox.valueProperty().isNull())
+        );
 
         // TODO
     }
