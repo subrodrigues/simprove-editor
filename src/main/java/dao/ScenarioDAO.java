@@ -62,8 +62,8 @@ public class ScenarioDAO {
                     "Oops, you screwed it."));
         }
 
-        ScenarioModel mockedScenario = new ScenarioModel(0, "Mocked Data",
-                "First comes the Universe, then comes the prayer.",
+        ScenarioModel mockedScenario = new ScenarioModel(0, "IntraHospital",
+                "A 27-year old male patient who arrived to the emergency department by ambulance with abdominal pain, vomiting, and shortness of breath shortly after eating a meal at a nearby Asian restaurant.",
                 mockedStates, mockedActions);
 
         EventBus.getDefault().post(new ScenarioEvent(mockedScenario));

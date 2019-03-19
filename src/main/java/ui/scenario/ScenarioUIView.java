@@ -31,11 +31,9 @@ import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
-import utils.DataUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
@@ -82,6 +80,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private JFXButton addActionButton;
+
+    @FXML
+    private JFXTextField inputScenarioName;
+
+    @FXML
+    private JFXTextArea inputBriefing;
 
     private boolean isSlidingContentVisible = true;
 
@@ -202,6 +206,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     void updateScenarioData(ScenarioModel scenario) {
         // TODO: fill scenario related data
+
+        this.inputScenarioName.setText(scenario.getName());
+        this.inputBriefing.setText(scenario.getBriefing());
 
         // Fill States
         for (int i = 0; i < scenario.getStates().size(); i++) {
