@@ -29,10 +29,10 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 
             @Override
             public void handle(KeyEvent t) {
-         //       comboBox.hide();
+                comboBox.hide();
             }
         });
-     //   this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
+        this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
     }
 
     @Override
