@@ -5,9 +5,13 @@
 package dao;
 
 import dao.model.*;
+import events.ActionTypesEvent;
 import events.ScenarioEvent;
 import org.greenrobot.eventbus.EventBus;
+import utils.DataUtils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,6 @@ public class ScenarioDAO {
     /**
      * Access the DAO to get the correspondent scenario model.
      * This method is async, notifying the Presenter when query is complete.
-     *
      */
     public void requestScenarioById(int scenarioId) {
         //TODO: Database
@@ -35,24 +38,23 @@ public class ScenarioDAO {
 
         /** MOCKED STATES **/
         List<StateModel> mockedStates = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             List<SignalModel> signals = new ArrayList<SignalModel>();
-            signals.add(new SignalModel(0, new SignalTypeModel(0, 1), "Heart Rate", 120f));
+            signals.add(new SignalModel(0, new SignalTypeModel(-1, 1), "Heart Rate", 120f));
             List<TipModel> tips = new ArrayList<TipModel>();
 
-            mockedStates.add(new StateModel(i, "State " + i, new TypeModel(0, 1, "Tipo Cenas"),
+            mockedStates.add(new StateModel(i, "State " + i, new TypeModel(-1, 1, "Tipo Cenas"),
                     signals, new TransitionModel(0, 10, 1), tips));
         }
 
-
         /** MOCKED ACTIONS **/
         List<ActionModel> mockedActions = new ArrayList<>();
-        for(int i = 10; i < 26; i++) {
+        for (int i = 10; i < 26; i++) {
             List<SignalModel> results = new ArrayList<SignalModel>();
-            results.add(new SignalModel(1, new SignalTypeModel(0, 1), "Heart Rate", 120f));
+            results.add(new SignalModel(1, new SignalTypeModel(-1, 1), "Heart Rate", 120f));
             List<StateModel> stateConditions = new ArrayList<StateModel>();
 
-            mockedActions.add(new ActionModel(i, "Action " + i, new TypeModel(0, 1, "Tipo Coiso"),
+            mockedActions.add(new ActionModel(i, "Action " + i, new TypeModel(-1, 1, "Tipo Coiso"),
                     new TypeModel(1, 1, "Diagnosis"),
                     stateConditions,
                     results,
@@ -87,5 +89,22 @@ public class ScenarioDAO {
         });
 
         addRequest(call);*/
+    }
+
+    /**
+     * Method that accesses the resources and load the Action Types in the resources action data file.
+     *
+     * @return List<TypeModel> containing all the TypeModels saved at the local file.
+     */
+    public void requestDefaultActionTypes() {
+        List<TypeModel> actionTypes = null;
+
+        try {
+            actionTypes = DataUtils.getActionTypesFromResourceURL(getClass().getResource("/raw/actions_data.txt"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        EventBus.getDefault().post(new ActionTypesEvent(actionTypes));
     }
 }

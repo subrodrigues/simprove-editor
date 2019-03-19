@@ -8,6 +8,7 @@ import com.jfoenix.controls.*;
 import dao.model.ActionModel;
 import dao.model.ScenarioModel;
 import dao.model.StateModel;
+import dao.model.TypeModel;
 import io.datafx.controller.ViewController;
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -30,9 +31,11 @@ import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
+import utils.DataUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
@@ -562,9 +565,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @param actions
      * @param states
+     * @param actionTypes
      */
-    void showNewActionDialog(List<ActionModel> actions, List<StateModel> states) {
-        NewActionViewController newActDialog = new NewActionViewController(actions, states, this);
+    void showNewActionDialog(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes) {
+        NewActionViewController newActDialog = new NewActionViewController(actions, states, actionTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 
