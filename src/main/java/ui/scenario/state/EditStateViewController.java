@@ -187,7 +187,7 @@ public class EditStateViewController {
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
-                    if (transitionComboBox.getValue().getId() != -1) {
+                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
                         mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
                                 inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
                                 transitionComboBox.getValue().getId()));
