@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -38,7 +39,7 @@ public class ActionItemViewController {
     private StackPane headerPane;
 
     @FXML
-    private Text actionName;
+    private Label actionName;
 
     @FXML
     private Text actionType;

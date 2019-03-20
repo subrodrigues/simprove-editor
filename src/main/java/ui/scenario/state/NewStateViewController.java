@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
+import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -109,6 +110,10 @@ public class NewStateViewController {
                 this.inputName.validate();
             }
         });
+
+        this.inputName.textProperty()
+                .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(inputName));
+
 
         this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.inputName.textProperty())

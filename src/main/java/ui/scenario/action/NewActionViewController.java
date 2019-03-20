@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
 import utils.ConstantUtils;
+import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -126,6 +127,9 @@ public class NewActionViewController {
             }
         });
 
+        this.actionTypeComboBox.getEditor().textProperty()
+                .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
+
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
         this.categoryComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
@@ -142,6 +146,8 @@ public class NewActionViewController {
         this.cancelButton.setOnAction(getCancelClickListener());
 
         // TODO
+
+
     }
 
     /**
@@ -179,7 +185,7 @@ public class NewActionViewController {
             public void handle(ActionEvent e) {
 
                 // Set state (type) name
-                mActionModel.setName(actionTypeComboBox.getValue().getName());
+                mActionModel.setName(actionTypeComboBox.getEditor().textProperty().getValue());
 
                 // Set/Update transition model
                 if (mActionModel.getTransition() != null) {

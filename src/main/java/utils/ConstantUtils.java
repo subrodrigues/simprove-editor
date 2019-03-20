@@ -11,6 +11,8 @@ import java.util.List;
 
 public class ConstantUtils {
 
+    public static int ACTION_STATE_INPUT_MAX_NUMBER_CHARS = 55;
+
     /**
      * Return the default Action Categories.
      *
@@ -24,5 +26,7 @@ public class ConstantUtils {
 
         return mockedActionCategories;
     }
+
+
 
 }

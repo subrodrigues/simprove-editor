@@ -15,10 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import utils.DisplayUtils;
 
@@ -35,7 +35,7 @@ public class StateItemViewController {
     private StackPane headerPane;
 
     @FXML
-    private Text stateName;
+    private Label stateName;
 
     // Private variables
     private StateModel mStateModel;

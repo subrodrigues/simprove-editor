@@ -9,10 +9,8 @@
 <!--
   ~ Created by Filipe André Rodrigues on 06-03-2019 22:40
   -->
-<!--
-  ~ Created by Filipe André Rodrigues on 20-02-2019 19:50
-  -->
 
+<?import javafx.scene.control.Label?>
 <StackPane fx:id="actionItemRoot" prefHeight="100.0" prefWidth="100.0" styleClass="item-card-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="actionItemContent" alignment="TOP_CENTER" prefHeight="50.0" prefWidth="100.0">
@@ -22,8 +20,8 @@
                   <StackPane.margin>
                      <Insets top="16.0" />
                   </StackPane.margin>
-                  <Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Action Name" StackPane.alignment="TOP_CENTER">
-                  </Text>
+                  <Label fx:id="actionName" wrapText="true" styleClass="card-name-title" text="Action Name" StackPane.alignment="TOP_CENTER">
+                  </Label>
                   <!--<Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Type" StackPane.alignment="TOP_CENTER">-->
                   <!--</Text>-->
                   <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="card-name-title" text="Category" StackPane.alignment="TOP_CENTER">
