@@ -45,33 +45,34 @@ public class ScenarioDAO {
         /** MOCKED STATES **/
         List<StateModel> mockedStates = new ArrayList<>();
 //        for (int i = 0; i < 10; i++) {
+
         List<SignalModel> signals = new ArrayList<SignalModel>();
         signals.add(new SignalModel(0, new SignalTypeModel(-1, 1), "Heart Rate", 120f));
         List<TipModel> tips = new ArrayList<TipModel>();
 
         mockedStates.add(new StateModel(0, "Baseline", new TypeModel(-1, 1, "No Type"),
-                signals, null, tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(1, "Responsive", new TypeModel(-1, 1, "No Type"),
-                signals,  new TransitionModel(0, 180, 2), tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(2, "Mumbling", new TypeModel(-1, 1, "No Type"),
-                signals, new TransitionModel(0, 120, 3), tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(3, "Anaphylactic shock", new TypeModel(-1, 1, "No Type"),
-                signals, new TransitionModel(0, 120, 4), tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(4, "ICU", new TypeModel(-1, 1, "No Type"),
-                signals, null, tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(5, "Treatment", new TypeModel(-1, 1, "No Type"),
-                signals, new TransitionModel(0, 30, 6), tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(6, "Recovery", new TypeModel(-1, 1, "No Type"),
-                signals, new TransitionModel(0, 30, 7), tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(7, "Discharge", new TypeModel(-1, 1, "No Type"),
-                signals, null, tips));
+                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
 
 
 //        }
@@ -85,121 +86,121 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(0, "Start", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 0, "Control"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 1),
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(1, "Oximetry", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(2, "ECG", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(3, "Blood Pressure", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(4, "Epinephrine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(5, "Fluids", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(6, "Propofol", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(7, "Temperature", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(8, "Desloratadine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(9, "Blood Tests", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(10, "Capillary Refill", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(11, "Basic Life Support", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(12, "Oxygen", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(13, "Diagnosis", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(14, "Anaphylaxis Reaction", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(15, "Pulmonary Edema", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
 
         mockedActions.add(new ActionModel(16, "Hemorragic Shock", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
-                stateConditions,
-                results,
+                new ArrayList<StateModel>(),
+                new ArrayList<SignalModel>(),
                 null,
                 "Oops, you screwed it."));
 
