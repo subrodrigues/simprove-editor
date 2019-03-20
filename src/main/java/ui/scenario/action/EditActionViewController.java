@@ -21,8 +21,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
 import utils.ConstantUtils;
+import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,8 +34,11 @@ public class EditActionViewController {
     @FXML
     private StackPane editActionRoot;
 
+//    @FXML
+//    private JFXTextField inputName;
+
     @FXML
-    private JFXTextField inputName;
+    private JFXComboBox<TypeModel> actionTypeComboBox;
 
     @FXML
     private JFXComboBox<ActionModel> transitionComboBox;
@@ -80,7 +85,7 @@ public class EditActionViewController {
      * @param actions
      * @param listener
      */
-    public EditActionViewController(ActionModel action, List<ActionModel> actions, OnScenarioEditActionClickListener listener) {
+    public EditActionViewController(ActionModel action, List<ActionModel> actions, List<TypeModel> actionTypes, OnScenarioEditActionClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditActionDialog.fxml"));
@@ -92,15 +97,18 @@ public class EditActionViewController {
         }
 
         setupAction(action);
-        setupUI(actions);
+        setupUI(actions, actionTypes);
     }
 
     private void setupAction(ActionModel action) {
         this.mActionModel = action;
     }
 
-    private void setupUI(List<ActionModel> actions) {
-        this.inputName.setText(mActionModel.getName());
+    private void setupUI(List<ActionModel> actions, List<TypeModel> actionTypes) {
+        this.actionTypeComboBox.setValue(new TypeModel(-1, -1, mActionModel.getName()));
+
+        this.actionTypeComboBox.getItems().addAll(actionTypes);
+        new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new ActionModel(-1, "NONE"));
@@ -132,14 +140,24 @@ public class EditActionViewController {
             }
         });
 
-        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
+//        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
+//            if (!newVal) {
+//                this.inputName.validate();
+//            }
+//        });
+
+        this.actionTypeComboBox.getEditor().textProperty()
+                .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
+
+        this.actionTypeComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
-                this.inputName.validate();
+                this.actionTypeComboBox.validate();
             }
         });
 
         this.applyButton.disableProperty().bind(
-                Bindings.isEmpty(this.inputName.textProperty())
+                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
+                        this.categoryComboBox.valueProperty().isNull())
         );
 
         this.applyButton.setOnAction(getApplyClickListener());
@@ -185,7 +203,10 @@ public class EditActionViewController {
             public void handle(ActionEvent e) {
 
                 // Set Action name
-                mActionModel.setName(inputName.getText());
+//                mActionModel.setName(inputName.getText());
+
+                // Set state (type) name
+                mActionModel.setName(actionTypeComboBox.getEditor().textProperty().getValue());
 
                 // Set/Update transition model
                 if (mActionModel.getTransition() != null) {
@@ -199,7 +220,7 @@ public class EditActionViewController {
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
-                    if (transitionComboBox.getValue().getId() != -1) {
+                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
                         mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
                                 inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
                                 transitionComboBox.getValue().getId()));
@@ -229,7 +250,8 @@ public class EditActionViewController {
                 alert.setOverlayClose(false);
                 JFXDialogLayout layout = new JFXDialogLayout();
                 layout.setHeading(new Label("Confirmation"));
-                layout.setBody(new Label("Are you sure you want to delete " + inputName.getText() + "? \n"));
+                // Set state (type) name
+                layout.setBody(new Label("Are you sure you want to delete " + actionTypeComboBox.getEditor().textProperty().getValue() + "? \n"));
 
                 JFXButton noButton = new JFXButton("No");
 

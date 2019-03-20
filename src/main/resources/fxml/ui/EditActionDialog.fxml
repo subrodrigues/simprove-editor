@@ -31,22 +31,33 @@
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                <Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />
+                                 <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Action: " />
                              </VBox>
-                             <JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="Action name" styleClass="edit-dialog-parameter-input">
-                             <validators>
-                                 <RequiredFieldValidator message="Input Required!">
-                                     <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                 </RequiredFieldValidator>
-                             </validators>
-                             </JFXTextField>
+                             <JFXComboBox fx:id="actionTypeComboBox" editable="true" prefHeight="30.0" prefWidth="600.0" promptText="Action Type" styleClass="combo-box">
+                                 <validators>
+                                     <RequiredFieldValidator message="Category Required!">
+                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                     </RequiredFieldValidator>
+                                 </validators>
+                             </JFXComboBox>
+
+                             <!--<VBox alignment="CENTER_LEFT" minWidth="84.0">-->
+                                <!--<Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />-->
+                             <!--</VBox>-->
+                             <!--<JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="Action name" styleClass="edit-dialog-parameter-input">-->
+                             <!--<validators>-->
+                                 <!--<RequiredFieldValidator message="Input Required!">-->
+                                     <!--&lt;!&ndash;<MaterialIconView glyphName="WARNING" size="1.2em" />&ndash;&gt;-->
+                                 <!--</RequiredFieldValidator>-->
+                             <!--</validators>-->
+                             <!--</JFXTextField>-->
                          </HBox>
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                  <Text fx:id="actionTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
                              </VBox>
-                             <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select State" styleClass="combo-box">
+                             <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
                             </JFXComboBox>
 
                              <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
@@ -65,7 +76,7 @@
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                  <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
                              </VBox>
-                             <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select Category" styleClass="combo-box">
+                             <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Category" styleClass="combo-box">
                                  <validators>
                                      <RequiredFieldValidator message="Category Required!">
                                          <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
