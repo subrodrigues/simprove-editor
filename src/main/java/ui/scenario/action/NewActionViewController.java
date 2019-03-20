@@ -140,6 +140,8 @@ public class NewActionViewController {
                         this.categoryComboBox.valueProperty().isNull())
         );
 
+        this.cancelButton.setOnAction(getCancelClickListener());
+
         // TODO
     }
 
@@ -203,6 +205,20 @@ public class NewActionViewController {
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 
+                closeDialogWindow();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the positive confirmation to cancel the action edition
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getCancelClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
                 closeDialogWindow();
             }
         };

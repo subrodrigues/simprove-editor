@@ -132,6 +132,9 @@ public class EditStateViewController {
         this.applyButton.setOnAction(getApplyClickListener());
 
         this.deleteButton.setOnAction(getDeleteClickListener());
+
+        this.cancelButton.setOnAction(getCancelClickListener());
+
         //TODO
     }
 
@@ -242,6 +245,20 @@ public class EditStateViewController {
             @Override
             public void handle(ActionEvent e) {
                 mListener.onStateDeleteClicked(mStateModel.getId());
+                closeDialogWindow();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the positive confirmation to cancel the state edition
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getCancelClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
                 closeDialogWindow();
             }
         };

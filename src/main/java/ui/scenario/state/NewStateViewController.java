@@ -116,6 +116,7 @@ public class NewStateViewController {
 
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
+        this.cancelButton.setOnAction(getCancelClickListener());
         //TODO
     }
 
@@ -177,6 +178,20 @@ public class NewStateViewController {
 
                 mListener.onNewStateAcceptClicked(mStateModel);
 
+                closeDialogWindow();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the positive confirmation to cancel the new state window
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getCancelClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
                 closeDialogWindow();
             }
         };
