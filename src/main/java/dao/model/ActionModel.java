@@ -4,6 +4,7 @@
 
 package dao.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionModel {
@@ -30,11 +31,15 @@ public class ActionModel {
     public ActionModel(int id, String name) {
         this.id = id;
         this.name = name;
+
+        this.stateConditions = new ArrayList<>();
     }
 
 
     public ActionModel(int actionId) {
         this.id = actionId;
+
+        this.stateConditions = new ArrayList<>();
     }
 
     public int getId() {

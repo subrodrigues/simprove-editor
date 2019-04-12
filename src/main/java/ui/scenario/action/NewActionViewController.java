@@ -130,7 +130,7 @@ public class NewActionViewController {
         this.actionTypeComboBox.getEditor().textProperty()
                 .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
 
-        this.acceptButton.setOnAction(getNewStateAcceptClickListener());
+        this.acceptButton.setOnAction(getNewActionAcceptClickListener());
 
         this.categoryComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
@@ -179,7 +179,7 @@ public class NewActionViewController {
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getNewStateAcceptClickListener() {
+    private EventHandler<ActionEvent> getNewActionAcceptClickListener() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
