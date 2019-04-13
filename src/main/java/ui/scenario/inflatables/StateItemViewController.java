@@ -165,4 +165,21 @@ public class StateItemViewController {
         };
     }
 
+    /**
+     * Method that returns current state name
+     *
+     * @return state name string
+     */
+    public String getStateName(){
+        return this.stateName.getText();
+    }
+
+    /**
+     * Method that returns current state color
+     *
+     * @return state color string
+     */
+    public String getStateColor(){
+        return this.mHeaderColor;
+    }
 }

@@ -4,6 +4,10 @@
 
 package ui.scenario;
 
+import com.fxgraph.edges.DoubleCorneredEdge;
+import com.fxgraph.graph.Graph;
+import com.fxgraph.graph.ICell;
+import com.fxgraph.graph.Model;
 import com.jfoenix.controls.*;
 import dao.model.ActionModel;
 import dao.model.ScenarioModel;
@@ -16,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -31,6 +36,8 @@ import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
+import ui.widgets.graph.CustomLayoutGrid;
+import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -50,6 +57,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @FXML StackPane scenarioRoot;
 
     @FXML StackPane scenarioContent;
+
+    @FXML StackPane statesGraphPane;
 
     @FXML
     private ScrollPane actionsScrollPane;
@@ -237,6 +246,52 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             }
             actionsGridView.getChildren().add(action);
         }
+
+        updateStatesGraphView(scenario.getStates());
+    }
+
+    void updateStatesGraphView(List<StateModel> states) {
+
+        if(states.size() == 0) return;
+
+        statesGraphPane.getChildren().clear();
+
+        Graph graph = new Graph();
+        final Model model = graph.getModel();
+
+        graph.beginUpdate();
+
+        for(StateModel state: states){
+            final ICell stateCell = new TextableRectangleCell(state.getName(), state.getId());
+            model.addCell(stateCell);
+        }
+
+        for(StateModel state: states) {
+            if(state.getTransition() != null){
+                ICell source = null, target = null;
+
+                for(ICell cell: model.getAddedCells()){
+                    if(((TextableRectangleCell)cell).getId() == state.getId())
+                        source = cell;
+                    else if(((TextableRectangleCell)cell).getId() == state.getTransition().getStateId())
+                        target = cell;
+
+                    if(source != null && target != null){
+                        final DoubleCorneredEdge edgeAB = new DoubleCorneredEdge(source, target, Orientation.HORIZONTAL);
+
+                        edgeAB.textProperty().set(state.getTransition().getDuration() != -1 ?
+                                state.getTransition().getDuration() + " seconds timer" : "no timer");
+                        model.addEdge(edgeAB);
+                    }
+                }
+            }
+        }
+
+        graph.endUpdate();
+
+        graph.layout(new CustomLayoutGrid()); // TODO: Maybe a tree
+
+        statesGraphPane.getChildren().add(graph.getCanvas());
     }
 
     /**

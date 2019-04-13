@@ -20,6 +20,8 @@ dependencies {
     // FontAwesome (Bintray)
 //    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
+
+    compile group: 'com.sirolf2009', name: 'fxgraph', version: '0.0.3'
 }
 
 jar {
