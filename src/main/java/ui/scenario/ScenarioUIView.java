@@ -250,6 +250,11 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         updateStatesGraphView(scenario.getStates());
     }
 
+    /**
+     * Method that redraws the States Graph View
+     *
+     * @param states
+     */
     void updateStatesGraphView(List<StateModel> states) {
 
         if(states.size() == 0) return;
@@ -331,7 +336,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     public void deselectStateViewItem(int indexToHighlight) {
-        if(statesGridView.getChildren().size() == 0) return;
+        if(statesGridView.getChildren().size() == 0 || indexToHighlight > statesGridView.getChildren().size()) return;
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
         stateView.setStyle("item-card-style");
