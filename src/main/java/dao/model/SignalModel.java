@@ -2,11 +2,11 @@ package dao.model;
 
 public class SignalModel {
     private int id;
-    private SignalTypeModel type;
+    private int type;
     private String name;
     private float value;
 
-    public SignalModel(int id, SignalTypeModel type, String name, float value) {
+    public SignalModel(int id, int type, String name, float value) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -21,11 +21,11 @@ public class SignalModel {
         this.id = id;
     }
 
-    public SignalTypeModel getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(SignalTypeModel type) {
+    public void setType(int type) {
         this.type = type;
     }
 

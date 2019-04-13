@@ -22,6 +22,8 @@ dependencies {
     compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
 
     compile group: 'com.sirolf2009', name: 'fxgraph', version: '0.0.3'
+
+    compile 'org.controlsfx:controlsfx:8.40.14'
 }
 
 jar {

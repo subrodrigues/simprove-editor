@@ -47,7 +47,7 @@ public class ScenarioDAO {
 //        for (int i = 0; i < 10; i++) {
 
         List<SignalModel> signals = new ArrayList<SignalModel>();
-        signals.add(new SignalModel(0, new SignalTypeModel(-1, 1), "Heart Rate", 120f));
+        signals.add(new SignalModel(0, 1, "Heart Rate", 120f));
         List<TipModel> tips = new ArrayList<TipModel>();
 
         mockedStates.add(new StateModel(0, "Baseline", new TypeModel(-1, 1, "No Type"),
@@ -81,7 +81,7 @@ public class ScenarioDAO {
         List<ActionModel> mockedActions = new ArrayList<>();
 //        for (int i = 10; i < 26; i++) {
         List<SignalModel> results = new ArrayList<SignalModel>();
-        results.add(new SignalModel(1, new SignalTypeModel(-1, 1), "Heart Rate", 120f));
+        results.add(new SignalModel(1, 1, "Heart Rate", 120f));
         List<StateModel> stateConditions = new ArrayList<StateModel>();
 
         mockedActions.add(new ActionModel(0, "Start", new TypeModel(-1, 1, "Tipo Coiso"),

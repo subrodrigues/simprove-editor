@@ -1394,3 +1394,14 @@
     -fx-margin: 16 0 0 0; /* 2 10 3 10 */
 }
 
+.item-grid-style{
+    -fx-cursor: hand;
+    -fx-background-radius: 5, 5, 5, 5;
+}
+
+.tooltip-style{
+    -fx-font: normal bold 16 Roboto;
+    -fx-base: transparent;
+    -fx-background-color: rgba(97.0, 97.0, 97.0, 0.86);
+    -fx-text-fill: #fafafa;
+}

@@ -6,22 +6,33 @@
 package ui.scenario.state;
 
 import com.jfoenix.controls.*;
+import dao.model.SignalModel;
 import dao.model.StateModel;
 import dao.model.TransitionModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import org.controlsfx.control.GridCell;
+import org.controlsfx.control.GridView;
+import org.controlsfx.control.cell.ColorGridCell;
 import ui.widgets.JFXNumericTextField;
+import ui.widgets.grid.TextableColorGridCell;
 import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 public class NewStateViewController {
     // UI Bind variables
@@ -42,6 +53,9 @@ public class NewStateViewController {
 
     @FXML
     private JFXButton cancelButton;
+
+    @FXML
+    private JFXScrollPane signalsRootPane;
 
     // Private variables
     private StateModel mStateModel;
@@ -123,6 +137,32 @@ public class NewStateViewController {
 
         this.cancelButton.setOnAction(getCancelClickListener());
         //TODO
+        
+        setupSignalsGrid();
+    }
+
+    private void setupSignalsGrid() {
+
+        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
+
+        GridView<SignalModel> signalGrid = new GridView<>(list);
+        signalGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
+        signalGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
+        signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
+
+        //(top/right/bottom/left)
+        signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
+            @Override public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
+                return new TextableColorGridCell();
+            }
+        });
+
+        for(int i = 0; i < 15; i++) {
+            SignalModel s = new SignalModel(i, 1, "Sig " + i, 10);
+            list.add(s);
+        }
+
+        this.signalsRootPane.getChildren().add(signalGrid);
     }
 
     /**

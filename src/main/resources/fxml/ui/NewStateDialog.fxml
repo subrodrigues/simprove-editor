@@ -15,6 +15,9 @@
   ~ Created by Filipe André Rodrigues on 01-03-2019 23:01
   -->
 
+<?import com.jfoenix.skins.JFXColorPalette.JFXColorGrid?>
+<?import javafx.scene.layout.GridPane?>
+<?import com.jfoenix.controls.JFXScrollPane?>
 <StackPane fx:id="newStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -60,12 +63,13 @@
                            </VBox.margin>
 
                          </HBox>
-                            <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
-                           <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin></Text>
+                            <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: "/>
+                            </VBox>
+                         <JFXScrollPane fx:id="signalsRootPane">
 
-                                    <Text fx:id="stateTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips: " />
+                         </JFXScrollPane>
+
                      </children>
                      <StackPane.margin>
                         <Insets left="22.0" right="22.0" top="46.0" />
