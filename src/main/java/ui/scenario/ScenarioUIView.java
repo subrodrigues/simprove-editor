@@ -37,6 +37,7 @@ import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
 import ui.widgets.graph.CustomLayoutGrid;
+import ui.widgets.graph.DirectionalCorneredEdge;
 import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
@@ -282,7 +283,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                         target = cell;
 
                     if(source != null && target != null){
-                        final DoubleCorneredEdge edgeAB = new DoubleCorneredEdge(source, target, Orientation.HORIZONTAL);
+                        final DirectionalCorneredEdge edgeAB = new DirectionalCorneredEdge(source, target, Orientation.HORIZONTAL);
 
                         edgeAB.textProperty().set(state.getTransition().getDuration() != -1 ?
                                 state.getTransition().getDuration() + " seconds timer" : "no timer");
@@ -336,7 +337,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     public void deselectStateViewItem(int indexToHighlight) {
-        if(statesGridView.getChildren().size() == 0 || indexToHighlight > statesGridView.getChildren().size()) return;
+        if(statesGridView.getChildren().size() == 0 || indexToHighlight >= statesGridView.getChildren().size()) return;
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
         stateView.setStyle("item-card-style");
