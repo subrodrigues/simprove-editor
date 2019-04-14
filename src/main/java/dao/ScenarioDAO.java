@@ -51,25 +51,25 @@ public class ScenarioDAO {
         List<TipModel> tips = new ArrayList<TipModel>();
 
         mockedStates.add(new StateModel(0, "Baseline", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, 10, 1), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(1, "Responsive", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, 4, 2), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(2, "Mumbling", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, -1, 3), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(3, "Anaphylactic shock", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, 25, 4), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(4, "ICU", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, -1, 5), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(5, "Treatment", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, -1, 6), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(6, "Recovery", new TypeModel(-1, 1, "No Type"),
-                new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));
+                new ArrayList<SignalModel>(), new TransitionModel(0, 8, 7), new ArrayList<TipModel>()));
 
         mockedStates.add(new StateModel(7, "Discharge", new TypeModel(-1, 1, "No Type"),
                 new ArrayList<SignalModel>(), null, new ArrayList<TipModel>()));

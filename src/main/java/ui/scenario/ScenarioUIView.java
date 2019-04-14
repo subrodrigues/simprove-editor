@@ -286,7 +286,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                         final DirectionalCorneredEdge edgeAB = new DirectionalCorneredEdge(source, target, Orientation.HORIZONTAL);
 
                         edgeAB.textProperty().set(state.getTransition().getDuration() != -1 ?
-                                state.getTransition().getDuration() + " seconds timer" : "no timer");
+                                state.getTransition().getDuration() + " sec" : "no timer");
                         model.addEdge(edgeAB);
                     }
                 }

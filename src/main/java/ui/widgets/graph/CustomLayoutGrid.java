@@ -29,8 +29,8 @@ public class CustomLayoutGrid extends RandomLayout {
             graph.getGraphic(cell).relocate(x, y);
             index++;
 
-            if(index < 5){
-                xInc += ((TextableRectangleCell)cell).getPrefWidth() + 80;
+            if(index < 10){
+                xInc += ((TextableRectangleCell)cell).getPrefWidth() + 120;
             } else{
                 index = 0;
                 yPos += 160;

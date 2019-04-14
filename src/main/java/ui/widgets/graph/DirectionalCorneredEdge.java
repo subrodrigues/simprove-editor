@@ -16,8 +16,12 @@ import javafx.beans.property.StringProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 
 public class DirectionalCorneredEdge extends AbstractEdge {
 
@@ -51,7 +55,11 @@ public class DirectionalCorneredEdge extends AbstractEdge {
         private final Line lineA;
         private final Line lineB;
         private final Line lineC;
+        private Polygon triangle = null;
         private final Text text;
+
+        private DoubleBinding dx;
+        private DoubleBinding dy;
 
         public EdgeGraphic(Graph graph, DirectionalCorneredEdge edge, Orientation orientation, StringProperty textProperty) {
             sourceX = edge.getSource().getXAnchor(graph, edge);
@@ -82,6 +90,10 @@ public class DirectionalCorneredEdge extends AbstractEdge {
                 lineA.startYProperty().bind(sourceY);
                 lineA.endXProperty().bind(centerX);
                 lineA.endYProperty().bind(sourceY);
+                lineA.setStrokeWidth(1);
+
+                lineA.setStroke(Color.rgb(97, 97, 97, 0.60));
+
                 group.getChildren().add(lineA);
 
                 lineB = new Line();
@@ -89,6 +101,8 @@ public class DirectionalCorneredEdge extends AbstractEdge {
                 lineB.startYProperty().bind(sourceY);
                 lineB.endXProperty().bind(centerX);
                 lineB.endYProperty().bind(targetY);
+                lineB.setStrokeWidth(2);
+                lineB.setStroke(Color.rgb(97, 97, 97, 0.80));
                 group.getChildren().add(lineB);
 
                 lineC = new Line();
@@ -96,7 +110,31 @@ public class DirectionalCorneredEdge extends AbstractEdge {
                 lineC.startYProperty().bind(targetY);
                 lineC.endXProperty().bind(targetX);
                 lineC.endYProperty().bind(targetY);
-                group.getChildren().add(lineC);
+                lineC.setStrokeWidth(4);
+                lineC.setStroke(Color.rgb(100, 149, 237, 1.00));
+
+                /** Create Triangle (Arrow) */
+                dx = lineB.endXProperty().add( lineB.startXProperty().negate());
+                dy = lineB.endYProperty().add( lineB.startYProperty().negate());
+
+                triangle = new Polygon(0, 0, - 16, 8, - 16, - 8);
+                triangle.setFill(Color.rgb(100, 149, 237, 1.00));
+                Rotate rotate = new Rotate(0,0,0,1,Rotate.Z_AXIS);
+                triangle.getTransforms().add(rotate);
+
+                dx.addListener((observable, oldValue, newValue) -> {
+                    rotate.setAngle(getAngle(dy.doubleValue(), newValue.doubleValue()));
+                });
+
+                dy.addListener((observable, oldValue, newValue) -> {
+                    rotate.setAngle(getAngle(newValue.doubleValue(), dx.doubleValue()));
+                });
+
+                triangle.layoutXProperty().bind(centerX);
+                triangle.layoutYProperty().bind(centerY);
+                /** Create Triangle (Arrow) */
+
+                group.getChildren().addAll(lineC, triangle);
 
             } else {
                 group = new Group();
@@ -127,6 +165,11 @@ public class DirectionalCorneredEdge extends AbstractEdge {
 
             group.getChildren().add(text);
             getChildren().add(group);
+        }
+
+
+        private double getAngle(double dy ,double dx){
+            return Math.toDegrees(Math.atan2(dy, dx));
         }
 
         public DoubleBinding getSourceX() {

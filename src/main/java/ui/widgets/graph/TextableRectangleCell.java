@@ -27,8 +27,8 @@ public class TextableRectangleCell extends RectangleCell {
     public Region getGraphic(Graph graph) {
         final Rectangle view = new Rectangle(50, 50);
 
-        view.setStroke(Color.valueOf("#616161"));
-        view.setStrokeWidth(2);
+        view.setStroke(Color.valueOf("#6495ed"));
+        view.setStrokeWidth(3);
         view.setFill(Color.valueOf("#484848"));
 
         Text name = new Text(this.mName);
