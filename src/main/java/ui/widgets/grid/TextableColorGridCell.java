@@ -15,12 +15,14 @@ import utils.DisplayUtils;
 import utils.WidgetUtils;
 
 public class TextableColorGridCell extends GridCell<SignalModel> {
+    private static final boolean debug = false;
+    final String IDLE_BUTTON_STYLE = "-fx-effect:: null;";
+    final String HOVERED_BUTTON_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(13, 213, 252,0.7), 10, 0.8, 0, 0)";
 
     private int mId;
     private Rectangle mColorRect;
     private String mName;
 
-    private static final boolean debug = false;
 
     /**
      * Creates a default ColorGridCell instance.
@@ -32,6 +34,7 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
         mColorRect.setStrokeWidth(2);
 
         mColorRect.setFill(Color.valueOf(DisplayUtils.getRandomBrightPastelColor()));
+
 
         Text textName = new Text("");
 
@@ -50,7 +53,6 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
 
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                // TODO Auto-generated method stub
                 if (event.getClickCount() >= 2) {
                     //do something when it's clicked
 
@@ -58,6 +60,7 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
             }
 
         });
+
     }
 
     /**
@@ -83,6 +86,9 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
             mColorRect.getStyleClass().add("item-grid-style");
 
             pane.getChildren().addAll(mColorRect, textName);
+            pane.setStyle(IDLE_BUTTON_STYLE);
+            pane.setOnMouseEntered(e -> mColorRect.setStyle(HOVERED_BUTTON_STYLE));
+            pane.setOnMouseExited(e -> mColorRect.setStyle(IDLE_BUTTON_STYLE));
 
             setGraphic(pane);
 
