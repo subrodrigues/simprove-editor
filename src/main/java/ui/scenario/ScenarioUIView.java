@@ -25,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -534,14 +535,17 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
-//        alert.setOverlayClose(false);
-        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
+
+
+        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
+        dialog.setContent(newStateDialog.getNewStateItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
         dialog.show();
     }
-
 
     /**
      * Gets notified by the grid items when an element is clicked with a request to edit the StateModel with id {stateId}.

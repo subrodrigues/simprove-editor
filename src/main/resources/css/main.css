@@ -1405,3 +1405,8 @@
     -fx-background-color: rgba(97.0, 97.0, 97.0, 0.86);
     -fx-text-fill: #fafafa;
 }
+
+.colored-grid-style{
+    -fx-background-color: #fafafa;
+    -fx-margin: 32 16 16 0;
+}

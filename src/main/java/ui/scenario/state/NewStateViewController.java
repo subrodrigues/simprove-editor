@@ -20,19 +20,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
-import org.controlsfx.control.cell.ColorGridCell;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.TextableColorGridCell;
 import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 public class NewStateViewController {
     // UI Bind variables
@@ -55,7 +52,7 @@ public class NewStateViewController {
     private JFXButton cancelButton;
 
     @FXML
-    private JFXScrollPane signalsRootPane;
+    private StackPane signalsRootPane;
 
     // Private variables
     private StateModel mStateModel;
@@ -157,7 +154,7 @@ public class NewStateViewController {
             }
         });
 
-        for(int i = 0; i < 15; i++) {
+        for(int i = 0; i < 50; i++) {
             SignalModel s = new SignalModel(i, 1, "Sig " + i, 10);
             list.add(s);
         }
@@ -174,6 +171,25 @@ public class NewStateViewController {
         return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
     }
 
+    /**
+     * Method that returns the root view with a specific width and height
+     *
+     * @param width
+     * @param height
+     * @return StacePane (root view)
+     */
+    public StackPane getNewStateItemRootDialog(double width, double height) {
+        newStateRoot.setPrefWidth(width);
+        newStateRoot.setPrefHeight(height);
+
+        return newStateRoot;
+    }
+
+    /**
+     * Method that returns the root view
+     *
+     * @return StacePane (root view)
+     */
     public StackPane getNewStateItemRootDialog() {
         return newStateRoot;
     }
