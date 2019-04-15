@@ -7,6 +7,7 @@ package dao;
 import dao.model.*;
 import events.ActionTypesEvent;
 import events.ScenarioEvent;
+import events.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
 import utils.DataUtils;
 
@@ -250,5 +251,61 @@ public class ScenarioDAO {
         }
 
         EventBus.getDefault().post(new ActionTypesEvent(actionTypes));
+    }
+
+
+    /**
+     * Method that accesses the resources and load the SignalTemplateModel in the resources action data file.
+     *
+     * @return List<SignalTemplateModel> containing all the SignalTemplateModel saved at the local file.
+     */
+    public void requestDefaultSignals() {
+        List<SignalTemplateModel> signals = new ArrayList<>();
+
+        // TODO: Remove hardcoded values and read from the File
+        signals.add(new SignalTemplateModel(0, 0,
+                "Arterial Blood Pressure",
+                "mmHg",
+                0,
+                1000,
+                1,
+                null));
+
+        signals.add(new SignalTemplateModel(1, 0,
+                "Diastolic Blood Pressure",
+                "mmHg",
+                0,
+                1000,
+                1,
+                null));
+
+        signals.add(new SignalTemplateModel(2, 0,
+                "Heart Rate",
+                "bpm ",
+                0,
+                200,
+                1,
+                null));
+
+        signals.add(new SignalTemplateModel(3, 0,
+                "Glucose",
+                "mg/dl ",
+                0,
+                600,
+                1,
+                null));
+
+        List<String> rashOptions = new ArrayList<String>();
+        rashOptions.add("Absent");
+        rashOptions.add("Present");
+        signals.add(new SignalTemplateModel(4, 1,
+                "Rash",
+                "mg/dl ",
+                -1,
+                -1,
+                1,
+                rashOptions));
+
+        EventBus.getDefault().post(new SignalTypesEvent(signals));
     }
 }

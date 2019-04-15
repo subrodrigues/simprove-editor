@@ -302,11 +302,6 @@
 *                          							   *
 *******************************************************/
 
-.jfx-slider-colored{
-    -jfx-default-thumb: -fx-decorator-main-color;
-    -jfx-default-track: #212121;
-}
-
 .jfx-slider-style {
     -jfx-indicator-position: right;
 }
@@ -1129,6 +1124,11 @@
 /******************************************************************************************
 * GENERAL STYLING                                                                          *
 *******************************************************************************************/
+
+.jfx-slider-colored{
+    -jfx-default-thumb: #212121;
+    -jfx-default-track: #616161;
+}
 
 .pane-title-label{
     -fx-font-family: "Roboto";

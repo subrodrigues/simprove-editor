@@ -26,7 +26,7 @@
 
 <StackPane fx:id="scenarioContent">
 
-    <SplitPane dividerPositions="0.8" orientation="VERTICAL" style="-fx-box-border: transparent;  -fx-background-insets: 0; -fx-padding: 0;" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.84" orientation="VERTICAL" style="-fx-box-border: transparent;  -fx-background-insets: 0; -fx-padding: 0;" VBox.vgrow="ALWAYS">
 
         <VBox>
 

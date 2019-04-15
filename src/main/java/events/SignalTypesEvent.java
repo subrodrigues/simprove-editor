@@ -1,31 +1,31 @@
 /*
- * Created by Filipe André Rodrigues on 14-03-2019 17:45
+ * Created by Filipe André Rodrigues on 15-04-2019 18:29
  */
 
 package events;
 
 import base.BaseEvent;
 import base.ResponseError;
-import dao.model.TypeModel;
+import dao.model.SignalTemplateModel;
 
 import java.util.List;
 
-public class ActionTypesEvent extends BaseEvent {
-    private List<TypeModel> actionTypes;
+public class SignalTypesEvent extends BaseEvent {
+    private List<SignalTemplateModel> signalTypes;
 
-    public ActionTypesEvent(List<TypeModel> actionTypes) {
-        this.actionTypes = actionTypes;
+    public SignalTypesEvent(List<SignalTemplateModel> signalTypes) {
+        this.signalTypes = signalTypes;
     }
 
-    public ActionTypesEvent(ResponseError error) {
+    public SignalTypesEvent(ResponseError error) {
         super(error);
     }
 
-    public List<TypeModel> getActionTypes() {
-        return actionTypes;
+    public List<SignalTemplateModel> getSignalTypes() {
+        return signalTypes;
     }
 
-    public void setActionTypes(List<TypeModel> actionTypes) {
-        this.actionTypes = actionTypes;
+    public void setSignalTypes(List<SignalTemplateModel> signalTypes) {
+        this.signalTypes = signalTypes;
     }
 }

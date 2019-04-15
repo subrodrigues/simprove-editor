@@ -11,16 +11,21 @@
 <?import ui.widgets.JFXNumericTextField?>
 
 <!--
+  ~ Created by Filipe André Rodrigues on 15-04-2019 17:49
+  -->
+
+<!--
   ~ Created by Filipe André Rodrigues on 13-03-2019 19:29
   -->
 
-<StackPane fx:id="newActionRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<?import com.jfoenix.controls.JFXSlider?>
+<StackPane fx:id="newSignalRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
                 <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Text fx:id="editActionTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Action">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Signal">
                      <StackPane.margin>
                         <Insets top="16.0" />
                      </StackPane.margin>
@@ -30,9 +35,9 @@
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Action: " />
+                                <Text fx:id="signalType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signal: " />
                              </VBox>
-                             <JFXComboBox fx:id="actionTypeComboBox" editable="true" prefHeight="30.0" prefWidth="600.0" promptText="Action Type" styleClass="combo-box">
+                             <JFXComboBox fx:id="signalTypeComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Signal Type" styleClass="combo-box">
                                  <validators>
                                      <RequiredFieldValidator message="Category Required!">
                                          <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
@@ -40,57 +45,25 @@
                                  </validators>
                              </JFXComboBox>
 
-                             <!--<JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="Action name" styleClass="edit-dialog-parameter-input">-->
-                             <!--<validators>-->
-                                 <!--<RequiredFieldValidator message="Input Required!">-->
-                                     <!--&lt;!&ndash;<MaterialIconView glyphName="WARNING" size="1.2em" />&ndash;&gt;-->
-                                 <!--</RequiredFieldValidator>-->
-                             <!--</validators>-->
-                             <!--</JFXTextField>-->
                          </HBox>
 
-                         <HBox>
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="actionTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
-                             </VBox>
-                             <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
-                            </JFXComboBox>
+                         <!-- Signal Numeric type -->
+                         <VBox alignment="CENTER" >
+                             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value" />
 
-                             <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="100.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
-                                 <HBox.margin>
-                                 <Insets left="10.0" />
-                              </HBox.margin></JFXNumericTextField>
-
-                             <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin>
-
-                         </HBox>
-
-                         <HBox>
-
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
-                             </VBox>
-                             <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Category" styleClass="combo-box">
-                                 <validators>
-                                     <RequiredFieldValidator message="Category Required!">
-                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                     </RequiredFieldValidator>
-                                 </validators>
-                             </JFXComboBox>
                              <VBox.margin>
                                  <Insets top="32.0" />
                              </VBox.margin>
+                         </VBox>
 
-                         </HBox>
+                         <JFXSlider fx:id="signalNumericValue" styleClass="jfx-slider-colored" maxWidth="Infinity">
+                             <VBox.margin>
+                                 <Insets top="16.0" />
+                             </VBox.margin>
+                         </JFXSlider>
 
-                            <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
-                           <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin></Text>
+                         <!-- TODO: Signal Categoric type -->
 
-                         <Text fx:id="actionTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips: " />
                      </children>
                      <StackPane.margin>
                         <Insets left="22.0" right="22.0" top="46.0" />
@@ -126,5 +99,7 @@
             <Insets />
          </opaqueInsets>
         </VBox>
+
     </children>
+
 </StackPane>

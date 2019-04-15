@@ -1,16 +1,13 @@
 /*
- * Created by Filipe André Rodrigues on 13-03-2019 19:32
+ * Created by Filipe André Rodrigues on 15-04-2019 18:11
  */
 
-package ui.scenario.action;
+package ui.scenario.signal;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import dao.model.ActionModel;
-import dao.model.StateModel;
-import dao.model.TransitionModel;
-import dao.model.TypeModel;
-import javafx.beans.binding.Bindings;
+import com.jfoenix.controls.JFXSlider;
+import dao.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,33 +16,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import ui.widgets.AutoCompleteComboBoxListener;
-import ui.widgets.JFXNumericTextField;
-import utils.ConstantUtils;
-import utils.TextUtils;
 
 import java.io.IOException;
 import java.util.List;
 
-public class NewActionViewController {
+public class NewSignalViewController {
     // UI Bind variables
     @FXML
-    private StackPane newActionRoot;
-
-//    @FXML
-//    private JFXTextField inputName;
+    private StackPane newSignalRoot;
 
     @FXML
-    private JFXComboBox<TypeModel> actionTypeComboBox;
+    private JFXComboBox<SignalTemplateModel> signalTypeComboBox;
 
     @FXML
-    private JFXComboBox<StateModel> transitionComboBox;
-
-    @FXML
-    private JFXNumericTextField inputTransitionDuration;
-
-    @FXML
-    private JFXComboBox<TypeModel> categoryComboBox;
+    private JFXSlider signalNumericValue;
 
     @FXML
     private JFXButton acceptButton;
@@ -54,19 +38,19 @@ public class NewActionViewController {
     private JFXButton cancelButton;
 
     // Private variables
-    private ActionModel mActionModel;
-    private OnScenarioNewActionClickListener mListener;
+    private SignalModel mSignalModel;
+    private OnNewSignalClickListener mListener;
     private int mStateId = -1;
 
-    public interface OnScenarioNewActionClickListener {
-        void onNewActionAcceptClicked(ActionModel newActionModel);
+    public interface OnNewSignalClickListener {
+        void onNewSignalAcceptClicked(SignalModel newSignalModel);
     }
 
-    public NewActionViewController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewActionDialog.fxml"));
+    public NewSignalViewController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewSignalDialog.fxml"));
         fxmlLoader.setController(this);
         try {
-            newActionRoot = fxmlLoader.load();
+            newSignalRoot = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,73 +59,50 @@ public class NewActionViewController {
     /**
      * Constructor with respective click listener.
      *
-     * @param actions
-     * @param actionTypes
+     * @param signals
      * @param listener
      */
-    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, OnScenarioNewActionClickListener listener) {
+    public NewSignalViewController(List<SignalTemplateModel> signals, int id, OnNewSignalClickListener listener) {
         this.mListener = listener;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewActionDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewSignalDialog.fxml"));
         fxmlLoader.setController(this);
         try {
-            newActionRoot = fxmlLoader.load();
+            newSignalRoot = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        mActionModel = new ActionModel(actions.size());
+        mSignalModel = new SignalModel(id);
 
-        setupUI(states, actionTypes);
+        setupUI(signals);
     }
 
-    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
-//        this.inputName.setText(mActionModel.getName() != null ? mActionModel.getName() : "");
+    private void setupUI(List<SignalTemplateModel> signals) {
 
-        // Init Transition ComboBox
-        this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
-        this.transitionComboBox.getItems().addAll(states);
-
-        this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
-
-        this.actionTypeComboBox.getItems().addAll(actionTypes);
-        new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
+        // Init Signals ComboBox
+        this.signalTypeComboBox.getItems().addAll(signals);
 
         /*
          * Set Listeners and Bindings
          */
-        this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
+        this.signalTypeComboBox.valueProperty().addListener(new ChangeListener<SignalTemplateModel>() {
             @Override
-            public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
+            public void changed(ObservableValue<? extends SignalTemplateModel> observable, SignalTemplateModel oldValue, SignalTemplateModel newValue) {
                 if (newValue.getId() == -1) {
-                    inputTransitionDuration.setDisable(true);
+                    //TODO: Remove/disable input type
+//                    inputTransitionDuration.setDisable(true);
                 } else {
-                    inputTransitionDuration.setDisable(false);
+                    //TODO: Check type and create value input
                 }
             }
         });
 
-        this.actionTypeComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
-            if (!newVal) {
-                this.actionTypeComboBox.validate();
-            }
-        });
 
-        this.actionTypeComboBox.getEditor().textProperty()
-                .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
-
-        this.acceptButton.setOnAction(getNewActionAcceptClickListener());
-
-        this.categoryComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
-            if (!newVal) {
-                this.categoryComboBox.validate();
-            }
-        });
-
-        this.acceptButton.disableProperty().bind(
-                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
-                        this.categoryComboBox.valueProperty().isNull())
-        );
+//        this.acceptButton.disableProperty().bind(
+//                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
+//                        this.categoryComboBox.valueProperty().isNull())
+//        );
 
         this.cancelButton.setOnAction(getCancelClickListener());
 
@@ -151,16 +112,26 @@ public class NewActionViewController {
     }
 
     /**
-     * Method that returns the current Transition duration in case it is defined, -1 otherwise.
+     * Method that returns the root view
      *
-     * @return duration value or -1
+     * @return StacePane (root view)
      */
-    private int getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
+    public StackPane getNewSignalItemRootDialog() {
+        return newSignalRoot;
     }
 
-    public StackPane getNewActionItemRootDialog() {
-        return newActionRoot;
+    /**
+     * Method that returns the root view with a specific width and height
+     *
+     * @param width
+     * @param height
+     * @return StacePane (root view)
+     */
+    public StackPane getNewSignalItemRootDialog(double width, double height) {
+        newSignalRoot.setPrefWidth(width);
+        newSignalRoot.setPrefHeight(height);
+
+        return newSignalRoot;
     }
 
     /**
@@ -168,47 +139,48 @@ public class NewActionViewController {
      */
     private void closeDialogWindow() {
         // get a handle to the stage
-        Stage stage = (Stage) newActionRoot.getScene().getWindow();
+        Stage stage = (Stage) newSignalRoot.getScene().getWindow();
         // do what you have to do
         stage.close();
     }
 
     /**
-     * Method that implements the Accept new State click listener behavior.
-     * It updates the mStateModel with new content and returns it.
+     * Method that implements the Accept new Signal click listener behavior.
+     * It updates the mSignalModel with new content and returns it.
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getNewActionAcceptClickListener() {
+    private EventHandler<ActionEvent> getNewSignalAcceptClickListener() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
                 // Set state (type) name
-                mActionModel.setName(actionTypeComboBox.getEditor().textProperty().getValue());
+                mSignalModel.setName(signalTypeComboBox.getEditor().textProperty().getValue());
 
                 // Set/Update transition model
-                if (mActionModel.getTransition() != null) {
+                // TODO: Fill the fields properly
+//                if (mActionModel.getTransition() != null) {
+//
+//                    // If we removed the Transition
+//                    if (transitionComboBox.getValue().getId() == -1) {
+//                        mActionModel.setTransition(null);
+//                    } else { // If we updated the existing Transition
+//                        mActionModel.getTransition().setDuration(getCurrentTransitionDuration());
+//                        mActionModel.getTransition().setStateId(transitionComboBox.getValue().getId());
+//                    }
+//                } else { // If we didn't have a transition
+//                    // And we are adding a Transition
+//                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
+//                        mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
+//                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
+//                                transitionComboBox.getValue().getId()));
+//                    }
+//                }
+//
+//                mActionModel.setCategory(categoryComboBox.getValue());
 
-                    // If we removed the Transition
-                    if (transitionComboBox.getValue().getId() == -1) {
-                        mActionModel.setTransition(null);
-                    } else { // If we updated the existing Transition
-                        mActionModel.getTransition().setDuration(getCurrentTransitionDuration());
-                        mActionModel.getTransition().setStateId(transitionComboBox.getValue().getId());
-                    }
-                } else { // If we didn't have a transition
-                    // And we are adding a Transition
-                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
-                        mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
-                                transitionComboBox.getValue().getId()));
-                    }
-                }
-
-                mActionModel.setCategory(categoryComboBox.getValue());
-
-                mListener.onNewActionAcceptClicked(mActionModel);
+                mListener.onNewSignalAcceptClicked(mSignalModel);
 
                 closeDialogWindow();
             }

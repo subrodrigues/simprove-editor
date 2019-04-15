@@ -16,7 +16,7 @@ import utils.WidgetUtils;
 
 public class TextableColorGridCell extends GridCell<SignalModel> {
     private static final boolean debug = false;
-    final String IDLE_BUTTON_STYLE = "-fx-effect:: null;";
+    final String IDLE_BUTTON_STYLE = "-fx-effect: null;";
     final String HOVERED_BUTTON_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(13, 213, 252,0.7), 10, 0.8, 0, 0)";
 
     private int mId;

@@ -13,6 +13,13 @@ public class SignalModel {
         this.value = value;
     }
 
+    public SignalModel(int id){
+        this.id = id;
+        this.type = -1;
+        this.name = "";
+        this.value = -1;
+    }
+
     public int getId() {
         return id;
     }

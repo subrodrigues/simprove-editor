@@ -9,10 +9,7 @@ import com.fxgraph.graph.Graph;
 import com.fxgraph.graph.ICell;
 import com.fxgraph.graph.Model;
 import com.jfoenix.controls.*;
-import dao.model.ActionModel;
-import dao.model.ScenarioModel;
-import dao.model.StateModel;
-import dao.model.TypeModel;
+import dao.model.*;
 import io.datafx.controller.ViewController;
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -527,9 +524,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Notifies the view of a new state event.
      *
      * @param states
+     * @param signalTypes
      */
-    void showNewStateDialog(List<StateModel> states) {
-        NewStateViewController newStateDialog = new NewStateViewController(states, this);
+    void showNewStateDialog(List<StateModel> states, List<SignalTemplateModel> signalTypes) {
+        NewStateViewController newStateDialog = new NewStateViewController(states, signalTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 

@@ -7,6 +7,7 @@ package ui.scenario.state;
 
 import com.jfoenix.controls.*;
 import dao.model.SignalModel;
+import dao.model.SignalTemplateModel;
 import dao.model.StateModel;
 import dao.model.TransitionModel;
 import javafx.beans.binding.Bindings;
@@ -19,11 +20,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
+import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.TextableColorGridCell;
 import utils.TextUtils;
@@ -31,7 +35,7 @@ import utils.TextUtils;
 import java.io.IOException;
 import java.util.List;
 
-public class NewStateViewController {
+public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener {
     // UI Bind variables
     @FXML
     private StackPane newStateRoot;
@@ -54,10 +58,15 @@ public class NewStateViewController {
     @FXML
     private StackPane signalsRootPane;
 
+    @FXML
+    private JFXButton addSignalButton;
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioNewStateClickListener mListener;
     private int mStateId = -1;
+
+    private List<SignalTemplateModel> mSignalTypes;
 
     public interface OnScenarioNewStateClickListener {
         void onNewStateAcceptClicked(StateModel newStateModel);
@@ -79,8 +88,9 @@ public class NewStateViewController {
      * @param states
      * @param listener
      */
-    public NewStateViewController(List<StateModel> states, OnScenarioNewStateClickListener listener) {
+    public NewStateViewController(List<StateModel> states, List<SignalTemplateModel> signalTypes, OnScenarioNewStateClickListener listener) {
         this.mListener = listener;
+        this.mSignalTypes = signalTypes;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewStateDialog.fxml"));
         fxmlLoader.setController(this);
@@ -125,7 +135,6 @@ public class NewStateViewController {
         this.inputName.textProperty()
                 .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(inputName));
 
-
         this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.inputName.textProperty())
         );
@@ -160,6 +169,8 @@ public class NewStateViewController {
         }
 
         this.signalsRootPane.getChildren().add(signalGrid);
+
+        this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
     }
 
     /**
@@ -258,4 +269,50 @@ public class NewStateViewController {
         };
     }
 
+    /**
+     * Method that shows the add new signal window
+     *
+     * @param signals
+     */
+    private void showNewSignalDialog(List<SignalTemplateModel> signals) {
+        Stage stage = (Stage) signalsRootPane.getScene().getWindow();
+
+        NewSignalViewController newSignalDialog = new NewSignalViewController(signals, 1, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth()/1.5, stage.getHeight()/1.5));
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that implements the action behavior to launch a new signal window
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewSignalClickListener(List<SignalTemplateModel> signals) {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showNewSignalDialog(signals);
+            }
+        };
+    }
+
+    /********************************************************************************************************************
+     * CALLBACKS INTERFACE                                                                                              *
+     ********************************************************************************************************************/
+
+    @Override
+    public void onNewSignalAcceptClicked(SignalModel newSignalModel) {
+        //TODO
+    }
 }

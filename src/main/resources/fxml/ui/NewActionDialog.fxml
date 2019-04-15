@@ -85,12 +85,11 @@
 
                          </HBox>
 
-                            <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: ">
+                            <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signal Results ">
                            <VBox.margin>
                               <Insets top="32.0" />
                            </VBox.margin></Text>
 
-                         <Text fx:id="actionTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips: " />
                      </children>
                      <StackPane.margin>
                         <Insets left="22.0" right="22.0" top="46.0" />

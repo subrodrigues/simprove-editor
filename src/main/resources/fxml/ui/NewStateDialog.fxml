@@ -78,7 +78,7 @@
 
                          <HBox>
                              <Pane HBox.hgrow="ALWAYS" />
-                             <JFXButton fx:id="addActionButton" buttonType="RAISED" prefHeight="34" prefWidth="34" ripplerFill="#212121" styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
+                             <JFXButton fx:id="addSignalButton" buttonType="RAISED" prefHeight="34" prefWidth="34" ripplerFill="#212121" styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
                                  <graphic>
                                      <StackPane>
                                          <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-item-grid-icon" />
