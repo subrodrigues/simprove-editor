@@ -1409,4 +1409,15 @@
 .colored-grid-style{
     -fx-background-color: #fafafa;
     -fx-margin: 32 16 16 0;
+    -fx-min-height: 80.0px;
+}
+
+.add-item-grid-button {
+    -fx-cursor: hand;
+    -fx-background-color: #fafafa;
+}
+
+.fab-add-item-grid-icon{
+    -fx-fill: #212121;
+    -fx-cursor: hand;
 }

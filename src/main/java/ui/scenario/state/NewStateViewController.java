@@ -154,7 +154,7 @@ public class NewStateViewController {
             }
         });
 
-        for(int i = 0; i < 50; i++) {
+        for(int i = 0; i < 12; i++) {
             SignalModel s = new SignalModel(i, 1, "Sig " + i, 10);
             list.add(s);
         }
