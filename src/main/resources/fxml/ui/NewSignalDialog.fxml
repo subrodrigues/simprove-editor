@@ -37,14 +37,13 @@
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                 <Text fx:id="signalType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signal: " />
                              </VBox>
-                             <JFXComboBox fx:id="signalTypeComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Signal Type" styleClass="combo-box">
+                             <JFXComboBox fx:id="signalTypeComboBox" prefHeight="30.0" prefWidth="1920" promptText="Select Signal Type" styleClass="combo-box">
                                  <validators>
                                      <RequiredFieldValidator message="Category Required!">
                                          <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
                                      </RequiredFieldValidator>
                                  </validators>
                              </JFXComboBox>
-
                          </HBox>
 
                          <!-- Signal Numeric type -->

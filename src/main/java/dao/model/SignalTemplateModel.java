@@ -24,6 +24,7 @@ public class SignalTemplateModel {
         this.unit = unit;
         this.minRange = minRange;
         this.maxRange = maxRange;
+        this.granularity = granularity;
         this.physicalOptions = physicalOptions;
     }
 

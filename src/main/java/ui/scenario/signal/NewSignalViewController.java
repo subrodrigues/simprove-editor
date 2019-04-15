@@ -82,6 +82,7 @@ public class NewSignalViewController {
 
         // Init Signals ComboBox
         this.signalTypeComboBox.getItems().addAll(signals);
+        this.signalTypeComboBox.getSelectionModel().selectFirst();
 
         /*
          * Set Listeners and Bindings
