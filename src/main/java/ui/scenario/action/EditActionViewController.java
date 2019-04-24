@@ -138,6 +138,11 @@ public class EditActionViewController {
             @Override
             public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
                 if (newValue.getId() == -1) {
+                    if(inputTransitionDuration.getText().isEmpty()){
+                        inputTransitionDuration.setText("0");
+                        inputTransitionDuration.validate();
+                    }
+
                     inputTransitionDuration.setDisable(true);
                 } else {
                     inputTransitionDuration.setDisable(false);
@@ -161,9 +166,16 @@ public class EditActionViewController {
         });
 
         this.applyButton.disableProperty().bind(
-                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
-                        this.categoryComboBox.valueProperty().isNull())
+                Bindings.or(inputTransitionDuration.textProperty().isEmpty(),
+                        Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
+                            this.categoryComboBox.valueProperty().isNull()))
         );
+
+        this.inputTransitionDuration.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!inputTransitionDuration.isDisabled() && !newVal) {
+                this.inputTransitionDuration.validate();
+            }
+        });
 
         this.applyButton.setOnAction(getApplyClickListener());
 
