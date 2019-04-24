@@ -335,7 +335,7 @@ public class ScenarioPresenter {
 
         if(index != -1){
 //            deselectSelectedPane();
-            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getActions(),  this.actionTypes);
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.actionTypes);
         }
     }
 

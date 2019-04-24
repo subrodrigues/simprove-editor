@@ -163,8 +163,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             }
         });
 
-        for(int i = 0; i < 12; i++) {
-            SignalModel s = new SignalModel(i, 1, "Sig " + i, 10);
+        for(int i = 0; i < 20; i++) {
+            SignalModel s = new SignalModel(i, 1, "Signal with a long name " + i, 10);
             list.add(s);
         }
 
@@ -284,7 +284,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth()/2.5, stage.getHeight()/2.5));
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");

@@ -612,10 +612,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Notifies the view of an edit action event.
      *
      * @param action
-     * @param actions
+     * @param states
      */
-    public void showActionEditDialog(ActionModel action, List<ActionModel> actions,  List<TypeModel> actionTypes) {
-        EditActionViewController editActionDialog = new EditActionViewController(action, actions, actionTypes, this);
+    public void showActionEditDialog(ActionModel action, List<StateModel> states,  List<TypeModel> actionTypes) {
+        EditActionViewController editActionDialog = new EditActionViewController(action, states, actionTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 

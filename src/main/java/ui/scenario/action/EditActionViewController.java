@@ -8,6 +8,7 @@ package ui.scenario.action;
 import com.jfoenix.controls.*;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
 import dao.model.ActionModel;
+import dao.model.StateModel;
 import dao.model.TransitionModel;
 import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
@@ -41,7 +42,7 @@ public class EditActionViewController {
     private JFXComboBox<TypeModel> actionTypeComboBox;
 
     @FXML
-    private JFXComboBox<ActionModel> transitionComboBox;
+    private JFXComboBox<StateModel> transitionComboBox;
 
     @FXML
     private JFXNumericTextField inputTransitionDuration;
@@ -82,10 +83,10 @@ public class EditActionViewController {
     /**
      * Constructor with respective click listener.
      *
-     * @param actions
+     * @param states
      * @param listener
      */
-    public EditActionViewController(ActionModel action, List<ActionModel> actions, List<TypeModel> actionTypes, OnScenarioEditActionClickListener listener) {
+    public EditActionViewController(ActionModel action, List<StateModel> states, List<TypeModel> actionTypes, OnScenarioEditActionClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditActionDialog.fxml"));
@@ -97,41 +98,45 @@ public class EditActionViewController {
         }
 
         setupAction(action);
-        setupUI(actions, actionTypes);
+        setupUI(states, actionTypes);
     }
 
     private void setupAction(ActionModel action) {
         this.mActionModel = action;
     }
 
-    private void setupUI(List<ActionModel> actions, List<TypeModel> actionTypes) {
+    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
         this.actionTypeComboBox.setValue(new TypeModel(-1, -1, mActionModel.getName()));
 
         this.actionTypeComboBox.getItems().addAll(actionTypes);
         new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
 
         // Init Transition ComboBox
-        this.transitionComboBox.getItems().add(new ActionModel(-1, "NONE"));
-        this.transitionComboBox.getItems().addAll(actions);
+        this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
+        this.transitionComboBox.getItems().addAll(states);
 
         this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
 
         // Set selected Transition
         if (mActionModel.getTransition() != null) {
-            this.transitionComboBox.getSelectionModel().select(new ActionModel(mActionModel.getTransition().getStateId(), ""));
+            this.transitionComboBox.getSelectionModel().select(
+                    new StateModel(this.mActionModel.getTransition().getStateId(), ""));
             this.inputTransitionDuration.setText(mActionModel.getTransition().getDuration() + "");
+        } else {
+            // No defined transition on creation
+            this.transitionComboBox.getSelectionModel().select(0);
+            this.inputTransitionDuration.setDisable(true);
         }
 
         // Set selected Category
         this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory().getId());
 
-
         /*
          * Set Listeners and Bindings
          */
-        this.transitionComboBox.valueProperty().addListener(new ChangeListener<ActionModel>() {
+        this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
             @Override
-            public void changed(ObservableValue<? extends ActionModel> observable, ActionModel oldValue, ActionModel newValue) {
+            public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
                 if (newValue.getId() == -1) {
                     inputTransitionDuration.setDisable(true);
                 } else {
