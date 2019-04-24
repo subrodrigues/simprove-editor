@@ -50,6 +50,12 @@
                             </JFXComboBox>
 
                              <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
+                                 <validators>
+                                     <RequiredFieldValidator message="Input Required!">
+                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                     </RequiredFieldValidator>
+                                 </validators>
+
                                  <HBox.margin>
                                  <Insets left="10.0" />
                               </HBox.margin></JFXNumericTextField>
