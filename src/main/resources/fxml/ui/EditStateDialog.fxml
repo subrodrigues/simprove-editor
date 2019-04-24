@@ -49,7 +49,7 @@
                              <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
                             </JFXComboBox>
 
-                             <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Timer limit (seconds)?" styleClass="edit-dialog-parameter-input">
+                             <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
                                  <validators>
                                      <RequiredFieldValidator message="Input Required!">
                                          <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
