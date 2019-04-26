@@ -286,7 +286,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      * @param signals
      */
     private void showNewSignalDialog(List<SignalTemplateModel> signals) {
-        Stage stage = (Stage) signalsRootPane.getScene().getWindow();
+        Stage stage = (Stage) newStateRoot.getScene().getWindow();
 
         NewSignalViewController newSignalDialog = new NewSignalViewController(signals, 1, this);
 

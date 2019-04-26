@@ -8,16 +8,24 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
 import dao.model.*;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import ui.widgets.AutoCompleteComboBoxListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewSignalViewController {
@@ -41,6 +49,9 @@ public class NewSignalViewController {
     private SignalModel mSignalModel;
     private OnNewSignalClickListener mListener;
     private int mStateId = -1;
+
+    private List<SignalTemplateModel> mSignalTypes;
+
 
     public interface OnNewSignalClickListener {
         void onNewSignalAcceptClicked(SignalModel newSignalModel);
@@ -79,10 +90,13 @@ public class NewSignalViewController {
     }
 
     private void setupUI(List<SignalTemplateModel> signals) {
+        this.mSignalTypes = signals;
 
         // Init Signals ComboBox
-        this.signalTypeComboBox.getItems().addAll(signals);
-        this.signalTypeComboBox.getSelectionModel().selectFirst();
+        this.signalTypeComboBox.getItems().addAll(this.mSignalTypes);
+        new AutoCompleteComboBoxListener<>(this.signalTypeComboBox);
+        this.signalTypeComboBox.setEditable(true);
+
 
         /*
          * Set Listeners and Bindings
@@ -100,12 +114,11 @@ public class NewSignalViewController {
         });
 
 
-//        this.acceptButton.disableProperty().bind(
-//                Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
-//                        this.categoryComboBox.valueProperty().isNull())
-//        );
+        this.acceptButton.disableProperty().bind(
+                Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
+
 
         // TODO
 

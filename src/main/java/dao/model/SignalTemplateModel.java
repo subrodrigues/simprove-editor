@@ -28,6 +28,11 @@ public class SignalTemplateModel {
         this.physicalOptions = physicalOptions;
     }
 
+    public SignalTemplateModel(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
