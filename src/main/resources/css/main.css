@@ -1169,6 +1169,13 @@
     -fx-text-fill: -fx-decorator-light-color;
 }
 
+.right-sided-dialog-parameter-title{
+    -fx-font-size: 16.0;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: -fx-decorator-light-color;
+    -fx-alignment: right;
+}
+
 .edit-dialog-parameter-input{
     -fx-font-size: 17.0;
     -fx-font-weight: NORMAL;

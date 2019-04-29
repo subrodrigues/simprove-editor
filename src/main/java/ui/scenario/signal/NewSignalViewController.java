@@ -8,24 +8,19 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
 import dao.model.*;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import ui.widgets.AutoCompleteComboBoxListener;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewSignalViewController {
@@ -40,6 +35,12 @@ public class NewSignalViewController {
     private JFXSlider signalNumericValue;
 
     @FXML
+    private Text numericValue;
+
+    @FXML
+    private Text numericValueUnit;
+
+    @FXML
     private JFXButton acceptButton;
 
     @FXML
@@ -51,6 +52,8 @@ public class NewSignalViewController {
     private int mStateId = -1;
 
     private List<SignalTemplateModel> mSignalTypes;
+
+    private SignalTemplateModel mCurrentItem;
 
 
     public interface OnNewSignalClickListener {
@@ -97,31 +100,50 @@ public class NewSignalViewController {
         new AutoCompleteComboBoxListener<>(this.signalTypeComboBox);
         this.signalTypeComboBox.setEditable(true);
 
-
         /*
          * Set Listeners and Bindings
          */
-        this.signalTypeComboBox.valueProperty().addListener(new ChangeListener<SignalTemplateModel>() {
+        this.signalTypeComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends SignalTemplateModel> observable, SignalTemplateModel oldValue, SignalTemplateModel newValue) {
-                if (newValue.getId() == -1) {
-                    //TODO: Remove/disable input type
-//                    inputTransitionDuration.setDisable(true);
-                } else {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+                    signalNumericValue.setDisable(false);
+
+                    mCurrentItem = mSignalTypes.get((Integer) newValue);
+
+                    numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
+
+                    signalNumericValue.setMin(mCurrentItem.getMinRange());
+                    signalNumericValue.setMax(mCurrentItem.getMaxRange());
+
+                    // Binds the label value to the slider changes
+                    String granularity = String.valueOf(mCurrentItem.getGranularity());
+                    String fractionalStr = granularity.substring(granularity.indexOf('.')+1);
+
+
+                    numericValue.textProperty().bind(
+                        Bindings.format(
+                                "%." + fractionalStr + "f", // "%.2f"
+                                signalNumericValue.valueProperty()
+                        )
+                    );
+
+                    signalNumericValue.requestLayout();
+
+                    mCurrentItem = mSignalTypes.get((Integer) newValue);
                     //TODO: Check type and create value input
-                }
             }
+
         });
 
-
+        this.acceptButton.setDisable(true);
         this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
 
-
         // TODO
-
+        this.signalNumericValue.setDisable(true);
 
     }
 

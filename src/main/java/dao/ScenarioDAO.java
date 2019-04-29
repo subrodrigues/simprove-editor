@@ -268,7 +268,7 @@ public class ScenarioDAO {
                 "mmHg",
                 0,
                 1000,
-                1,
+                .0f,
                 null));
 
         signals.add(new SignalTemplateModel(1, 0,
@@ -276,7 +276,7 @@ public class ScenarioDAO {
                 "mmHg",
                 0,
                 1000,
-                1,
+                .0f,
                 null));
 
         signals.add(new SignalTemplateModel(2, 0,
@@ -284,7 +284,7 @@ public class ScenarioDAO {
                 "bpm ",
                 0,
                 200,
-                1,
+                .0f,
                 null));
 
         signals.add(new SignalTemplateModel(3, 0,
@@ -292,9 +292,15 @@ public class ScenarioDAO {
                 "mg/dl ",
                 0,
                 600,
-                1,
+                .0f,
                 null));
-
+        signals.add(new SignalTemplateModel(3, 0,
+                "Body Temperature",
+                "ºC ",
+                0,
+                100,
+                .1f,
+                null));
         List<String> rashOptions = new ArrayList<String>();
         rashOptions.add("Absent");
         rashOptions.add("Present");
@@ -303,7 +309,7 @@ public class ScenarioDAO {
                 "mg/dl ",
                 -1,
                 -1,
-                1,
+                .0f,
                 rashOptions));
 
         EventBus.getDefault().post(new SignalTypesEvent(signals));

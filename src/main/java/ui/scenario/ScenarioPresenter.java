@@ -37,6 +37,7 @@ public class ScenarioPresenter {
         mDAO = new ScenarioDAO();
 
         actionTypes = new ArrayList<TypeModel>();
+        signalTypes = new ArrayList<SignalTemplateModel>();
         mDAO.requestDefaultActionTypes();
         mDAO.requestDefaultSignals();
 
