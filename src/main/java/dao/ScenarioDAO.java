@@ -302,11 +302,13 @@ public class ScenarioDAO {
                 .1f,
                 null));
         List<String> rashOptions = new ArrayList<String>();
+
+
         rashOptions.add("Absent");
         rashOptions.add("Present");
         signals.add(new SignalTemplateModel(4, 1,
                 "Rash",
-                "mg/dl ",
+                null,
                 -1,
                 -1,
                 .0f,

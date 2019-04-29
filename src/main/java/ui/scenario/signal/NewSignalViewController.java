@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -46,13 +47,18 @@ public class NewSignalViewController {
     @FXML
     private JFXButton cancelButton;
 
+    @FXML
+    private GridPane numericValueContainer;
+
+    @FXML
+    private JFXComboBox physicalOptionComboBox;
+
     // Private variables
     private SignalModel mSignalModel;
     private OnNewSignalClickListener mListener;
     private int mStateId = -1;
 
     private List<SignalTemplateModel> mSignalTypes;
-
     private SignalTemplateModel mCurrentItem;
 
 
@@ -107,30 +113,34 @@ public class NewSignalViewController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-                    signalNumericValue.setDisable(false);
+                    numericValueContainer.setVisible(true);
+                    physicalOptionComboBox.setVisible(false);
 
                     mCurrentItem = mSignalTypes.get((Integer) newValue);
 
-                    numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
+                    if(mCurrentItem.getType() == 0) {
+                        numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
 
-                    signalNumericValue.setMin(mCurrentItem.getMinRange());
-                    signalNumericValue.setMax(mCurrentItem.getMaxRange());
+                        signalNumericValue.setMin(mCurrentItem.getMinRange());
+                        signalNumericValue.setMax(mCurrentItem.getMaxRange());
 
-                    // Binds the label value to the slider changes
-                    String granularity = String.valueOf(mCurrentItem.getGranularity());
-                    String fractionalStr = granularity.substring(granularity.indexOf('.')+1);
+                        // Binds the label value to the slider changes
+                        String granularity = String.valueOf(mCurrentItem.getGranularity());
+                        String fractionalStr = granularity.substring(granularity.indexOf('.') + 1);
 
+                        numericValue.textProperty().bind(
+                                Bindings.format(
+                                        "%." + fractionalStr + "f", // "%.2f"
+                                        signalNumericValue.valueProperty()
+                                )
+                        );
 
-                    numericValue.textProperty().bind(
-                        Bindings.format(
-                                "%." + fractionalStr + "f", // "%.2f"
-                                signalNumericValue.valueProperty()
-                        )
-                    );
+                        signalNumericValue.requestLayout();
+                    } else{
+                        numericValueContainer.setVisible(false);
+                        physicalOptionComboBox.setVisible(true);
+                    }
 
-                    signalNumericValue.requestLayout();
-
-                    mCurrentItem = mSignalTypes.get((Integer) newValue);
                     //TODO: Check type and create value input
             }
 
@@ -141,9 +151,6 @@ public class NewSignalViewController {
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
-
-        // TODO
-        this.signalNumericValue.setDisable(true);
 
     }
 
