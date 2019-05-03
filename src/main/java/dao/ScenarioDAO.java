@@ -267,7 +267,7 @@ public class ScenarioDAO {
                 "Arterial Blood Pressure",
                 "mmHg",
                 0,
-                1000,
+                500,
                 .0f,
                 null));
 
@@ -275,7 +275,7 @@ public class ScenarioDAO {
                 "Diastolic Blood Pressure",
                 "mmHg",
                 0,
-                1000,
+                500,
                 .0f,
                 null));
 

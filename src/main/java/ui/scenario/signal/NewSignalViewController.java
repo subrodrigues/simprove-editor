@@ -51,7 +51,7 @@ public class NewSignalViewController {
     private GridPane numericValueContainer;
 
     @FXML
-    private JFXComboBox physicalOptionComboBox;
+    private JFXComboBox<String> physicalOptionComboBox;
 
     // Private variables
     private SignalModel mSignalModel;
@@ -112,38 +112,16 @@ public class NewSignalViewController {
         this.signalTypeComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                mCurrentItem = mSignalTypes.get((Integer) newValue);
 
-                    numericValueContainer.setVisible(true);
-                    physicalOptionComboBox.setVisible(false);
+                if (mCurrentItem.getType() == 0) {
+                    showNumericSignalUI();
+                } else {
+                    showCategoricalSignalUI();
+                }
 
-                    mCurrentItem = mSignalTypes.get((Integer) newValue);
-
-                    if(mCurrentItem.getType() == 0) {
-                        numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
-
-                        signalNumericValue.setMin(mCurrentItem.getMinRange());
-                        signalNumericValue.setMax(mCurrentItem.getMaxRange());
-
-                        // Binds the label value to the slider changes
-                        String granularity = String.valueOf(mCurrentItem.getGranularity());
-                        String fractionalStr = granularity.substring(granularity.indexOf('.') + 1);
-
-                        numericValue.textProperty().bind(
-                                Bindings.format(
-                                        "%." + fractionalStr + "f", // "%.2f"
-                                        signalNumericValue.valueProperty()
-                                )
-                        );
-
-                        signalNumericValue.requestLayout();
-                    } else{
-                        numericValueContainer.setVisible(false);
-                        physicalOptionComboBox.setVisible(true);
-                    }
-
-                    //TODO: Check type and create value input
+                //TODO: Check type and create value input
             }
-
         });
 
         this.acceptButton.setDisable(true);
@@ -151,7 +129,43 @@ public class NewSignalViewController {
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
+    }
 
+    /**
+     * Method that updates the dialog window to the Categorical interface
+     */
+    private void showCategoricalSignalUI() {
+        this.numericValueContainer.setVisible(false);
+        this.physicalOptionComboBox.setVisible(true);
+
+        this.physicalOptionComboBox.getItems().clear();
+        this.physicalOptionComboBox.getItems().addAll(mCurrentItem.getPhysicalOptions());
+    }
+
+    /**
+     * Method that updates the dialog window to the Numerical interface
+     */
+    private void showNumericSignalUI() {
+        this.numericValueContainer.setVisible(true);
+        this.physicalOptionComboBox.setVisible(false);
+
+        numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
+
+        signalNumericValue.setMin(mCurrentItem.getMinRange());
+        signalNumericValue.setMax(mCurrentItem.getMaxRange());
+
+        // Binds the label value to the slider changes
+        String granularity = String.valueOf(mCurrentItem.getGranularity());
+        String fractionalStr = granularity.substring(granularity.indexOf('.') + 1);
+
+        numericValue.textProperty().bind(
+                Bindings.format(
+                        "%." + fractionalStr + "f", // "%.2f"
+                        signalNumericValue.valueProperty()
+                )
+        );
+
+        signalNumericValue.requestLayout();
     }
 
     /**

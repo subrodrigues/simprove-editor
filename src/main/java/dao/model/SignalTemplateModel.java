@@ -14,6 +14,14 @@ public class SignalTemplateModel {
     private String unit;
     private float minRange;
     private float maxRange;
+
+    /**
+     * Granularity explanation.
+     *
+     * # .0f means 0 decimal cases (i.e. integer)
+     * # .1f means 1 decimal case
+     * # and so on...
+     */
     private float granularity;
     private List<String> physicalOptions;
 

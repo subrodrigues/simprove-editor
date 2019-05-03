@@ -14,13 +14,10 @@
 <?import javafx.scene.text.Text?>
 
 <!--
-  ~ Created by Filipe André Rodrigues on 15-04-2019 17:49
-  -->
-<!--
   ~ Created by Filipe André Rodrigues on 13-03-2019 19:29
   -->
 
-<StackPane fx:id="newSignalRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="newSignalRoot" maxHeight="300.0" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
@@ -31,7 +28,7 @@
                                 <Insets top="16.0" />
                             </StackPane.margin>
                         </Text>
-                        <VBox prefHeight="200.0" prefWidth="100.0" StackPane.alignment="CENTER">
+                        <VBox prefWidth="100.0" StackPane.alignment="CENTER">
                             <children>
 
                                 <HBox>
@@ -49,13 +46,23 @@
                                 </HBox>
 
                                 <!-- Signal Numeric type -->
-                                <VBox alignment="CENTER_LEFT">
-                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
+                                <HBox alignment="CENTER_LEFT">
+                                    <VBox alignment="CENTER_LEFT" minWidth="84">
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
+                                    </VBox>
+
+                                    <JFXComboBox fx:id="physicalOptionComboBox" prefHeight="30.0" prefWidth="1920" promptText="Select a Categorical Value" styleClass="combo-box" visible="false" StackPane.alignment="CENTER_LEFT">
+                                        <validators>
+                                            <RequiredFieldValidator message="Category Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                    </JFXComboBox>
 
                                     <VBox.margin>
                                         <Insets top="32.0" />
                                     </VBox.margin>
-                                </VBox>
+                                </HBox>
 
                                 <StackPane>
                                 <GridPane fx:id="numericValueContainer" visible="false">
@@ -64,7 +71,7 @@
 
                                     <Text fx:id="numericValueUnit" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                    <JFXSlider showTickMarks="true" showTickLabels="true" fx:id="signalNumericValue" indicatorPosition="RIGHT" maxWidth="Infinity" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                    <JFXSlider fx:id="signalNumericValue" indicatorPosition="RIGHT" maxWidth="Infinity" showTickLabels="true" showTickMarks="true" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
                                         <VBox.margin>
                                             <Insets top="16.0" />
                                         </VBox.margin>
@@ -90,13 +97,6 @@
                                 </GridPane>
                                 <!-- TODO: Signal Categoric type -->
 
-                                <JFXComboBox fx:id="physicalOptionComboBox" prefHeight="30.0" prefWidth="400.0" promptText="Select a Categorical Value" styleClass="combo-box" visible="false" StackPane.alignment="CENTER_LEFT">
-                                    <validators>
-                                        <RequiredFieldValidator message="Category Required!">
-                                            <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                        </RequiredFieldValidator>
-                                    </validators>
-                                </JFXComboBox>
                            <VBox.margin>
                               <Insets top="6.0" />
                            </VBox.margin>
