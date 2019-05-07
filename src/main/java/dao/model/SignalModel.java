@@ -63,4 +63,27 @@ public class SignalModel {
     public void setTemplate(SignalTemplateModel template) {
         this.template = template;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!SignalModel.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final SignalModel other = (SignalModel) obj;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.id;
+        return hash;
+    }
+
 }
