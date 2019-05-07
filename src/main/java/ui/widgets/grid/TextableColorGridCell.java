@@ -23,18 +23,24 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
     private Rectangle mColorRect;
     private String mName;
 
+    private OnTextableColorGridClickListener mListener;
+
+    public interface OnTextableColorGridClickListener {
+        void onSignalGridItemClick(SignalModel clickedItem);
+    }
 
     /**
      * Creates a default ColorGridCell instance.
      */
-    public TextableColorGridCell() {
-        mColorRect = new Rectangle(60, 60);
+    public TextableColorGridCell(OnTextableColorGridClickListener listener) {
+        this.mListener = listener;
 
-        mColorRect.setStroke(Color.valueOf("#616161"));
-        mColorRect.setStrokeWidth(2);
+        this.mColorRect = new Rectangle(60, 60);
 
-        mColorRect.setFill(Color.valueOf(DisplayUtils.getRandomBrightPastelColor()));
+        this.mColorRect.setStroke(Color.valueOf("#616161"));
+        this.mColorRect.setStrokeWidth(2);
 
+        this.mColorRect.setFill(Color.valueOf(DisplayUtils.getRandomBrightPastelColor()));
 
         Text textName = new Text("");
 
@@ -43,10 +49,10 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
 
         double width = textName.getBoundsInLocal().getWidth() + 26;
         pane.setPrefSize(width, 60);
-        mColorRect.widthProperty().bind(pane.prefWidthProperty());
-        mColorRect.heightProperty().bind(pane.prefHeightProperty());
+        this.mColorRect.widthProperty().bind(pane.prefWidthProperty());
+        this.mColorRect.heightProperty().bind(pane.prefHeightProperty());
 
-        pane.getChildren().addAll(mColorRect, textName);
+        pane.getChildren().addAll(this.mColorRect, textName);
         setGraphic(pane);
 
         setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
@@ -54,11 +60,9 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
                 if (event.getClickCount() >= 2) {
-                    //do something when it's clicked
-
+                    mListener.onSignalGridItemClick(getItem());
                 }
             }
-
         });
 
     }

@@ -1,5 +1,5 @@
 /*
- * Created by Filipe André Rodrigues on 15-04-2019 18:11
+ * Created by Filipe André Rodrigues on 07-05-2019 11:41
  */
 
 package ui.scenario.signal;
@@ -7,7 +7,8 @@ package ui.scenario.signal;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
-import dao.model.*;
+import dao.model.SignalModel;
+import dao.model.SignalTemplateModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,7 +25,7 @@ import ui.widgets.AutoCompleteComboBoxListener;
 import java.io.IOException;
 import java.util.List;
 
-public class NewSignalViewController {
+public class EditSignalViewController {
     // UI Bind variables
     @FXML
     private StackPane newSignalRoot;
@@ -42,10 +43,13 @@ public class NewSignalViewController {
     private Text numericValueUnit;
 
     @FXML
-    private JFXButton acceptButton;
+    private JFXButton applyButton;
 
     @FXML
     private JFXButton cancelButton;
+
+    @FXML
+    private JFXButton deleteButton;
 
     @FXML
     private GridPane numericValueContainer;
@@ -55,18 +59,18 @@ public class NewSignalViewController {
 
     // Private variables
     private SignalModel mSignalModel;
-    private OnNewSignalClickListener mListener;
+    private OnEditSignalClickListener mListener;
     private int mStateId = -1;
 
     private List<SignalTemplateModel> mSignalTypes;
     private SignalTemplateModel mCurrentItem;
 
 
-    public interface OnNewSignalClickListener {
-        void onNewSignalAcceptClicked(SignalModel newSignalModel);
+    public interface OnEditSignalClickListener {
+        void onEditSignalAcceptClicked(SignalModel newSignalModel);
     }
 
-    public NewSignalViewController() {
+    public EditSignalViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewSignalDialog.fxml"));
         fxmlLoader.setController(this);
         try {
@@ -82,10 +86,10 @@ public class NewSignalViewController {
      * @param signals
      * @param listener
      */
-    public NewSignalViewController(List<SignalTemplateModel> signals, int id, OnNewSignalClickListener listener) {
+    public EditSignalViewController(SignalModel signal, List<SignalTemplateModel> signals, OnEditSignalClickListener listener) {
         this.mListener = listener;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewSignalDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditSignalDialog.fxml"));
         fxmlLoader.setController(this);
         try {
             newSignalRoot = fxmlLoader.load();
@@ -93,9 +97,15 @@ public class NewSignalViewController {
             throw new RuntimeException(e);
         }
 
-        mSignalModel = new SignalModel(id);
-
+        setupSignal(signal);
         setupUI(signals);
+
+        // Set default values
+        setDefaultSignalData();
+    }
+
+    private void setupSignal(SignalModel signal) {
+        this.mSignalModel = signal;
     }
 
     private void setupUI(List<SignalTemplateModel> signals) {
@@ -114,22 +124,56 @@ public class NewSignalViewController {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 mCurrentItem = mSignalTypes.get((Integer) newValue);
 
-                if (mCurrentItem.isNumericalSignal()) {
-                    showNumericSignalUI();
-                } else {
-                    showCategoricalSignalUI();
-                }
+                showSignalValueData(null);
 
                 //TODO: Check type and create value input
             }
         });
 
-        this.acceptButton.setDisable(true);
-        this.acceptButton.disableProperty().bind(
+        this.applyButton.setDisable(true);
+        this.applyButton.disableProperty().bind(
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
-        this.acceptButton.setOnAction(getNewSignalAcceptClickListener());
+        this.applyButton.setOnAction(getEditSignalAcceptClickListener());
+    }
+
+    /**
+     * Method that sets the default data values
+     */
+    private void setDefaultSignalData() {
+        if(mSignalModel.getTemplate() == null){
+            closeDialogWindow();
+        }
+
+        mCurrentItem = mSignalModel.getTemplate();
+
+        this.mSignalModel.setType(mCurrentItem.getType());
+        this.mSignalModel.setName(mCurrentItem.getName());
+        this.signalTypeComboBox.setValue(mCurrentItem);
+
+        showSignalValueData(mSignalModel);
+    }
+
+    /**
+     * Method that checks current item type and fill the value UI accordingly
+     * @param defaultData
+     */
+    private void showSignalValueData(SignalModel defaultData) {
+
+        if (this.mCurrentItem.isNumericalSignal()) {
+            showNumericSignalUI();
+
+            if(defaultData != null)
+                this.signalNumericValue.setValue(Double.valueOf(defaultData.getValue()));
+        } else {
+            showCategoricalSignalUI();
+
+            if(defaultData != null)
+                this.physicalOptionComboBox.getSelectionModel().select(defaultData.getValue());
+        }
+
+
     }
 
     /**
@@ -203,12 +247,12 @@ public class NewSignalViewController {
     }
 
     /**
-     * Method that implements the Accept new Signal click listener behavior.
+     * Method that implements the Accept edition of the Signal click listener behavior.
      * It updates the mSignalModel with new content and returns it.
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getNewSignalAcceptClickListener() {
+    private EventHandler<ActionEvent> getEditSignalAcceptClickListener() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -225,8 +269,7 @@ public class NewSignalViewController {
 
                 mSignalModel.setTemplate(mCurrentItem);
 
-                mListener.onNewSignalAcceptClicked(mSignalModel);
-
+                mListener.onEditSignalAcceptClicked(mSignalModel);
                 closeDialogWindow();
             }
         };

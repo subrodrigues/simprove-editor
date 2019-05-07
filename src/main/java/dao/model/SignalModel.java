@@ -6,11 +6,15 @@ public class SignalModel {
     private String name;
     private String value;
 
+    private SignalTemplateModel template;
+
     public SignalModel(int id, int type, String name, String value) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.value = value;
+
+        this.template = null;
     }
 
     public SignalModel(int id){
@@ -50,5 +54,13 @@ public class SignalModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public SignalTemplateModel getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(SignalTemplateModel template) {
+        this.template = template;
     }
 }

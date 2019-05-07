@@ -24,8 +24,10 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import jdk.nashorn.internal.runtime.Context;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
+import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.TextableColorGridCell;
@@ -35,7 +37,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener {
+public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener,
+        EditSignalViewController.OnEditSignalClickListener,
+        TextableColorGridCell.OnTextableColorGridClickListener {
     // UI Bind variables
     @FXML
     private StackPane newStateRoot;
@@ -122,7 +126,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             @Override
             public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
                 if (newValue.getId() == -1) {
-                    if(inputTransitionDuration.getText().isEmpty()) {
+                    if (inputTransitionDuration.getText().isEmpty()) {
                         inputTransitionDuration.setText("0");
                         inputTransitionDuration.validate();
                     }
@@ -170,14 +174,33 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
 
         //(top/right/bottom/left)
+        TextableColorGridCell.OnTextableColorGridClickListener context = this;
         signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
-            @Override public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
-                return new TextableColorGridCell();
+            @Override
+            public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
+                return new TextableColorGridCell(context);
             }
         });
 
         this.signalsRootPane.getChildren().add(signalGrid);
         this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
+
+        // Set GridView click listener
+//        signalGrid.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                if (event.getClickCount() == 1) {
+//                    System.out.println("doubleClick");
+//                }
+//                if (event.getClickCount() == 2) {
+//                    System.out.println("doubleClick");
+//                }
+//                if (event.isPrimaryButtonDown()) {
+//                    System.out.println("PrimaryKey event");
+//                }
+//            }
+//        });
+
     }
 
     /**
@@ -185,8 +208,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      *
      * @param signal
      */
-    private void addSignalToGridView(SignalModel signal){
-        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0) ).getItems().add(signal);
+    private void addSignalToGridView(SignalModel signal) {
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().add(signal);
     }
 
     /**
@@ -300,7 +323,31 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth()/1.5, stage.getHeight()/1.5));
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that shows the edit signal window
+     *
+     * @param signals
+     */
+    private void showEditSignalDialog(SignalModel signalToEdit, List<SignalTemplateModel> signals) {
+        Stage stage = (Stage) newStateRoot.getScene().getWindow();
+
+        EditSignalViewController newSignalDialog = new EditSignalViewController(signalToEdit, signals, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
@@ -331,5 +378,15 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     public void onNewSignalAcceptClicked(SignalModel newSignalModel) {
         this.mStateSignals.add(newSignalModel);
         this.addSignalToGridView(newSignalModel);
+    }
+
+    @Override
+    public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
+
+    }
+
+    @Override
+    public void onSignalGridItemClick(SignalModel clickedItem) {
+        showEditSignalDialog(clickedItem, this.mSignalTypes);
     }
 }
