@@ -2,7 +2,6 @@
  * Created by Filipe André Rodrigues on 01-03-2019 23:00
  */
 
-
 package ui.scenario.state;
 
 import com.jfoenix.controls.*;
@@ -33,6 +32,7 @@ import ui.widgets.grid.TextableColorGridCell;
 import utils.TextUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener {
@@ -65,7 +65,9 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private StateModel mStateModel;
     private OnScenarioNewStateClickListener mListener;
     private int mStateId = -1;
+    private List<SignalModel> mStateSignals;
 
+    // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
 
     public interface OnScenarioNewStateClickListener {
@@ -100,7 +102,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             throw new RuntimeException(e);
         }
 
-        mStateModel = new StateModel(states.size());
+        this.mStateSignals = new ArrayList<SignalModel>();
+        this.mStateModel = new StateModel(states.size());
 
         setupUI(states);
     }
@@ -159,7 +162,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     }
 
     private void setupSignalsGrid() {
-
         final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
 
         GridView<SignalModel> signalGrid = new GridView<>(list);
@@ -174,14 +176,17 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             }
         });
 
-        for(int i = 0; i < 20; i++) {
-            SignalModel s = new SignalModel(i, 1, "Signal with a long name " + i, 10);
-            list.add(s);
-        }
-
         this.signalsRootPane.getChildren().add(signalGrid);
-
         this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
+    }
+
+    /**
+     * Method that updates the GridView UI. Adding a new Signal
+     *
+     * @param signal
+     */
+    private void addSignalToGridView(SignalModel signal){
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0) ).getItems().add(signal);
     }
 
     /**
@@ -288,7 +293,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void showNewSignalDialog(List<SignalTemplateModel> signals) {
         Stage stage = (Stage) newStateRoot.getScene().getWindow();
 
-        NewSignalViewController newSignalDialog = new NewSignalViewController(signals, 1, this);
+        NewSignalViewController newSignalDialog = new NewSignalViewController(signals, this.mStateSignals.size(), this);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 
@@ -324,6 +329,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     @Override
     public void onNewSignalAcceptClicked(SignalModel newSignalModel) {
-        //TODO
+        this.mStateSignals.add(newSignalModel);
+        this.addSignalToGridView(newSignalModel);
     }
 }

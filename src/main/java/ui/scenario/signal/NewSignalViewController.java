@@ -114,7 +114,7 @@ public class NewSignalViewController {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 mCurrentItem = mSignalTypes.get((Integer) newValue);
 
-                if (mCurrentItem.getType() == 0) {
+                if (mCurrentItem.isNumericalSignal()) {
                     showNumericSignalUI();
                 } else {
                     showCategoricalSignalUI();
@@ -129,6 +129,7 @@ public class NewSignalViewController {
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
         this.cancelButton.setOnAction(getCancelClickListener());
+        this.acceptButton.setOnAction(getNewSignalAcceptClickListener());
     }
 
     /**
@@ -213,29 +214,14 @@ public class NewSignalViewController {
             public void handle(ActionEvent e) {
 
                 // Set state (type) name
+                mSignalModel.setType(mCurrentItem.getType());
                 mSignalModel.setName(signalTypeComboBox.getEditor().textProperty().getValue());
 
-                // Set/Update transition model
-                // TODO: Fill the fields properly
-//                if (mActionModel.getTransition() != null) {
-//
-//                    // If we removed the Transition
-//                    if (transitionComboBox.getValue().getId() == -1) {
-//                        mActionModel.setTransition(null);
-//                    } else { // If we updated the existing Transition
-//                        mActionModel.getTransition().setDuration(getCurrentTransitionDuration());
-//                        mActionModel.getTransition().setStateId(transitionComboBox.getValue().getId());
-//                    }
-//                } else { // If we didn't have a transition
-//                    // And we are adding a Transition
-//                    if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
-//                        mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-//                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
-//                                transitionComboBox.getValue().getId()));
-//                    }
-//                }
-//
-//                mActionModel.setCategory(categoryComboBox.getValue());
+                if(mCurrentItem.isNumericalSignal()){
+                    mSignalModel.setValue(String.valueOf(signalNumericValue.getValue()));
+                } else {
+                    mSignalModel.setValue(String.valueOf(signalNumericValue.getValue()));
+                }
 
                 mListener.onNewSignalAcceptClicked(mSignalModel);
 

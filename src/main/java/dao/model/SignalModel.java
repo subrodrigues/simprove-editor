@@ -4,9 +4,9 @@ public class SignalModel {
     private int id;
     private int type;
     private String name;
-    private float value;
+    private String value;
 
-    public SignalModel(int id, int type, String name, float value) {
+    public SignalModel(int id, int type, String name, String value) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -17,7 +17,7 @@ public class SignalModel {
         this.id = id;
         this.type = -1;
         this.name = "";
-        this.value = -1;
+        this.value = "";
     }
 
     public int getId() {
@@ -44,11 +44,11 @@ public class SignalModel {
         this.name = name;
     }
 
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

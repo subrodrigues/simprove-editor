@@ -130,4 +130,8 @@ public class SignalTemplateModel {
     public String toString() {
         return this.getName();
     }
+
+    public boolean isNumericalSignal(){
+        return this.type == 0;
+    }
 }
