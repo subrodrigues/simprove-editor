@@ -379,7 +379,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     @Override
     public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
         if(this.mStateSignals.contains(editedSignalModel)){
-            this.mStateSignals.add(this.mStateSignals.indexOf(editedSignalModel), editedSignalModel);
+            this.mStateSignals.set(this.mStateSignals.indexOf(editedSignalModel), editedSignalModel);
 
             updateGridViewSignal(editedSignalModel);
         }
