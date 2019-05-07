@@ -64,7 +64,6 @@ public class SignalModel {
         this.template = template;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

@@ -185,22 +185,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         this.signalsRootPane.getChildren().add(signalGrid);
         this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
 
-        // Set GridView click listener
-//        signalGrid.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                if (event.getClickCount() == 1) {
-//                    System.out.println("doubleClick");
-//                }
-//                if (event.getClickCount() == 2) {
-//                    System.out.println("doubleClick");
-//                }
-//                if (event.isPrimaryButtonDown()) {
-//                    System.out.println("PrimaryKey event");
-//                }
-//            }
-//        });
-
     }
 
     /**
@@ -211,6 +195,17 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void addSignalToGridView(SignalModel signal) {
         ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().add(signal);
     }
+
+    /**
+     * Method that updates the GridView specified item.
+     *
+     * @param editedSignalModel
+     */
+    private void updateGridViewSignal(SignalModel editedSignalModel) {
+        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(editedSignalModel);
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().set(index, editedSignalModel);
+    }
+
 
     /**
      * Method that returns the current Transition duration in case it is defined, -1 otherwise.
@@ -377,12 +372,17 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     @Override
     public void onNewSignalAcceptClicked(SignalModel newSignalModel) {
         this.mStateSignals.add(newSignalModel);
+
         this.addSignalToGridView(newSignalModel);
     }
 
     @Override
     public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
+        if(this.mStateSignals.contains(editedSignalModel)){
+            this.mStateSignals.add(this.mStateSignals.indexOf(editedSignalModel), editedSignalModel);
 
+            updateGridViewSignal(editedSignalModel);
+        }
     }
 
     @Override
