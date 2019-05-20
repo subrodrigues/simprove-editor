@@ -105,10 +105,13 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             throw new RuntimeException(e);
         }
 
-        this.mStateSignals = new ArrayList<SignalModel>();
-        this.mStateModel = new StateModel(states.size());
-
+        setupState(new StateModel(states.size())); // Create new state with index = states.size
         setupUI(states);
+    }
+
+    private void setupState(StateModel state) {
+        this.mStateSignals = new ArrayList<SignalModel>();
+        this.mStateModel = state;
     }
 
     private void setupUI(List<StateModel> states) {

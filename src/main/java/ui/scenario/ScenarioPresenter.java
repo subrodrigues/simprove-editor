@@ -166,7 +166,7 @@ public class ScenarioPresenter {
 
         if(stateIndex != -1){
             //deselectSelectedPane();
-            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates());
+            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates(), this.signalTypes);
         }
     }
 
