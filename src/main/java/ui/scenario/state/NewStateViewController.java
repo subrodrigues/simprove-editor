@@ -24,7 +24,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import jdk.nashorn.internal.runtime.Context;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
@@ -160,7 +159,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         this.acceptButton.setOnAction(getNewStateAcceptClickListener());
 
         this.cancelButton.setOnAction(getCancelClickListener());
-        //TODO
+        // TODO
 
         setupSignalsGrid();
     }
@@ -184,7 +183,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
         this.signalsRootPane.getChildren().add(signalGrid);
         this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
-
     }
 
     /**
@@ -206,6 +204,15 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().set(index, editedSignalModel);
     }
 
+    /**
+     * Method that removes the GridView specified item.
+     *
+     * @param signal
+     */
+    private void removeGridViewSignal(SignalModel signal) {
+//        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(signal);
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().remove(signal);
+    }
 
     /**
      * Method that returns the current Transition duration in case it is defined, -1 otherwise.
@@ -382,6 +389,16 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             this.mStateSignals.set(this.mStateSignals.indexOf(editedSignalModel), editedSignalModel);
 
             updateGridViewSignal(editedSignalModel);
+        }
+    }
+
+    @Override
+    public void onSignalDeleteClicked(SignalModel signal) {
+        int indexToRemove = this.mStateSignals.indexOf(signal);
+
+        if(indexToRemove != -1) {
+            this.mStateSignals.remove(indexToRemove); // clean data
+            this.removeGridViewSignal(signal); // Refresh UI
         }
     }
 

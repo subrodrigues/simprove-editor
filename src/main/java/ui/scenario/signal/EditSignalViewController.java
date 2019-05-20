@@ -4,9 +4,7 @@
 
 package ui.scenario.signal;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.*;
 import dao.model.SignalModel;
 import dao.model.SignalTemplateModel;
 import javafx.beans.binding.Bindings;
@@ -16,9 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.AutoCompleteComboBoxListener;
 
@@ -68,6 +68,8 @@ public class EditSignalViewController {
 
     public interface OnEditSignalClickListener {
         void onEditSignalAcceptClicked(SignalModel newSignalModel);
+
+        void onSignalDeleteClicked(SignalModel signalToDelete);
     }
 
     public EditSignalViewController() {
@@ -134,8 +136,10 @@ public class EditSignalViewController {
         this.applyButton.disableProperty().bind(
                 Bindings.isEmpty(this.signalTypeComboBox.getEditor().textProperty()));
 
-        this.cancelButton.setOnAction(getCancelClickListener());
-        this.applyButton.setOnAction(getEditSignalAcceptClickListener());
+        this.cancelButton.setOnAction(this.getCancelClickListener());
+        this.applyButton.setOnAction(this.getEditSignalAcceptClickListener());
+
+        this.deleteButton.setOnAction(this.getDeleteClickListener());
     }
 
     /**
@@ -172,7 +176,6 @@ public class EditSignalViewController {
             if(defaultData != null)
                 this.physicalOptionComboBox.getSelectionModel().select(defaultData.getValue());
         }
-
 
     }
 
@@ -284,6 +287,57 @@ public class EditSignalViewController {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                closeDialogWindow();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the Delete click listener behavior with confirmation alert.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getDeleteClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                JFXAlert alert = new JFXAlert((Stage) deleteButton.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setOverlayClose(false);
+                JFXDialogLayout layout = new JFXDialogLayout();
+                layout.setHeading(new Label("Confirmation"));
+
+                // Set state (type) name
+                layout.setBody(new Label("Are you sure you want to delete " + mSignalModel.getName() + "? \n"));
+
+                JFXButton noButton = new JFXButton("No");
+
+                JFXButton yesButton = new JFXButton("Yes");
+
+                noButton.getStyleClass().add("alert-cancel");
+                noButton.setOnAction(event -> alert.hideWithAnimation());
+
+                yesButton.getStyleClass().add("alert-accept");
+                yesButton.setOnAction(getDeletePositiveConfirmationClickListener());
+
+                layout.setActions(noButton, yesButton);
+
+                alert.setContent(layout);
+                alert.show();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the positive confirmation to delete the signal.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getDeletePositiveConfirmationClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mListener.onSignalDeleteClicked(mSignalModel);
                 closeDialogWindow();
             }
         };
