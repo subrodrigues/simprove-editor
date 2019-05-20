@@ -15,6 +15,11 @@
   ~ Created by Filipe André Rodrigues on 13-03-2019 17:45
   -->
 
+<?import javafx.scene.layout.Pane?>
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <StackPane fx:id="editActionRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -40,17 +45,6 @@
                                      </RequiredFieldValidator>
                                  </validators>
                              </JFXComboBox>
-
-                             <!--<VBox alignment="CENTER_LEFT" minWidth="84.0">-->
-                                <!--<Text fx:id="actionName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />-->
-                             <!--</VBox>-->
-                             <!--<JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="Action name" styleClass="edit-dialog-parameter-input">-->
-                             <!--<validators>-->
-                                 <!--<RequiredFieldValidator message="Input Required!">-->
-                                     <!--&lt;!&ndash;<MaterialIconView glyphName="WARNING" size="1.2em" />&ndash;&gt;-->
-                                 <!--</RequiredFieldValidator>-->
-                             <!--</validators>-->
-                             <!--</JFXTextField>-->
                          </HBox>
 
                          <HBox>
@@ -78,7 +72,6 @@
                          </HBox>
 
                          <HBox>
-
                              <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                  <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
                              </VBox>
@@ -95,8 +88,87 @@
 
                          </HBox>
 
+                         <HBox>
+                             <VBox alignment="CENTER_LEFT" minWidth="76.0">
+                                 <Text fx:id="isSingle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Complementary Action:" />
+                             </VBox>
+                             <JFXToggleButton styleClass="custom-jfx-toggle-button">
+                                 <HBox.margin>
+                                     <Insets left="-6.0" />
+                                 </HBox.margin>
+                             </JFXToggleButton>
 
-                    </children>
+                             <VBox.margin>
+                                 <Insets top="16.0" />
+                             </VBox.margin>
+                         </HBox>
+
+
+                         <HBox>
+                             <VBox alignment="CENTER_LEFT" minWidth="70.0">
+                                 <Text fx:id="behavior" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Behavior:" />
+                             </VBox>
+                             <JFXRadioButton fx:id="singleBehavior" selected="true" styleClass="custom-jfx-radio-button" text="Single">
+                                 <toggleGroup>
+                                     <ToggleGroup fx:id="behaviorToggleGroup" />
+                                 </toggleGroup>
+                                 <HBox.margin>
+                                     <Insets left="14.0" />
+                                 </HBox.margin>
+                             </JFXRadioButton>
+
+                             <JFXRadioButton fx:id="toggleBehavior" styleClass="custom-jfx-radio-button" text="Toggle" toggleGroup="$behaviorToggleGroup">
+                                 <HBox.margin>
+                                     <Insets left="18.0" />
+                                 </HBox.margin></JFXRadioButton>
+                             <JFXRadioButton fx:id="multipleBehavior" styleClass="custom-jfx-radio-button" text="Multiple" toggleGroup="$behaviorToggleGroup">
+                                 <HBox.margin>
+                                     <Insets left="18.0" />
+                                 </HBox.margin></JFXRadioButton>
+
+                             <VBox.margin>
+                                 <Insets top="14.0" />
+                             </VBox.margin>
+                         </HBox>
+
+                         <VBox alignment="CENTER" minWidth="84.0">
+                             <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals: " />
+
+                             <VBox.margin>
+                                 <Insets top="32.0" />
+                             </VBox.margin>
+                         </VBox>
+
+                         <StackPane fx:id="signalsRootPane" styleClass="colored-grid-style">
+                             <VBox.margin>
+                                 <Insets top="16.0" />
+                             </VBox.margin>
+                         </StackPane>
+
+                         <HBox>
+                             <Pane HBox.hgrow="ALWAYS" />
+                             <JFXButton fx:id="addSignalButton" buttonType="RAISED" prefHeight="34" prefWidth="34" ripplerFill="#212121" styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
+                                 <graphic>
+                                     <StackPane>
+                                         <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-item-grid-icon">
+                                             <StackPane.margin>
+                                                 <Insets />
+                                             </StackPane.margin></MaterialIconView>
+                                     </StackPane>
+                                 </graphic>
+                                 <HBox.margin>
+                                     <Insets top="6.0" />
+                                 </HBox.margin>
+
+                             </JFXButton>
+                             <VBox.margin>
+                                 <Insets bottom="18.0" />
+                             </VBox.margin>
+                         </HBox>
+
+
+
+                     </children>
                      <StackPane.margin>
                         <Insets left="22.0" right="22.0" top="46.0" />
                      </StackPane.margin>
