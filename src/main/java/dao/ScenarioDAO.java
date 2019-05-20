@@ -87,6 +87,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(0, "Start", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 0, "Control"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 1),
@@ -94,6 +95,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(1, "Oximetry", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -101,6 +103,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(2, "ECG", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -108,6 +111,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(3, "Blood Pressure", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -115,6 +119,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(4, "Epinephrine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
@@ -122,6 +127,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(5, "Fluids", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
@@ -129,6 +135,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(6, "Propofol", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -136,6 +143,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(7, "Temperature", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -143,6 +151,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(8, "Desloratadine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -150,6 +159,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(9, "Blood Tests", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -157,6 +167,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(10, "Capillary Refill", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -164,6 +175,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(11, "Basic Life Support", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -171,6 +183,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(12, "Oxygen", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -178,6 +191,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(13, "Diagnosis", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -185,6 +199,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(14, "Anaphylaxis Reaction", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -192,6 +207,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(15, "Pulmonary Edema", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                1,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
@@ -200,6 +216,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(16, "Hemorragic Shock", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Diagnosis"),
+                0,
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,

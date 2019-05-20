@@ -558,7 +558,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @Override
     public void onStateSelectClicked(int stateId) {
         mPresenter.requestSelectStateItem(stateId);
-
     }
 
     /**
@@ -642,12 +641,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 
-        // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
-//        alert.setOverlayClose(false);
-        dialog.setContent(newActDialog.getNewActionItemRootDialog());
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
+        dialog.setContent(newActDialog.getNewActionItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
         dialog.show();
     }

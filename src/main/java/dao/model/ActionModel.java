@@ -11,17 +11,19 @@ public class ActionModel {
     private int id;
     private TypeModel type;
     private TypeModel category;
+    private int isSingle;
     private String name;
     private List<StateModel> stateConditions;
     private List<SignalModel> results;
     private TransitionModel transition;
     private String errorMessage;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isSingle, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.category = category;
+        this.isSingle = isSingle;
         this.stateConditions = stateConditions;
         this.results = results;
         this.transition = transition;
@@ -112,6 +114,14 @@ public class ActionModel {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public int getIsSingle() {
+        return isSingle;
+    }
+
+    public void setIsSingle(int isSingle) {
+        this.isSingle = isSingle;
     }
 
     @Override

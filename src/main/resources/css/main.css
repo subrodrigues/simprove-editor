@@ -259,7 +259,11 @@
 }
 
 .custom-jfx-radio-button {
+    -fx-font-family: "Roboto";
     -fx-font-size: 16.0px;
+    -fx-text-fill: #fafafa;
+    -jfx-selected-color: #212121;
+    -jfx-unselected-color: #8616161;
 }
 
 .custom-jfx-radio-button .radio {
@@ -583,7 +587,7 @@
 }
 
 .custom-jfx-toggle-button {
-    -jfx-toggle-color: -fx-decorator-color-dark;
+    -jfx-toggle-color: #212121;
 }
 
 .custom-jfx-toggle-button-red {

@@ -112,6 +112,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void setupState(StateModel state) {
         this.mStateSignals = new ArrayList<SignalModel>();
         this.mStateModel = state;
+
+        setupSignalsGrid();
     }
 
     private void setupUI(List<StateModel> states) {
@@ -164,7 +166,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         this.cancelButton.setOnAction(getCancelClickListener());
         // TODO
 
-        setupSignalsGrid();
     }
 
     private void setupSignalsGrid() {
@@ -291,6 +292,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
                                 transitionComboBox.getValue().getId()));
                     }
                 }
+
+                mStateModel.setSignals(mStateSignals);
 
                 mListener.onNewStateAcceptClicked(mStateModel);
 

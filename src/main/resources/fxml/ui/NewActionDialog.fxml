@@ -2,8 +2,11 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,115 +24,152 @@
                 <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
                     <children>
                         <Text fx:id="editActionTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Action">
-                     <StackPane.margin>
-                        <Insets top="16.0" />
-                     </StackPane.margin>
+                            <StackPane.margin>
+                                <Insets top="16.0" />
+                            </StackPane.margin>
                         </Text>
-                  <VBox prefHeight="200.0" prefWidth="100.0" StackPane.alignment="CENTER">
-                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" StackPane.alignment="CENTER">
+                            <children>
 
-                         <HBox>
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Action: " />
-                             </VBox>
-                             <JFXComboBox fx:id="actionTypeComboBox" editable="true" prefHeight="30.0" prefWidth="600.0" promptText="Action Type" styleClass="combo-box">
-                                 <validators>
-                                     <RequiredFieldValidator message="Category Required!">
-                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                     </RequiredFieldValidator>
-                                 </validators>
-                             </JFXComboBox>
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actionType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Action: " />
+                                    </VBox>
+                                    <JFXComboBox fx:id="actionTypeComboBox" editable="true" prefHeight="30.0" prefWidth="600.0" promptText="Action Type" styleClass="combo-box">
+                                        <validators>
+                                            <RequiredFieldValidator message="Category Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                    </JFXComboBox>
+                                </HBox>
 
-                             <!--<JFXTextField fx:id="inputName" prefHeight="30.0" prefWidth="200.0" promptText="Action name" styleClass="edit-dialog-parameter-input">-->
-                             <!--<validators>-->
-                                 <!--<RequiredFieldValidator message="Input Required!">-->
-                                     <!--&lt;!&ndash;<MaterialIconView glyphName="WARNING" size="1.2em" />&ndash;&gt;-->
-                                 <!--</RequiredFieldValidator>-->
-                             <!--</validators>-->
-                             <!--</JFXTextField>-->
-                         </HBox>
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actionTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
+                                    </VBox>
+                                    <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
+                                    </JFXComboBox>
 
-                         <HBox>
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="actionTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
-                             </VBox>
-                             <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
-                            </JFXComboBox>
+                                    <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="100.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
+                                        <validators>
+                                            <RequiredFieldValidator message="Input Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
 
-                             <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="100.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
-                                 <validators>
-                                     <RequiredFieldValidator message="Input Required!">
-                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                     </RequiredFieldValidator>
-                                 </validators>
+                                        <HBox.margin>
+                                            <Insets left="10.0" />
+                                        </HBox.margin>
+                                    </JFXNumericTextField>
 
-                                 <HBox.margin>
-                                 <Insets left="10.0" />
-                              </HBox.margin></JFXNumericTextField>
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
 
-                             <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin>
+                                </HBox>
 
-                         </HBox>
+                                <HBox>
 
-                         <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
+                                    </VBox>
+                                    <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Category" styleClass="combo-box">
+                                        <validators>
+                                            <RequiredFieldValidator message="Category Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                    </JFXComboBox>
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
 
-                             <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                 <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
-                             </VBox>
-                             <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Category" styleClass="combo-box">
-                                 <validators>
-                                     <RequiredFieldValidator message="Category Required!">
-                                         <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                     </RequiredFieldValidator>
-                                 </validators>
-                             </JFXComboBox>
-                             <VBox.margin>
-                                 <Insets top="32.0" />
-                             </VBox.margin>
+                                </HBox>
 
-                         </HBox>
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="76.0">
+                                        <Text fx:id="isSingle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Complementary Action:" />
+                                    </VBox>
+                                    <JFXToggleButton styleClass="custom-jfx-toggle-button">
+                                      <HBox.margin>
+                                         <Insets left="-6.0" />
+                                      </HBox.margin>
+                                    </JFXToggleButton>
 
-                            <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signal Results ">
-                           <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin></Text>
+                                    <VBox.margin>
+                                        <Insets top="16.0" />
+                                    </VBox.margin>
+                                </HBox>
 
-                     </children>
-                     <StackPane.margin>
-                        <Insets left="22.0" right="22.0" top="46.0" />
-                     </StackPane.margin>
-                  </VBox>
+
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="70.0">
+                                        <Text fx:id="behavior" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Behavior:" />
+                                    </VBox>
+                                        <JFXRadioButton fx:id="singleBehavior" selected="true" styleClass="custom-jfx-radio-button" text="Single">
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="behaviorToggleGroup" />
+                                            </toggleGroup>
+                                          <HBox.margin>
+                                             <Insets left="14.0" />
+                                          </HBox.margin>
+                                        </JFXRadioButton>
+
+                                        <JFXRadioButton fx:id="toggleBehavior" styleClass="custom-jfx-radio-button" text="Toggle" toggleGroup="$behaviorToggleGroup">
+                                          <HBox.margin>
+                                             <Insets left="18.0" />
+                                          </HBox.margin></JFXRadioButton>
+                                                    <JFXRadioButton fx:id="multipleBehavior" styleClass="custom-jfx-radio-button" text="Multiple" toggleGroup="$behaviorToggleGroup">
+                                          <HBox.margin>
+                                             <Insets left="18.0" />
+                                          </HBox.margin></JFXRadioButton>
+
+                                        <VBox.margin>
+                                            <Insets top="14.0" />
+                                        </VBox.margin>
+                                </HBox>
+
+                                <Text fx:id="actionSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signal Results ">
+                                    <VBox.margin>
+                                        <Insets top="26.0" />
+                                    </VBox.margin>
+                                </Text>
+
+                            </children>
+                            <StackPane.margin>
+                                <Insets left="22.0" right="22.0" top="46.0" />
+                            </StackPane.margin>
+                        </VBox>
                     </children>
                 </StackPane>
                 <StackPane style="-fx-background-color: #fafafa;">
 
                     <HBox alignment="CENTER" StackPane.alignment="CENTER">
 
-                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100"
-                                   styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
-                         <HBox.margin>
-                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                         </HBox.margin></JFXButton>
+                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100" styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </JFXButton>
 
-                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100"
-                                   styleClass="apply-jfx-button-raised" text="Accept" StackPane.alignment="CENTER_RIGHT">
-                         <HBox.margin>
-                            <Insets bottom="10.0" right="10.0" top="10.0" />
-                         </HBox.margin></JFXButton>
+                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100" styleClass="apply-jfx-button-raised" text="Accept" StackPane.alignment="CENTER_RIGHT">
+                            <HBox.margin>
+                                <Insets bottom="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </JFXButton>
                     </HBox>
                     <StackPane.margin>
-                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </StackPane.margin>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </VBox.margin>
-            </StackPane>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </StackPane.margin>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                    </VBox.margin>
+                </StackPane>
             </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
         </VBox>
     </children>
 </StackPane>

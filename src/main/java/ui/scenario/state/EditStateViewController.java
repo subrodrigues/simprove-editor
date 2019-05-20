@@ -119,6 +119,8 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     private void setupState(StateModel state) {
         this.mStateSignals = new ArrayList<SignalModel>();
         this.mStateModel = state;
+
+        setupSignalsGrid(state.getSignals());
     }
 
     private void setupUI(List<StateModel> states) {
@@ -174,12 +176,10 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
         this.deleteButton.setOnAction(getDeleteClickListener());
 
         this.cancelButton.setOnAction(getCancelClickListener());
-
-        setupSignalsGrid();
     }
 
-    private void setupSignalsGrid() {
-        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
+    private void setupSignalsGrid(List<SignalModel> signals) {
+        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList(signals);
 
         GridView<SignalModel> signalGrid = new GridView<>(list);
         signalGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for

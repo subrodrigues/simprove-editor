@@ -171,7 +171,17 @@ public class NewActionViewController {
         return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
     }
 
-    public StackPane getNewActionItemRootDialog() {
+    /**
+     * Method that returns the root view with a specific width and height
+     *
+     * @param width
+     * @param height
+     * @return StacePane (root view)
+     */
+    public StackPane getNewActionItemRootDialog(double width, double height) {
+        newActionRoot.setPrefWidth(width);
+        newActionRoot.setPrefHeight(height);
+
         return newActionRoot;
     }
 
