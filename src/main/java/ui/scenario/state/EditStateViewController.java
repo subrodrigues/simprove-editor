@@ -136,7 +136,12 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
         if (mStateModel.getTransition() != null) {
             this.transitionComboBox.getSelectionModel().select(new StateModel(mStateModel.getTransition().getStateId(), ""));
             this.inputTransitionDuration.setText(mStateModel.getTransition().getDuration() + "");
+        } else {
+            // No defined transition on creation
+            this.transitionComboBox.getSelectionModel().select(0);
+            this.inputTransitionDuration.setDisable(true);
         }
+
 
         /*
          * Set Listeners and Bindings
