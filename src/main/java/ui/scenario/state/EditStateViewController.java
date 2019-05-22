@@ -142,7 +142,6 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
             this.inputTransitionDuration.setDisable(true);
         }
 
-
         /*
          * Set Listeners and Bindings
          */

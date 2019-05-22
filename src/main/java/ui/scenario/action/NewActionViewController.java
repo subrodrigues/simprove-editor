@@ -4,9 +4,7 @@
 
 package ui.scenario.action;
 
-import com.jfoenix.controls.JFXAlert;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.*;
 import dao.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -18,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -67,6 +66,12 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     @FXML
     private JFXButton addSignalButton;
+
+    @FXML
+    private JFXToggleButton isComplActionToggleBtn;
+
+    @FXML
+    private ToggleGroup behaviorToggleGroup;
 
     // Private variables
     private ActionModel mActionModel;
@@ -313,6 +318,12 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
                 mActionModel.setCategory(categoryComboBox.getValue());
                 mActionModel.setResults(mActionSignals);
+
+                // Set the complementary action flag
+                mActionModel.setIsComplActionToggleBtn(isComplActionToggleBtn.isSelected() ? 0 : 1);
+
+                // Set Behavior
+                mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 

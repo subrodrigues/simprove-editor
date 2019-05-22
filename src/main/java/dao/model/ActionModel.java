@@ -11,19 +11,21 @@ public class ActionModel {
     private int id;
     private TypeModel type;
     private TypeModel category;
-    private int isSingle;
+    private int isComplActionToggleBtn;
+    private String behavior;
     private String name;
     private List<StateModel> stateConditions;
     private List<SignalModel> results;
     private TransitionModel transition;
     private String errorMessage;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isSingle, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isComplActionToggleBtn, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.category = category;
-        this.isSingle = isSingle;
+        this.isComplActionToggleBtn = isComplActionToggleBtn;
+        this.behavior = behavior;
         this.stateConditions = stateConditions;
         this.results = results;
         this.transition = transition;
@@ -116,12 +118,20 @@ public class ActionModel {
         this.errorMessage = errorMessage;
     }
 
-    public int getIsSingle() {
-        return isSingle;
+    public int getIsComplActionToggleBtn() {
+        return isComplActionToggleBtn;
     }
 
-    public void setIsSingle(int isSingle) {
-        this.isSingle = isSingle;
+    public void setIsComplActionToggleBtn(int isComplActionToggleBtn) {
+        this.isComplActionToggleBtn = isComplActionToggleBtn;
+    }
+
+    public String getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(String behavior) {
+        this.behavior = behavior;
     }
 
     @Override

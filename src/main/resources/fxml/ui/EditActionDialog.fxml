@@ -90,9 +90,9 @@
 
                          <HBox>
                              <VBox alignment="CENTER_LEFT" minWidth="76.0">
-                                 <Text fx:id="isSingle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Complementary Action:" />
+                                 <Text  fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Complementary Action:" />
                              </VBox>
-                             <JFXToggleButton styleClass="custom-jfx-toggle-button">
+                             <JFXToggleButton fx:id="isComplActionToggleBtn" styleClass="custom-jfx-toggle-button">
                                  <HBox.margin>
                                      <Insets left="-6.0" />
                                  </HBox.margin>
@@ -108,7 +108,7 @@
                              <VBox alignment="CENTER_LEFT" minWidth="70.0">
                                  <Text fx:id="behavior" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Behavior:" />
                              </VBox>
-                             <JFXRadioButton fx:id="singleBehavior" selected="true" styleClass="custom-jfx-radio-button" text="Single">
+                             <JFXRadioButton selected="true" styleClass="custom-jfx-radio-button" text="Single">
                                  <toggleGroup>
                                      <ToggleGroup fx:id="behaviorToggleGroup" />
                                  </toggleGroup>

@@ -17,7 +17,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -73,6 +76,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     @FXML
     private JFXButton addSignalButton;
+
+    @FXML
+    private JFXToggleButton isComplActionToggleBtn;
+
+    @FXML
+    private ToggleGroup behaviorToggleGroup;
 
     // Private variables
     private ActionModel mActionModel;
@@ -157,6 +166,16 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         // Set selected Category
         this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory().getId());
 
+        // Set Complementary Action flag
+        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplActionToggleBtn() == 0);
+
+        // Set behavior option
+        this.behaviorToggleGroup.getToggles().forEach(toggle -> {
+            if(((JFXRadioButton)toggle).getText().equals(mActionModel.getBehavior())) {
+                toggle.setSelected(true);
+            }
+        });
+
         /*
          * Set Listeners and Bindings
          */
@@ -175,12 +194,6 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 }
             }
         });
-
-//        this.inputName.focusedProperty().addListener((o, oldVal, newVal) -> {
-//            if (!newVal) {
-//                this.inputName.validate();
-//            }
-//        });
 
         this.actionTypeComboBox.getEditor().textProperty()
                 .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
@@ -291,6 +304,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
                 mActionModel.setCategory(categoryComboBox.getValue());
                 mActionModel.setResults(mActionSignals);
+
+                // Set the complementary action flag
+                mActionModel.setIsComplActionToggleBtn(isComplActionToggleBtn.isSelected() ? 0 : 1);
+
+                // Set Behavior
+                mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
 
                 mListener.onActionEditApplyClicked(mActionModel);
                 closeDialogWindow();
