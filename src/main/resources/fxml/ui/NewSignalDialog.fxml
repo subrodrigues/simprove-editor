@@ -71,7 +71,7 @@
 
                                     <Text fx:id="numericValueUnit" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                    <JFXSlider fx:id="signalNumericValue" indicatorPosition="RIGHT" maxWidth="Infinity" showTickLabels="true" showTickMarks="true" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                    <JFXSlider fx:id="signalNumericValue" indicatorPosition="LEFT" maxWidth="Infinity" showTickLabels="true" showTickMarks="true" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
                                         <VBox.margin>
                                             <Insets top="16.0" />
                                         </VBox.margin>

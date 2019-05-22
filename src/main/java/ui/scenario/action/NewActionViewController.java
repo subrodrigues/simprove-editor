@@ -4,36 +4,45 @@
 
 package ui.scenario.action;
 
+import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import dao.model.ActionModel;
-import dao.model.StateModel;
-import dao.model.TransitionModel;
-import dao.model.TypeModel;
+import dao.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import org.controlsfx.control.GridCell;
+import org.controlsfx.control.GridView;
+import ui.scenario.signal.EditSignalViewController;
+import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
+import ui.widgets.grid.TextableColorGridCell;
 import utils.ConstantUtils;
 import utils.TextUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class NewActionViewController {
+public class NewActionViewController implements NewSignalViewController.OnNewSignalClickListener,
+        EditSignalViewController.OnEditSignalClickListener,
+        TextableColorGridCell.OnTextableColorGridClickListener{
     // UI Bind variables
     @FXML
     private StackPane newActionRoot;
-
-//    @FXML
-//    private JFXTextField inputName;
 
     @FXML
     private JFXComboBox<TypeModel> actionTypeComboBox;
@@ -53,10 +62,20 @@ public class NewActionViewController {
     @FXML
     private JFXButton cancelButton;
 
+    @FXML
+    private StackPane signalsRootPane;
+
+    @FXML
+    private JFXButton addSignalButton;
+
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioNewActionClickListener mListener;
     private int mStateId = -1;
+    private List<SignalModel> mActionSignals;
+
+    // Available Signals
+    private List<SignalTemplateModel> mSignalTypes;
 
     public interface OnScenarioNewActionClickListener {
         void onNewActionAcceptClicked(ActionModel newActionModel);
@@ -79,8 +98,9 @@ public class NewActionViewController {
      * @param actionTypes
      * @param listener
      */
-    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, OnScenarioNewActionClickListener listener) {
+    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, List<SignalTemplateModel> signalTypes, OnScenarioNewActionClickListener listener) {
         this.mListener = listener;
+        this.mSignalTypes = signalTypes;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewActionDialog.fxml"));
         fxmlLoader.setController(this);
@@ -90,9 +110,16 @@ public class NewActionViewController {
             throw new RuntimeException(e);
         }
 
-        mActionModel = new ActionModel(actions.size());
-
+        setupAction(actions.size());
         setupUI(states, actionTypes);
+    }
+
+
+    private void setupAction(int id) {
+        this.mActionSignals = new ArrayList<SignalModel>();
+        this.mActionModel = new ActionModel(id);
+
+        setupSignalsGrid();
     }
 
     private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
@@ -163,6 +190,62 @@ public class NewActionViewController {
     }
 
     /**
+     *  // TODO: Refactor this signals behavior into a parent class
+     */
+    private void setupSignalsGrid() {
+        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
+
+        GridView<SignalModel> signalGrid = new GridView<>(list);
+        signalGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
+        signalGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
+        signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
+
+        //(top/right/bottom/left)
+        TextableColorGridCell.OnTextableColorGridClickListener context = this;
+        signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
+            @Override
+            public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
+                return new TextableColorGridCell(context);
+            }
+        });
+
+        this.signalsRootPane.getChildren().add(signalGrid);
+        this.addSignalButton.setOnAction(getNewSignalClickListener(this.mSignalTypes));
+    }
+
+    /**
+     * Method that updates the GridView UI. Adding a new Signal
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param signal
+     */
+    private void addSignalToGridView(SignalModel signal) {
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().add(signal);
+    }
+
+    /**
+     * Method that updates the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param editedSignalModel
+     */
+    private void updateGridViewSignal(SignalModel editedSignalModel) {
+        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(editedSignalModel);
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().set(index, editedSignalModel);
+    }
+
+    /**
+     * Method that removes the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param signal
+     */
+    private void removeGridViewSignal(SignalModel signal) {
+//        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(signal);
+        ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().remove(signal);
+    }
+
+    /**
      * Method that returns the current Transition duration in case it is defined, -1 otherwise.
      *
      * @return duration value or -1
@@ -229,6 +312,7 @@ public class NewActionViewController {
                 }
 
                 mActionModel.setCategory(categoryComboBox.getValue());
+                mActionModel.setResults(mActionSignals);
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 
@@ -249,6 +333,109 @@ public class NewActionViewController {
                 closeDialogWindow();
             }
         };
+    }
+
+    /**
+     * Method that shows the add new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param signals
+     */
+    private void showNewSignalDialog(List<SignalTemplateModel> signals) {
+        Stage stage = (Stage) newActionRoot.getScene().getWindow();
+
+        NewSignalViewController newSignalDialog = new NewSignalViewController(signals, this.mActionSignals.size(), this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that shows the edit signal window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param signals
+     */
+    private void showEditSignalDialog(SignalModel signalToEdit, List<SignalTemplateModel> signals) {
+        Stage stage = (Stage) newActionRoot.getScene().getWindow();
+
+        EditSignalViewController newSignalDialog = new EditSignalViewController(signalToEdit, signals, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that implements the action behavior to launch a new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewSignalClickListener(List<SignalTemplateModel> signals) {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showNewSignalDialog(signals);
+            }
+        };
+    }
+
+
+
+    /********************************************************************************************************************
+     * CALLBACKS INTERFACE                                                                                              *
+     ********************************************************************************************************************/
+
+    @Override
+    public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
+        if(this.mActionSignals.contains(editedSignalModel)){
+            this.mActionSignals.set(this.mActionSignals.indexOf(editedSignalModel), editedSignalModel);
+
+            updateGridViewSignal(editedSignalModel);
+        }
+    }
+
+    @Override
+    public void onSignalDeleteClicked(SignalModel signal) {
+        int indexToRemove = this.mActionSignals.indexOf(signal);
+
+        if(indexToRemove != -1) {
+            this.mActionSignals.remove(indexToRemove); // clean data
+            this.removeGridViewSignal(signal); // Refresh UI
+        }
+    }
+
+    @Override
+    public void onNewSignalAcceptClicked(SignalModel newSignalModel) {
+        this.mActionSignals.add(newSignalModel);
+
+        this.addSignalToGridView(newSignalModel);
+    }
+
+    @Override
+    public void onSignalGridItemClick(SignalModel clickedItem) {
+        showEditSignalDialog(clickedItem, this.mSignalTypes);
+
     }
 
 }

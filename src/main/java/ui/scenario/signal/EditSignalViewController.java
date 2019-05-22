@@ -67,9 +67,9 @@ public class EditSignalViewController {
 
 
     public interface OnEditSignalClickListener {
-        void onEditSignalAcceptClicked(SignalModel newSignalModel);
+        void onEditSignalAcceptClicked(SignalModel signal);
 
-        void onSignalDeleteClicked(SignalModel signalToDelete);
+        void onSignalDeleteClicked(SignalModel signal);
     }
 
     public EditSignalViewController() {

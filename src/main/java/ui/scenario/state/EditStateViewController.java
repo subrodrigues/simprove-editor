@@ -255,6 +255,8 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
                     }
                 }
 
+                mStateModel.setSignals(mStateSignals);
+
                 mListener.onStateEditApplyClicked(mStateModel);
 
                 closeDialogWindow();

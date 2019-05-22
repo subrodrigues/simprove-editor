@@ -221,7 +221,7 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewActionView() {
-        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.actionTypes);
+        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.actionTypes, this.signalTypes);
     }
 
     /**
@@ -336,7 +336,7 @@ public class ScenarioPresenter {
 
         if(index != -1){
 //            deselectSelectedPane();
-            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.actionTypes);
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.actionTypes, this.signalTypes);
         }
     }
 

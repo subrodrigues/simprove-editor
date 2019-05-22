@@ -168,7 +168,10 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     }
 
-    private void setupSignalsGrid() {
+    /**
+     *  // TODO: Refactor this signals behavior into a parent class
+     */
+     private void setupSignalsGrid() {
         final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
 
         GridView<SignalModel> signalGrid = new GridView<>(list);
@@ -191,6 +194,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that updates the GridView UI. Adding a new Signal
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @param signal
      */
@@ -200,6 +204,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that updates the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @param editedSignalModel
      */
@@ -210,6 +215,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that removes the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @param signal
      */
@@ -318,6 +324,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that shows the add new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @param signals
      */
@@ -342,6 +349,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that shows the edit signal window
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @param signals
      */
@@ -366,6 +374,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     /**
      * Method that implements the action behavior to launch a new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
      *
      * @return the EventHandler with correspondent behavior
      */
@@ -377,6 +386,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             }
         };
     }
+
 
     /********************************************************************************************************************
      * CALLBACKS INTERFACE                                                                                              *
