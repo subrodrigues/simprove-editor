@@ -118,6 +118,8 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
 
     private void setupState(StateModel state) {
         this.mStateSignals = new ArrayList<SignalModel>();
+        this.mStateSignals = state.getSignals();
+
         this.mStateModel = state;
 
         setupSignalsGrid(state.getSignals());

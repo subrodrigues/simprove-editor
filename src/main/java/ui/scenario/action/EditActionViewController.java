@@ -124,6 +124,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     private void setupAction(ActionModel action) {
         this.mActionSignals = new ArrayList<SignalModel>();
+        this.mActionSignals = action.getResults();
+
         this.mActionModel = action;
 
         setupSignalsGrid(action.getResults());
