@@ -164,7 +164,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         }
 
         // Set selected Category
-        this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory().getId());
+        this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory());
 
         // Set Complementary Action flag
         this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplActionToggleBtn() == 0);

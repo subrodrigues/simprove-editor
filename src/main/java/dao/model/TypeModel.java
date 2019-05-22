@@ -43,4 +43,26 @@ public class TypeModel {
     public String toString() {
         return this.getName();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!TypeModel.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final TypeModel other = (TypeModel) obj;
+        return this.typeId == other.typeId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.typeId;
+        return hash;
+    }
+
 }

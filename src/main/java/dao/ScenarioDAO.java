@@ -86,7 +86,7 @@ public class ScenarioDAO {
         List<StateModel> stateConditions = new ArrayList<StateModel>();
 
         mockedActions.add(new ActionModel(0, "Start", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 0, "Control"),
+                new TypeModel(0, 1, "Procedure"),
                 1,
                 "Toggle",
                 new ArrayList<StateModel>(),
@@ -95,7 +95,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(1, "Oximetry", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 0,
                 "Toggle",
                 new ArrayList<StateModel>(),
@@ -104,7 +104,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(2, "ECG", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 3, "Environment"),
                 1,
                 "Toggle",
                 new ArrayList<StateModel>(),
@@ -113,7 +113,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(3, "Blood Pressure", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Toggle",
                 new ArrayList<StateModel>(),
@@ -149,7 +149,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(7, "Temperature", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 3, "Environment"),
                 0,
                 "Toggle",
                 new ArrayList<StateModel>(),
@@ -167,7 +167,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(9, "Blood Tests", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 0,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -176,7 +176,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(10, "Capillary Refill", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -185,7 +185,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(11, "Basic Life Support", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -203,7 +203,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(13, "Diagnosis", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -212,7 +212,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(14, "Anaphylaxis Reaction", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -221,7 +221,7 @@ public class ScenarioDAO {
                 "Oops, you screwed it."));
 
         mockedActions.add(new ActionModel(15, "Pulmonary Edema", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 1,
                 "Single",
                 new ArrayList<StateModel>(),
@@ -231,7 +231,7 @@ public class ScenarioDAO {
 
 
         mockedActions.add(new ActionModel(16, "Hemorragic Shock", new TypeModel(-1, 1, "Tipo Coiso"),
-                new TypeModel(0, 1, "Diagnosis"),
+                new TypeModel(0, 2, "Diagnosis"),
                 0,
                 "Single",
                 new ArrayList<StateModel>(),
