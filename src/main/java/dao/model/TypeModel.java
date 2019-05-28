@@ -4,7 +4,11 @@
 
 package dao.model;
 
-public class TypeModel {
+import java.io.Serializable;
+
+public class TypeModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private int typeId;
     private String name;

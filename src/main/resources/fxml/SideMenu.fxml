@@ -16,7 +16,9 @@
 
     <JFXListView fx:id="sideList">
         <Label fx:id="new_scenario" styleClass="drawer-item">New Scenario</Label>
+        <Label fx:id="save_scenario" styleClass="drawer-item">Save Scenario</Label>
         <Label fx:id="load_scenario" styleClass="drawer-item">Load Scenario</Label>
+        <Label fx:id="export_scenario" styleClass="drawer-item">Export JSON File</Label>
 
     </JFXListView>
 </StackPane>

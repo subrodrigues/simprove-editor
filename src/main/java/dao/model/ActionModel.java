@@ -4,10 +4,13 @@
 
 package dao.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionModel {
+public class ActionModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private TypeModel type;
     private TypeModel category;

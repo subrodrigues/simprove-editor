@@ -4,9 +4,12 @@
 
 package dao.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class StateModel {
+public class StateModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private String name;
     private TypeModel type;

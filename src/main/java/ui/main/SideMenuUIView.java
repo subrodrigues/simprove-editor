@@ -5,23 +5,21 @@
 package ui.main;
 
 import com.jfoenix.controls.JFXListView;
+import events.ui.SideMenuEvent;
 import io.datafx.controller.ViewController;
-import io.datafx.controller.flow.Flow;
-import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.action.ActionTrigger;
-import io.datafx.controller.flow.context.FXMLViewFlowContext;
-import io.datafx.controller.flow.context.ViewFlowContext;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
+import org.greenrobot.eventbus.EventBus;
+import utils.ConstantUtils;
 
 import javax.annotation.PostConstruct;
 
 @ViewController(value = "/fxml/SideMenu.fxml", title = "Side Menu Title")
 public class SideMenuUIView {
 
-    @FXMLViewFlowContext
-    private ViewFlowContext context;
     @FXML
     @ActionTrigger("new_scenario")
     private Label newScenario;
@@ -37,32 +35,31 @@ public class SideMenuUIView {
      */
     @PostConstruct
     public void init() {
-//        Objects.requireNonNull(context, "context");
-//        FlowHandler contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentFlowHandler");
-//        sideList.propagateMouseEventsToParent();
-//        sideList.getSelectionModel().selectedItemProperty().addListener((o, oldVal, newVal) -> {
-//            new Thread(()->{
-//                Platform.runLater(()->{
-//                    if (newVal != null) {
-//                        try {
-//                            contentFlowHandler.handle(newVal.getId());
-//                        } catch (VetoException exc) {
-//                            exc.printStackTrace();
-//                        } catch (FlowException exc) {
-//                            exc.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }).start();
-//        });
-//        Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
-//        bindNodeToController(newScenario, ScenarioUIView.class, contentFlow, contentFlowHandler);
-//        bindNodeToController(loadScenario, CheckboxController.class, contentFlow, contentFlowHandler);
+        sideList.propagateMouseEventsToParent();
+        sideList.getSelectionModel().selectedItemProperty().addListener((o, oldVal, newVal) -> {
+            new Thread(() -> {
+                Platform.runLater(() -> {
+                    String id = newVal == null ? oldVal.getId() : newVal.getId();
+
+                    switch (id) {
+                        case ("new_scenario"):
+                            EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.NEW_SCENARIO));
+                            break;
+                        case ("save_scenario"):
+                            EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.SAVE_SCENARIO));
+                            break;
+                        case ("load_scenario"):
+                            EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.LOAD_SCENARIO));
+                            break;
+                        case ("export_scenario"):
+                            EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.EXPORT_SCENARIO));
+                            break;
+                    }
+                });
+            }).start();
+        });
 
     }
 
-    private void bindNodeToController(Node node, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
-        flow.withGlobalLink(node.getId(), controllerClass);
-    }
 
 }

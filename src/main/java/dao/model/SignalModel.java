@@ -1,6 +1,10 @@
 package dao.model;
 
-public class SignalModel {
+import java.io.Serializable;
+
+public class SignalModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private int type;
     private String name;

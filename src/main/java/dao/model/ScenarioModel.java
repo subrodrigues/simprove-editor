@@ -4,14 +4,26 @@
 
 package dao.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ScenarioModel {
+public class ScenarioModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private String name;
     private String briefing;
     private List<StateModel> states;
     private List<ActionModel> actions;
+
+    public ScenarioModel() {
+        this.id = 0;
+        this.name = "";
+        this.briefing = "";
+        this.states = new ArrayList<>();
+        this.actions = new ArrayList<>();
+    }
 
     public ScenarioModel(int id, String name, String briefing, List<StateModel> states, List<ActionModel> actions) {
         this.id = id;

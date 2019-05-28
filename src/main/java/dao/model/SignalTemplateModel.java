@@ -4,10 +4,13 @@
 
 package dao.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 // TODO: create composition models to support both the numeric range and list of Strings values
-public class SignalTemplateModel {
+public class SignalTemplateModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private int type;
     private String name;

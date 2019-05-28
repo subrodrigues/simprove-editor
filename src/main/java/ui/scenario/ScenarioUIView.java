@@ -4,7 +4,6 @@
 
 package ui.scenario;
 
-import com.fxgraph.edges.DoubleCorneredEdge;
 import com.fxgraph.graph.Graph;
 import com.fxgraph.graph.ICell;
 import com.fxgraph.graph.Model;
@@ -218,6 +217,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         this.inputScenarioName.setText(scenario.getName());
         this.inputBriefing.setText(scenario.getBriefing());
 
+        statesGridView.getChildren().clear();
+        actionsGridView.getChildren().clear();
+
         // Fill States
         for (int i = 0; i < scenario.getStates().size(); i++) {
             Node state = null;
@@ -246,6 +248,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             actionsGridView.getChildren().add(action);
         }
 
+        statesGridView.requestLayout();
+        actionsGridView.requestLayout();
+
         updateStatesGraphView(scenario.getStates());
     }
 
@@ -256,7 +261,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     void updateStatesGraphView(List<StateModel> states) {
 
-        if(states.size() == 0) return;
+//        if(states.size() == 0) return;
 
         statesGraphPane.getChildren().clear();
 

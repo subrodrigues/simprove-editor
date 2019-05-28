@@ -5,11 +5,12 @@
 package dao;
 
 import dao.model.*;
-import events.ActionTypesEvent;
-import events.ScenarioEvent;
-import events.SignalTypesEvent;
+import events.dao.ActionTypesEvent;
+import events.dao.ScenarioEvent;
+import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
 import utils.DataUtils;
+import utils.FileUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -350,4 +351,33 @@ public class ScenarioDAO {
 
         EventBus.getDefault().post(new SignalTypesEvent(signals));
     }
+
+    /**
+     * Method that saves the current ScenarioModel to a file.
+     * This is a temporary feature using serialization instead of a DB
+     */
+    public void saveCurrentScenario(ScenarioModel scenario){
+        try {
+            FileUtils.saveScenarioModel(scenario);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // TODO: Deal with thiss
+        }
+    }
+
+    /**
+     * Method that saves the current ScenarioModel to a file.
+     * This is a temporary feature using serialization instead of a DB
+     */
+    public void requestScenarioByFilename(String filename){
+        try {
+           ScenarioModel scenario = FileUtils.loadScenarioModel(filename);
+
+           EventBus.getDefault().post(scenario);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // TODO: Deal with thiss
+        }
+    }
+
 }

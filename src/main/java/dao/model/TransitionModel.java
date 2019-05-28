@@ -4,7 +4,11 @@
 
 package dao.model;
 
-public class TransitionModel {
+import java.io.Serializable;
+
+public class TransitionModel  implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private int duration;
     private int stateId;

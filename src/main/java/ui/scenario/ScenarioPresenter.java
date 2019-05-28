@@ -6,13 +6,13 @@ package ui.scenario;
 
 import dao.ScenarioDAO;
 import dao.model.*;
-import events.ActionTypesEvent;
-import events.ScenarioEvent;
-import events.SignalTypesEvent;
+import events.dao.ActionTypesEvent;
+import events.dao.ScenarioEvent;
+import events.ui.SideMenuEvent;
+import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -151,6 +151,36 @@ public class ScenarioPresenter {
             this.mView.selectActionViewItem(selectedIndex);
         }
     }
+
+    /**
+     * Receives a Scenario Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(SideMenuEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            switch (event.getSideMenuOption()){
+                case NEW_SCENARIO:
+                    this.requestScenarioReset();
+                    break;
+                case SAVE_SCENARIO:
+                    this.mDAO.saveCurrentScenario(this.mScenario);
+                    break;
+                case LOAD_SCENARIO:
+                    break;
+                case EXPORT_SCENARIO:
+                    break;
+            }
+
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
+        }
+    };
 
     /*******************************************************************************************************************
      * View Requests                                                                                              *
@@ -383,4 +413,9 @@ public class ScenarioPresenter {
         this.mView.addActionViewItem(newActionModel);
     }
 
+    void requestScenarioReset(){
+        this.mCurrentSelectedStateItem = -1;
+        this.mScenario = new ScenarioModel();
+        this.mView.updateScenarioData(this.mScenario);
+    }
 }

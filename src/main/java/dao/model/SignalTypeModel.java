@@ -4,7 +4,11 @@
 
 package dao.model;
 
-public class SignalTypeModel {
+import java.io.Serializable;
+
+public class SignalTypeModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private int typeId;
 

@@ -27,6 +27,10 @@ public class ConstantUtils {
         return mockedActionCategories;
     }
 
-
-
+    public enum SideMenuOption {
+        NEW_SCENARIO,
+        SAVE_SCENARIO,
+        LOAD_SCENARIO,
+        EXPORT_SCENARIO
+    }
 }

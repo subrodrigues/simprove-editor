@@ -1,8 +1,12 @@
 /*
+ * Created by Filipe André Rodrigues on 28-05-2019 23:47
+ */
+
+/*
  * Created by Filipe André Rodrigues on 20-02-2019 19:26
  */
 
-package events;
+package events.dao;
 
 import base.BaseEvent;
 import base.ResponseError;
