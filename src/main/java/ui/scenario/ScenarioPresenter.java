@@ -13,10 +13,8 @@ import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 public class ScenarioPresenter {
     private ScenarioUIView mView;
@@ -167,9 +165,16 @@ public class ScenarioPresenter {
                     this.requestScenarioReset();
                     break;
                 case SAVE_SCENARIO:
-                    this.mDAO.saveCurrentScenario(this.mScenario);
+                    String defaultFilename = this.mScenario.getName();
+
+                    if (defaultFilename.isEmpty()) {
+                        Date date = new Date();
+                        defaultFilename = "new_scenario_" + date.getTime();
+                    }
+                    this.mView.requestSaveScenarioDialog(defaultFilename);
                     break;
                 case LOAD_SCENARIO:
+                    this.mView.requestLoadScenarioDialog();
                     break;
                 case EXPORT_SCENARIO:
                     break;
@@ -417,5 +422,14 @@ public class ScenarioPresenter {
         this.mCurrentSelectedStateItem = -1;
         this.mScenario = new ScenarioModel();
         this.mView.updateScenarioData(this.mScenario);
+    }
+
+    public void requestOpenScenarioFile(String absolutePath) {
+        this.mDAO.requestScenarioByAbsolutePath(absolutePath);
+    }
+
+    public void requestSaveScenarioWithPath(String absolutePath){
+        this.mDAO.saveCurrentScenarioWithPath(absolutePath, this.mScenario);
+
     }
 }

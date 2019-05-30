@@ -39,9 +39,9 @@ public class SideMenuUIView {
         sideList.getSelectionModel().selectedItemProperty().addListener((o, oldVal, newVal) -> {
             new Thread(() -> {
                 Platform.runLater(() -> {
-                    String id = newVal == null ? oldVal.getId() : newVal.getId();
+                    if(newVal == null)return;
 
-                    switch (id) {
+                    switch (newVal.getId()) {
                         case ("new_scenario"):
                             EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.NEW_SCENARIO));
                             break;
@@ -55,11 +55,28 @@ public class SideMenuUIView {
                             EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.EXPORT_SCENARIO));
                             break;
                     }
+                    scheduleClearSelection(1000);
                 });
             }).start();
         });
 
     }
 
-
+    /**
+     * Method that clears the list selection
+     *
+     * @param timeMs
+     */
+    private void scheduleClearSelection(int timeMs) {
+        new java.util.Timer().
+                schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                sideList.getSelectionModel().clearSelection();
+                            }
+                        },
+                        timeMs
+                );
+    }
 }

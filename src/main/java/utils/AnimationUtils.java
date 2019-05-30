@@ -18,9 +18,9 @@ import javafx.util.Duration;
 public class AnimationUtils {
 
     /**
-     *         //this animation changes the background color
-     *         //of the VBox from red with opacity=1
-     *         //to red with opacity=0
+     * //this animation changes the background color
+     * //of the VBox from red with opacity=1
+     * //to red with opacity=0
      */
     public static void itemEaseInHighlight(Pane highlightPane) {
         final Animation animation = new Transition() {
@@ -42,9 +42,9 @@ public class AnimationUtils {
 
 
     /**
-     *         //this animation changes the background color
-     *         //of the VBox from red with opacity=1
-     *         //to red with opacity=0
+     * //this animation changes the background color
+     * //of the VBox from red with opacity=1
+     * //to red with opacity=0
      */
     public static void itemEaseOutHighlight(Pane highlightPane) {
         final Animation animation = new Transition() {
@@ -63,4 +63,5 @@ public class AnimationUtils {
         };
         animation.play();
     }
+
 }

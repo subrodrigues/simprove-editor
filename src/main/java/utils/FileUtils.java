@@ -49,4 +49,27 @@ public class FileUtils {
         objectOutputStream.flush();
         objectOutputStream.close();
     }
+
+    public static ScenarioModel loadScenarioModelByAbsolutePath(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream
+                = new FileInputStream(path);
+        ObjectInputStream objectInputStream
+                = new ObjectInputStream(fileInputStream);
+
+        ScenarioModel scenario = (ScenarioModel) objectInputStream.readObject();
+        objectInputStream.close();
+
+        return scenario;
+    }
+
+    public static void saveScenarioModel(String absolutePath, ScenarioModel scenario) throws IOException {
+        FileOutputStream fileOutputStream = null;
+
+        fileOutputStream = new FileOutputStream(absolutePath);
+
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(scenario);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
 }

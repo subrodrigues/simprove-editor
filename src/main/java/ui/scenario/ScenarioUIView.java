@@ -18,14 +18,17 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import ui.scenario.action.EditActionViewController;
 import ui.scenario.action.NewActionViewController;
@@ -38,7 +41,10 @@ import ui.widgets.graph.DirectionalCorneredEdge;
 import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @ViewController(value = "/fxml/ui/Scenario.fxml", title = "New Scenario Title")
@@ -468,6 +474,25 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     void showGenericErrorView() {
         //TODO: Deal with this
+
+        JFXAlert alert = new JFXAlert((Stage) scenarioRoot.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Oops"));
+
+        // Set state (type) name
+        layout.setBody(new Label("An error has occured, please try again. \n"));
+
+        JFXButton okButton = new JFXButton("Ok");
+
+        okButton.getStyleClass().add("alert-cancel");
+        okButton.setOnAction(event -> alert.hideWithAnimation());
+
+        layout.setActions(okButton);
+
+        alert.setContent(layout);
+        alert.show();
     }
 
     /**
@@ -634,9 +659,51 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
+     * Requested by the invoker, to launch the select scenario window
+     */
+    void requestLoadScenarioDialog(){
+        File recordsDir = new File(Paths.get("./scenarios").toAbsolutePath().normalize().toString());
+        if (! recordsDir.exists()) {
+            recordsDir.mkdirs();
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Scenario File");
+        fileChooser.setInitialDirectory(recordsDir);
+        File file = fileChooser.showOpenDialog(scenarioRoot.getScene().getWindow());
+
+        if (file != null) {
+            this.mPresenter.requestOpenScenarioFile(file.getAbsolutePath());
+        }
+    }
+
+    void requestSaveScenarioDialog(String defaultFilename){
+        File recordsDir = new File(Paths.get("./scenarios").toAbsolutePath().normalize().toString());
+        if (! recordsDir.exists()) {
+            recordsDir.mkdirs();
+        }
+
+        FileChooser.ExtensionFilter fileExtensions =
+                new FileChooser.ExtensionFilter(
+                        "Scenario file", "*.bin");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Scenario File");
+        fileChooser.setInitialFileName(defaultFilename);
+        fileChooser.setInitialDirectory(recordsDir);
+        fileChooser.getExtensionFilters().add(fileExtensions);
+
+        File file = fileChooser.showSaveDialog(scenarioRoot.getScene().getWindow());
+        if (file != null) {
+            this.mPresenter.requestSaveScenarioWithPath(file.getAbsolutePath());
+        }
+    }
+
+    /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
-     *  @param actions
+     *
+     * @param actions
      * @param states
      * @param actionTypes
      * @param signalTypes
@@ -688,4 +755,5 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     public void onNewActionAcceptClicked(ActionModel newActionModel) {
         mPresenter.requestActionCreation(newActionModel);
     }
+
 }

@@ -4,14 +4,18 @@
 
 package dao;
 
+import base.ErrorType;
+import base.ResponseError;
 import dao.model.*;
 import events.dao.ActionTypesEvent;
 import events.dao.ScenarioEvent;
 import events.dao.SignalTypesEvent;
+import javafx.stage.FileChooser;
 import org.greenrobot.eventbus.EventBus;
 import utils.DataUtils;
 import utils.FileUtils;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -380,4 +384,34 @@ public class ScenarioDAO {
         }
     }
 
+    /**
+     * Method that saves the current ScenarioModel to a file.
+     * This is a temporary feature using serialization instead of a DB
+     */
+    public void requestScenarioByAbsolutePath(String path){
+        try {
+            ScenarioModel scenario = FileUtils.loadScenarioModelByAbsolutePath(path);
+
+            EventBus.getDefault().post(new ScenarioEvent(scenario));
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // TODO: Deal with this
+
+            EventBus.getDefault().post(new ScenarioEvent(new ResponseError(ErrorType.GENERIC)));
+        }
+    }
+
+    /**
+     * Method that saves the current ScenarioModel to a file, with an absolute path.
+     *
+     * This is a temporary feature using serialization instead of a DB
+     */
+    public void saveCurrentScenarioWithPath(String absolutePath, ScenarioModel scenario) {
+        try {
+            FileUtils.saveScenarioModel(absolutePath, scenario);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // TODO: Deal with thiss
+        }
+    }
 }
