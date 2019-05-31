@@ -28,7 +28,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import ui.scenario.action.EditActionViewController;
 import ui.scenario.action.NewActionViewController;
@@ -41,7 +40,6 @@ import ui.widgets.graph.DirectionalCorneredEdge;
 import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -175,6 +173,14 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
                 isSlidingContentVisible = false;
             }
+        });
+
+        inputScenarioName.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPresenter.updateScenarioName(newValue);
+        });
+
+        inputBriefing.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPresenter.updateBriefingContent(newValue);
         });
     }
 

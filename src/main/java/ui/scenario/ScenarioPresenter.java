@@ -432,4 +432,12 @@ public class ScenarioPresenter {
         this.mDAO.saveCurrentScenarioWithPath(absolutePath, this.mScenario);
 
     }
+
+    public void updateScenarioName(String name) {
+        this.mScenario.setName(name);
+    }
+
+    public void updateBriefingContent(String briefing) {
+        this.mScenario.setBriefing(briefing);
+    }
 }
