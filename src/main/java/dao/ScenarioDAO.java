@@ -10,12 +10,10 @@ import dao.model.*;
 import events.dao.ActionTypesEvent;
 import events.dao.ScenarioEvent;
 import events.dao.SignalTypesEvent;
-import javafx.stage.FileChooser;
 import org.greenrobot.eventbus.EventBus;
 import utils.DataUtils;
 import utils.FileUtils;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -301,57 +299,11 @@ public class ScenarioDAO {
     public void requestDefaultSignals() {
         List<SignalTemplateModel> signals = new ArrayList<>();
 
-        // TODO: Remove hardcoded values and read from the File
-        signals.add(new SignalTemplateModel(0, 0,
-                "Arterial Blood Pressure",
-                "mmHg",
-                0,
-                500,
-                .0f,
-                null));
-
-        signals.add(new SignalTemplateModel(1, 0,
-                "Diastolic Blood Pressure",
-                "mmHg",
-                0,
-                500,
-                .0f,
-                null));
-
-        signals.add(new SignalTemplateModel(2, 0,
-                "Heart Rate",
-                "bpm ",
-                0,
-                200,
-                .0f,
-                null));
-
-        signals.add(new SignalTemplateModel(3, 0,
-                "Glucose",
-                "mg/dl ",
-                0,
-                600,
-                .0f,
-                null));
-        signals.add(new SignalTemplateModel(3, 0,
-                "Body Temperature",
-                "ºC ",
-                0,
-                100,
-                .1f,
-                null));
-        List<String> rashOptions = new ArrayList<String>();
-
-
-        rashOptions.add("Absent");
-        rashOptions.add("Present");
-        signals.add(new SignalTemplateModel(4, 1,
-                "Rash",
-                null,
-                -1,
-                -1,
-                .0f,
-                rashOptions));
+        try {
+            signals = DataUtils.getSignalsFromResourceURL(getClass().getResource("/raw/signals_data.txt"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         EventBus.getDefault().post(new SignalTypesEvent(signals));
     }
