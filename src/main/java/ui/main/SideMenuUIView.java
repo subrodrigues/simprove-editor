@@ -4,14 +4,21 @@
 
 package ui.main;
 
+import com.jfoenix.controls.JFXAlert;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
 import events.ui.SideMenuEvent;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.action.ActionTrigger;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.greenrobot.eventbus.EventBus;
 import utils.ConstantUtils;
 
@@ -39,11 +46,11 @@ public class SideMenuUIView {
         sideList.getSelectionModel().selectedItemProperty().addListener((o, oldVal, newVal) -> {
             new Thread(() -> {
                 Platform.runLater(() -> {
-                    if(newVal == null)return;
+                    if (newVal == null) return;
 
                     switch (newVal.getId()) {
                         case ("new_scenario"):
-                            EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.NEW_SCENARIO));
+                            confirmationNewScenarioEvent();
                             break;
                         case ("save_scenario"):
                             EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.SAVE_SCENARIO));
@@ -60,6 +67,51 @@ public class SideMenuUIView {
             }).start();
         });
 
+    }
+
+    /**
+     * Method that implements the new Scenario confirmation window.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private void confirmationNewScenarioEvent() {
+        JFXAlert alert = new JFXAlert((Stage) sideList.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("New Scenario"));
+        layout.setBody(new Label("Are you sure you want to discard the current Scenario? \n"));
+
+        JFXButton noButton = new JFXButton("No");
+
+        JFXButton yesButton = new JFXButton("Yes");
+
+        noButton.getStyleClass().add("alert-cancel");
+        noButton.setOnAction(event -> alert.hideWithAnimation());
+
+        yesButton.getStyleClass().add("alert-accept");
+        yesButton.setOnAction(launchNewScenarioEventRequest(alert));
+
+        layout.setActions(noButton, yesButton);
+
+        alert.setContent(layout);
+        alert.show();
+    }
+
+
+    /**
+     * Method that implements the positive confirmation to launch new scenario event.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> launchNewScenarioEventRequest(JFXAlert alert) {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.NEW_SCENARIO));
+                alert.close();
+            }
+        };
     }
 
     /**
