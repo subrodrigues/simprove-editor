@@ -6,4 +6,4 @@ ID # TYPE = 1 # NAME # CATEGORICAL_OPTIONS (delim = ',')
 3 # 0 # Heart Rate # bpm # 0 # 200 # .0f 
 4 # 0 # Glucose # mg/dl # 0 # 600 # .0f 
 5 # 0 # Body Temperature # ºC # 0 # 100 # .1f 
-5 # 1 # Rash # absent, present
+5 # 1 # Rash # absent,present

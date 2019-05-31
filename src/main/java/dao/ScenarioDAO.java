@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import utils.DataUtils;
 import utils.FileUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -282,7 +283,7 @@ public class ScenarioDAO {
         List<TypeModel> actionTypes = null;
 
         try {
-            actionTypes = DataUtils.getActionTypesFromResourceURL(getClass().getResource("/raw/actions_data.txt"));
+            actionTypes = DataUtils.getActionTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
@@ -300,7 +301,7 @@ public class ScenarioDAO {
         List<SignalTemplateModel> signals = new ArrayList<>();
 
         try {
-            signals = DataUtils.getSignalsFromResourceURL(getClass().getResource("/raw/signals_data.txt"));
+            signals = DataUtils.getSignalsFromResourceURL(new FileInputStream("raw/signals_data.txt"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
