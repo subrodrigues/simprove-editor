@@ -11,7 +11,7 @@ import events.dao.ActionTypesEvent;
 import events.dao.ScenarioEvent;
 import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
-import utils.DataUtils;
+import utils.ReadDataUtils;
 import utils.FileUtils;
 
 import java.io.FileInputStream;
@@ -283,7 +283,7 @@ public class ScenarioDAO {
         List<TypeModel> actionTypes = null;
 
         try {
-            actionTypes = DataUtils.getActionTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
+            actionTypes = ReadDataUtils.getActionTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
@@ -301,7 +301,7 @@ public class ScenarioDAO {
         List<SignalTemplateModel> signals = new ArrayList<>();
 
         try {
-            signals = DataUtils.getSignalsFromResourceURL(new FileInputStream("raw/signals_data.txt"));
+            signals = ReadDataUtils.getSignalsFromResourceURL(new FileInputStream("raw/signals_data.txt"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
@@ -364,7 +364,22 @@ public class ScenarioDAO {
             FileUtils.saveScenarioModel(absolutePath, scenario);
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO: Deal with thiss
+            // TODO: Deal with this
+        }
+    }
+
+    /**
+     * Method that exports the scenario into the JSON file from the protocol
+     *
+     * @param absolutePath File absolute path (include name) to disk
+     * @param scenario Data to be appended to the file
+     */
+    public void saveJSONFileWithPath(String absolutePath, ScenarioModel scenario) {
+        try {
+            FileUtils.saveScenarioJSONFile(absolutePath, scenario);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // TODO: Deal with this
         }
     }
 }

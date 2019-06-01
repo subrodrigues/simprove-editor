@@ -705,6 +705,28 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         }
     }
 
+    void requestExportJSONScenario(String defaultFilename){
+        File recordsDir = new File(Paths.get("./exported").toAbsolutePath().normalize().toString());
+        if (! recordsDir.exists()) {
+            recordsDir.mkdirs();
+        }
+
+        FileChooser.ExtensionFilter fileExtensions =
+                new FileChooser.ExtensionFilter(
+                        "Scenario exported file", "*.json");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export JSON File");
+        fileChooser.setInitialFileName(defaultFilename);
+        fileChooser.setInitialDirectory(recordsDir);
+        fileChooser.getExtensionFilters().add(fileExtensions);
+
+        File file = fileChooser.showSaveDialog(scenarioRoot.getScene().getWindow());
+        if (file != null) {
+            this.mPresenter.requestExportJSONWithPath(file.getAbsolutePath());
+        }
+    }
+
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.

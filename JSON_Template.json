@@ -1,0 +1,59 @@
+{
+	"name": String,
+	"score": int,
+	"minScore": int,
+	"briefing": String,
+	"states":[
+		{
+			"id": int,
+			"name": String,
+			"signals": [
+				{
+					"id": int,
+					"name": String,
+					"value": String
+				}
+			],
+			"tips": [
+				{
+					"id": int,
+					"message": String,
+					"actor": String,
+					"activationTime": float,
+					"duration": int,
+					"actionsDone": [int], // action IDs
+					"actionsTodo": [int] // action IDs
+				}
+			],
+			"transition": {
+				"id": int,
+				"duration": int,
+				"stateId": int
+			}
+		}
+	],
+	"actions": [
+		{
+			"id": int,
+			"name": String,
+			"type": {
+				"id": int,
+				"name": String
+			},
+			"behavior": String,
+			"conditions": [int], // state IDs
+			"results": [ // array signals
+				{
+					"id": int,
+					"name": String,
+					"value": String
+				}
+			],
+			"transition": {
+				"id": int,
+				"duration": int,
+				"stateId": int
+			}
+		}
+	]
+}

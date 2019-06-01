@@ -25,6 +25,7 @@ dependencies {
 
     compile 'org.controlsfx:controlsfx:8.40.14'
 
+    compile 'com.google.code.gson:gson:2.8.5'
 }
 
 jar {

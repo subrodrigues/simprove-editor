@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class DataUtils {
+public class ReadDataUtils {
 
     private static String STRING_DELIMITER = "\\s#\\s";
     private static String CSV_DELIMITER = ",";
