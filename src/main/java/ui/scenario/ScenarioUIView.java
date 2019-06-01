@@ -706,7 +706,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     void requestExportJSONScenario(String defaultFilename){
-        File recordsDir = new File(Paths.get("./exported").toAbsolutePath().normalize().toString());
+        File recordsDir = new File(Paths.get("./scenarios/exported").toAbsolutePath().normalize().toString());
         if (! recordsDir.exists()) {
             recordsDir.mkdirs();
         }
