@@ -154,7 +154,6 @@ public class FileUtils {
         }
         scenario.add("actions", actions);
 
-        System.out.println(scenario.toString());
         return scenario;
     }
 

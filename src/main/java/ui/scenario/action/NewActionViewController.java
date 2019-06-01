@@ -274,6 +274,15 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that returns the root view
+     *
+     * @return StacePane (root view)
+     */
+    public StackPane getNewActionItemRootDialog() {
+        return newActionRoot;
+    }
+
+    /**
      * Method that closes this DialogWindow view
      */
     private void closeDialogWindow() {

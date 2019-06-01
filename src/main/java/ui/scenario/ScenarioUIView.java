@@ -571,8 +571,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         dialog.initModality(Modality.APPLICATION_MODAL);
 
 
-        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
-        dialog.setContent(newStateDialog.getNewStateItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+//        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
+//        dialog.setContent(newStateDialog.getNewStateItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+        dialog.setContent(newStateDialog.getNewStateItemRootDialog());
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
@@ -744,8 +745,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         dialog.initModality(Modality.APPLICATION_MODAL);
 
         // TODO: Set window current size with a vertical/horizontal threshold
-        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
-        dialog.setContent(newActDialog.getNewActionItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+//        Stage stage = (Stage) scenarioRoot.getScene().getWindow();
+//        dialog.setContent(newActDialog.getNewActionItemRootDialog(stage.getWidth()/2, stage.getHeight()/2));
+        dialog.setContent(newActDialog.getNewActionItemRootDialog());
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
