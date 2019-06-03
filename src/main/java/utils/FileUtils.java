@@ -130,13 +130,17 @@ public class FileUtils {
             type.addProperty("name", actionModel.getCategory().getName());
             action.add("type", type);
 
+            action.addProperty("effectTime", actionModel.getEffectTime());
+
             action.addProperty("behavior", actionModel.getBehavior());
+
             action.addProperty("is_complement", actionModel.getIsComplement());
             JsonArray conditions = new JsonArray();
             for(StateModel stateModel: actionModel.getStateConditions()){
                 conditions.add(stateModel.getId());
             }
             action.add("conditions", conditions);
+
 
             JsonArray resultSignals = getSignalsJSONArray(actionModel.getResults());
             action.add("results", resultSignals);
@@ -145,7 +149,6 @@ public class FileUtils {
             if(actionModel.getTransition() != null) {
                 transition = new JsonObject();
                 transition.addProperty("id", actionModel.getTransition().getId());
-                transition.addProperty("duration", actionModel.getTransition().getDuration());
                 transition.addProperty("stateId", actionModel.getTransition().getStateId());
             }
             action.add("transition", transition);

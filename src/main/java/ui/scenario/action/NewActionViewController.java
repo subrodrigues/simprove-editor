@@ -50,7 +50,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXComboBox<StateModel> transitionComboBox;
 
     @FXML
-    private JFXNumericTextField inputTransitionDuration;
+    private JFXNumericTextField inputEffectTime;
 
     @FXML
     private JFXComboBox<TypeModel> categoryComboBox;
@@ -142,22 +142,6 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         /*
          * Set Listeners and Bindings
          */
-        this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
-            @Override
-            public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
-                if (newValue.getId() == -1) {
-                    if(inputTransitionDuration.getText().isEmpty()){
-                        inputTransitionDuration.setText("0");
-                        inputTransitionDuration.validate();
-                    }
-
-                    inputTransitionDuration.setDisable(true);
-                } else {
-                    inputTransitionDuration.setDisable(false);
-                }
-            }
-        });
-
         this.actionTypeComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
                 this.actionTypeComboBox.validate();
@@ -167,25 +151,13 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         this.actionTypeComboBox.getEditor().textProperty()
                 .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
 
-        this.acceptButton.setOnAction(getNewActionAcceptClickListener());
-
         this.categoryComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
                 this.categoryComboBox.validate();
             }
         });
 
-        this.acceptButton.disableProperty().bind(
-                Bindings.or(inputTransitionDuration.textProperty().isEmpty(),
-                        Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
-                            this.categoryComboBox.valueProperty().isNull()))
-        );
-
-        this.inputTransitionDuration.focusedProperty().addListener((o, oldVal, newVal) -> {
-            if (!inputTransitionDuration.isDisabled() && !newVal) {
-                this.inputTransitionDuration.validate();
-            }
-        });
+        this.acceptButton.setOnAction(getNewActionAcceptClickListener());
 
         this.cancelButton.setOnAction(getCancelClickListener());
 
@@ -251,12 +223,12 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
-     * Method that returns the current Transition duration in case it is defined, -1 otherwise.
+     * Method that returns the current effect time in case it is defined, -1 otherwise.
      *
-     * @return duration value or -1
+     * @return duration value or 0
      */
-    private int getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
+    private int getCurrentEffectDuration() {
+        return inputEffectTime != null && inputEffectTime.getLength() > 0 ? Integer.valueOf(inputEffectTime.getText()) : 0;
     }
 
     /**
@@ -313,15 +285,12 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                     if (transitionComboBox.getValue().getId() == -1) {
                         mActionModel.setTransition(null);
                     } else { // If we updated the existing Transition
-                        mActionModel.getTransition().setDuration(getCurrentTransitionDuration());
                         mActionModel.getTransition().setStateId(transitionComboBox.getValue().getId());
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
                     if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
-                        mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
-                                transitionComboBox.getValue().getId()));
+                        mActionModel.setTransition(new TransitionModel(transitionComboBox.getValue().getId()));
                     }
                 }
 
@@ -330,6 +299,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
                 // Set the complementary action flag
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
+
+                mActionModel.setEffectTime(getCurrentEffectDuration());
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());

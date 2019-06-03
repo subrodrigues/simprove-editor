@@ -14,6 +14,7 @@ public class ActionModel implements Serializable {
     private int id;
     private TypeModel type;
     private TypeModel category;
+    private int effectTime;
     private int isComplement;
     private String behavior;
     private String name;
@@ -22,11 +23,12 @@ public class ActionModel implements Serializable {
     private TransitionModel transition;
     private String errorMessage;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isComplement, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, int effectTime, int isComplement, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.category = category;
+        this.effectTime = effectTime;
         this.isComplement = isComplement;
         this.behavior = behavior;
         this.stateConditions = stateConditions;
@@ -136,6 +138,14 @@ public class ActionModel implements Serializable {
 
     public void setIsComplement(int isComplement) {
         this.isComplement = isComplement;
+    }
+
+    public int getEffectTime() {
+        return effectTime;
+    }
+
+    public void setEffectTime(int effectTime) {
+        this.effectTime = effectTime;
     }
 
     @Override

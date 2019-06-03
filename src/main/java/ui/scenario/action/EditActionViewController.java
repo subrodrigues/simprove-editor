@@ -7,9 +7,6 @@ package ui.scenario.action;
 
 import com.jfoenix.controls.*;
 import dao.model.*;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,9 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -57,7 +52,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private JFXComboBox<StateModel> transitionComboBox;
 
     @FXML
-    private JFXNumericTextField inputTransitionDuration;
+    private JFXNumericTextField inputEffectTime;
 
     @FXML
     private JFXComboBox<TypeModel> categoryComboBox;
@@ -156,15 +151,18 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         if (mActionModel.getTransition() != null) {
             this.transitionComboBox.getSelectionModel().select(
                     new StateModel(this.mActionModel.getTransition().getStateId(), ""));
-            this.inputTransitionDuration.setText(mActionModel.getTransition().getDuration() + "");
+//            this.inputTransitionDuration.setText(mActionModel.getTransition().getDuration() + "");
         } else {
             // No defined transition on creation
             this.transitionComboBox.getSelectionModel().select(0);
-            this.inputTransitionDuration.setDisable(true);
+//            this.inputTransitionDuration.setDisable(true);
         }
 
         // Set selected Category
         this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory());
+
+        // Set action effect time duration
+        this.inputEffectTime.setText(String.valueOf(mActionModel.getEffectTime()));
 
         // Set Complementary Action flag
         this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
@@ -179,40 +177,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         /*
          * Set Listeners and Bindings
          */
-        this.transitionComboBox.valueProperty().addListener(new ChangeListener<StateModel>() {
-            @Override
-            public void changed(ObservableValue<? extends StateModel> observable, StateModel oldValue, StateModel newValue) {
-                if (newValue.getId() == -1) {
-                    if(inputTransitionDuration.getText().isEmpty()){
-                        inputTransitionDuration.setText("0");
-                        inputTransitionDuration.validate();
-                    }
-
-                    inputTransitionDuration.setDisable(true);
-                } else {
-                    inputTransitionDuration.setDisable(false);
-                }
-            }
-        });
-
         this.actionTypeComboBox.getEditor().textProperty()
                 .addListener(TextUtils.getComboBoxTextInputMaxCharactersListener(this.actionTypeComboBox));
 
         this.actionTypeComboBox.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
                 this.actionTypeComboBox.validate();
-            }
-        });
-
-        this.applyButton.disableProperty().bind(
-                Bindings.or(inputTransitionDuration.textProperty().isEmpty(),
-                        Bindings.or(this.actionTypeComboBox.getEditor().textProperty().isEmpty(),
-                            this.categoryComboBox.valueProperty().isNull()))
-        );
-
-        this.inputTransitionDuration.focusedProperty().addListener((o, oldVal, newVal) -> {
-            if (!inputTransitionDuration.isDisabled() && !newVal) {
-                this.inputTransitionDuration.validate();
             }
         });
 
@@ -247,12 +217,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
 
     /**
-     * Method that returns the current Transition duration in case it is defined, -1 otherwise.
+     * Method that returns the current effect time in case it is defined, -1 otherwise.
      *
-     * @return duration value or -1
+     * @return duration value or 0
      */
-    private int getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
+    private int getCurrentEffectDuration() {
+        return inputEffectTime != null && inputEffectTime.getLength() > 0 ? Integer.valueOf(inputEffectTime.getText()) : 0;
     }
 
     public StackPane getEditActionItemRootDialog() {
@@ -290,15 +260,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                     if (transitionComboBox.getValue().getId() == -1) {
                         mActionModel.setTransition(null);
                     } else { // If we updated the existing Transition
-                        mActionModel.getTransition().setDuration(getCurrentTransitionDuration());
                         mActionModel.getTransition().setStateId(transitionComboBox.getValue().getId());
                     }
                 } else { // If we didn't have a transition
                     // And we are adding a Transition
                     if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
-                        mActionModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
-                                transitionComboBox.getValue().getId()));
+                        mActionModel.setTransition(new TransitionModel(transitionComboBox.getValue().getId()));
                     }
                 }
 
@@ -307,6 +274,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
                 // Set the complementary action flag
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
+
+                mActionModel.setEffectTime(getCurrentEffectDuration());
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());

@@ -24,6 +24,11 @@ public class TransitionModel  implements Serializable {
         this.stateId = stateId;
     }
 
+    public TransitionModel(int stateId) {
+        this.duration = -1;
+        this.stateId = stateId;
+    }
+
     public int getId() {
         return id;
     }
