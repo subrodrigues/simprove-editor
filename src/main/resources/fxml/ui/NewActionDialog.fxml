@@ -87,7 +87,7 @@
                                     <VBox alignment="CENTER_RIGHT" minWidth="52.0">
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Limit: " />
                                     </VBox>
-                                    <JFXNumericTextField fx:id="inputLimitUsage" labelFloat="true" prefHeight="30.0" prefWidth="300.0" promptText="Usage limit (0 = infinite)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
+                                    <JFXNumericTextField fx:id="inputUsageLimit" labelFloat="true" prefHeight="30.0" prefWidth="300.0" promptText="Usage limit (0 = infinite)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
                                     </JFXNumericTextField>
 
                                     <VBox.margin>

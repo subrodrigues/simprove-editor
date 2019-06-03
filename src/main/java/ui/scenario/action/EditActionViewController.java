@@ -42,9 +42,6 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     @FXML
     private StackPane editActionRoot;
 
-//    @FXML
-//    private JFXTextField inputName;
-
     @FXML
     private JFXComboBox<TypeModel> actionTypeComboBox;
 
@@ -53,6 +50,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     @FXML
     private JFXNumericTextField inputEffectTime;
+
+    @FXML
+    private JFXNumericTextField inputUsageLimit;
 
     @FXML
     private JFXComboBox<TypeModel> categoryComboBox;
@@ -151,11 +151,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         if (mActionModel.getTransition() != null) {
             this.transitionComboBox.getSelectionModel().select(
                     new StateModel(this.mActionModel.getTransition().getStateId(), ""));
-//            this.inputTransitionDuration.setText(mActionModel.getTransition().getDuration() + "");
         } else {
             // No defined transition on creation
             this.transitionComboBox.getSelectionModel().select(0);
-//            this.inputTransitionDuration.setDisable(true);
         }
 
         // Set selected Category
@@ -163,6 +161,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
         // Set action effect time duration
         this.inputEffectTime.setText(String.valueOf(mActionModel.getEffectTime()));
+
+        // Set usage limit
+        this.inputUsageLimit.setText(String.valueOf(mActionModel.getUsageLimit()));
 
         // Set Complementary Action flag
         this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
@@ -217,12 +218,21 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
 
     /**
-     * Method that returns the current effect time in case it is defined, -1 otherwise.
+     * Method that returns the current effect time in case it is defined, 0 otherwise.
      *
      * @return duration value or 0
      */
     private int getCurrentEffectDuration() {
         return inputEffectTime != null && inputEffectTime.getLength() > 0 ? Integer.valueOf(inputEffectTime.getText()) : 0;
+    }
+
+    /**
+     * Method that returns the current usage limit in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private int getUsageLimit() {
+        return inputUsageLimit != null && inputUsageLimit.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
     }
 
     public StackPane getEditActionItemRootDialog() {
@@ -276,6 +286,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
+
+                mActionModel.setUsageLimit(getUsageLimit());
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());

@@ -53,6 +53,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXNumericTextField inputEffectTime;
 
     @FXML
+    private JFXNumericTextField inputUsageLimit;
+
+    @FXML
     private JFXComboBox<TypeModel> categoryComboBox;
 
     @FXML
@@ -232,6 +235,15 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that returns the current usage limit in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private int getUsageLimit() {
+        return inputUsageLimit != null && inputUsageLimit.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
+    }
+
+    /**
      * Method that returns the root view with a specific width and height
      *
      * @param width
@@ -301,6 +313,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
+
+                mActionModel.setUsageLimit(getUsageLimit());
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
