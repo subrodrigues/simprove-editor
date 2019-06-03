@@ -130,9 +130,11 @@ public class FileUtils {
             type.addProperty("name", actionModel.getCategory().getName());
             action.add("type", type);
 
+            action.addProperty("behavior", actionModel.getBehavior());
+
             action.addProperty("effectTime", actionModel.getEffectTime());
 
-            action.addProperty("behavior", actionModel.getBehavior());
+            action.addProperty("usageLimit", actionModel.getUsageLimit());
 
             action.addProperty("is_complement", actionModel.getIsComplement());
             JsonArray conditions = new JsonArray();
