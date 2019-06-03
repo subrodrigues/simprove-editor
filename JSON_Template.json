@@ -43,6 +43,7 @@
 			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
 			"behavior": String,
 			"effectTime": int,
+			"usageLimit": int,
 			"conditions": [int], // state IDs
 			"results": [ // array signals
 				{
