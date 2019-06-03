@@ -40,6 +40,7 @@
 				"id": int,
 				"name": String
 			},
+			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
 			"behavior": String,
 			"conditions": [int], // state IDs
 			"results": [ // array signals

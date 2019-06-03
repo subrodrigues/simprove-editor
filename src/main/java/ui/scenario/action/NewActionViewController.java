@@ -329,7 +329,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.setResults(mActionSignals);
 
                 // Set the complementary action flag
-                mActionModel.setIsComplActionToggleBtn(isComplActionToggleBtn.isSelected() ? 0 : 1);
+                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());

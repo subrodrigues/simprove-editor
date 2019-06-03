@@ -167,7 +167,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory());
 
         // Set Complementary Action flag
-        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplActionToggleBtn() == 0);
+        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
 
         // Set behavior option
         this.behaviorToggleGroup.getToggles().forEach(toggle -> {
@@ -306,7 +306,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setResults(mActionSignals);
 
                 // Set the complementary action flag
-                mActionModel.setIsComplActionToggleBtn(isComplActionToggleBtn.isSelected() ? 0 : 1);
+                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());

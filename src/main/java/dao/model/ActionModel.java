@@ -14,7 +14,7 @@ public class ActionModel implements Serializable {
     private int id;
     private TypeModel type;
     private TypeModel category;
-    private int isComplActionToggleBtn;
+    private int isComplement;
     private String behavior;
     private String name;
     private List<StateModel> stateConditions;
@@ -22,12 +22,12 @@ public class ActionModel implements Serializable {
     private TransitionModel transition;
     private String errorMessage;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isComplActionToggleBtn, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, int isComplement, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.category = category;
-        this.isComplActionToggleBtn = isComplActionToggleBtn;
+        this.isComplement = isComplement;
         this.behavior = behavior;
         this.stateConditions = stateConditions;
         this.results = results;
@@ -121,13 +121,6 @@ public class ActionModel implements Serializable {
         this.errorMessage = errorMessage;
     }
 
-    public int getIsComplActionToggleBtn() {
-        return isComplActionToggleBtn;
-    }
-
-    public void setIsComplActionToggleBtn(int isComplActionToggleBtn) {
-        this.isComplActionToggleBtn = isComplActionToggleBtn;
-    }
 
     public String getBehavior() {
         return behavior;
@@ -135,6 +128,14 @@ public class ActionModel implements Serializable {
 
     public void setBehavior(String behavior) {
         this.behavior = behavior;
+    }
+
+    public int getIsComplement() {
+        return isComplement;
+    }
+
+    public void setIsComplement(int isComplement) {
+        this.isComplement = isComplement;
     }
 
     @Override

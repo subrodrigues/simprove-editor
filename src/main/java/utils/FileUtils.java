@@ -131,7 +131,7 @@ public class FileUtils {
             action.add("type", type);
 
             action.addProperty("behavior", actionModel.getBehavior());
-
+            action.addProperty("is_complement", actionModel.getIsComplement());
             JsonArray conditions = new JsonArray();
             for(StateModel stateModel: actionModel.getStateConditions()){
                 conditions.add(stateModel.getId());
