@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<!--
+  ~ Created by Filipe André Rodrigues on 04-06-2019 20:38
+  -->
+
+<StackPane fx:id="newTipRoot" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox>
+            <children>
+                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Tip">
+                            <StackPane.margin>
+                                <Insets top="16.0" />
+                            </StackPane.margin>
+                        </Text>
+                        <VBox prefWidth="100.0" StackPane.alignment="CENTER">
+                            <children>
+
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actorType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Actor:" />
+                                    </VBox>
+                                    <JFXComboBox fx:id="actorTypeComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select Actor Type" styleClass="combo-box">
+                                    </JFXComboBox>
+
+                                    <JFXTextField fx:id="actorCustomName" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Actor Name" styleClass="edit-dialog-parameter-input">
+                                        <validators>
+                                            <RequiredFieldValidator message="Input Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                    </JFXTextField>
+
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
+
+                                </HBox>
+
+                                <VBox>
+                                    <Text fx:id="tipMessage" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Message">
+                                        <VBox.margin>
+                                            <Insets top="24.0" />
+                                        </VBox.margin>
+                                    </Text>
+                                    <JFXTextArea fx:id="inputMessage" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a message to be shown to the Actor" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                                        <VBox.margin>
+                                            <Insets top="6.0" />
+                                        </VBox.margin>
+                                        <padding>
+                                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                        </padding>
+                                    </JFXTextArea>
+                                </VBox>
+
+                            </children>
+                            <StackPane.margin>
+                                <Insets left="22.0" right="22.0" top="46.0" />
+                            </StackPane.margin>
+                        </VBox>
+                    </children>
+                </StackPane>
+                <StackPane style="-fx-background-color: #fafafa;">
+
+                    <HBox alignment="CENTER" StackPane.alignment="CENTER">
+
+                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100" styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </JFXButton>
+
+                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100" styleClass="apply-jfx-button-raised" text="Accept" StackPane.alignment="CENTER_RIGHT">
+                            <HBox.margin>
+                                <Insets bottom="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                    </HBox>
+                    <StackPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </StackPane.margin>
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="32.0" />
+                    </VBox.margin>
+                </StackPane>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </VBox>
+
+    </children>
+
+</StackPane>

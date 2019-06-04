@@ -558,12 +558,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
-     *
-     * @param states
+     *  @param states
      * @param signalTypes
+     * @param actorTypes
+     * @param actorTypes
      */
-    void showNewStateDialog(List<StateModel> states, List<SignalTemplateModel> signalTypes) {
-        NewStateViewController newStateDialog = new NewStateViewController(states, signalTypes, this);
+    void showNewStateDialog(List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes) {
+        NewStateViewController newStateDialog = new NewStateViewController(states, signalTypes, actorTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 

@@ -5,10 +5,7 @@
 package ui.scenario.state;
 
 import com.jfoenix.controls.*;
-import dao.model.SignalModel;
-import dao.model.SignalTemplateModel;
-import dao.model.StateModel;
-import dao.model.TransitionModel;
+import dao.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +25,7 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
+import ui.scenario.tip.NewTipViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.TextableColorGridCell;
 import utils.TextUtils;
@@ -38,7 +36,9 @@ import java.util.List;
 
 public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        TextableColorGridCell.OnTextableColorGridClickListener {
+        TextableColorGridCell.OnTextableColorGridClickListener,
+        NewTipViewController.OnNewTipClickListener {
+
     // UI Bind variables
     @FXML
     private StackPane newStateRoot;
@@ -64,14 +64,23 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     @FXML
     private JFXButton addSignalButton;
 
+    @FXML
+    private StackPane tipsRootPane;
+
+    @FXML
+    private JFXButton addTipButton;
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioNewStateClickListener mListener;
     private int mStateId = -1;
     private List<SignalModel> mStateSignals;
+    private List<TipModel> mStateTips;
 
     // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
+    // Available Actors
+    private List<TypeModel> mActorTypes;
 
     public interface OnScenarioNewStateClickListener {
         void onNewStateAcceptClicked(StateModel newStateModel);
@@ -93,9 +102,10 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      * @param states
      * @param listener
      */
-    public NewStateViewController(List<StateModel> states, List<SignalTemplateModel> signalTypes, OnScenarioNewStateClickListener listener) {
+    public NewStateViewController(List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, OnScenarioNewStateClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
+        this.mActorTypes = actorTypes;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewStateDialog.fxml"));
         fxmlLoader.setController(this);
@@ -114,6 +124,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         this.mStateModel = state;
 
         setupSignalsGrid();
+        setupTipsGrid();
     }
 
     private void setupUI(List<StateModel> states) {
@@ -167,6 +178,64 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         // TODO
 
     }
+
+    /**
+     *  // TODO: Refactor this tips behavior into a parent class (maybe with templates to be used by the signals logic too)
+     */
+    private void setupTipsGrid() {
+        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
+
+        GridView<SignalModel> signalGrid = new GridView<>(list);
+        signalGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
+        signalGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
+        signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
+
+        //(top/right/bottom/left)
+        TextableColorGridCell.OnTextableColorGridClickListener context = this;
+        signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
+            @Override
+            public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
+                return new TextableColorGridCell(context);
+            }
+        });
+
+        this.tipsRootPane.getChildren().add(signalGrid);
+        this.addTipButton.setOnAction(getNewTipClickListener(this.mActorTypes));
+    }
+
+    /**
+     * Method that updates the GridView UI. Adding a new Tip
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param tip
+     */
+    private void addTipToGridView(TipModel tip) {
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().add(tip);
+    }
+
+    /**
+     * Method that updates the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param editedTip
+     */
+    private void updateGridViewTip(TipModel editedTip) {
+        final int index = ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().indexOf(editedTip);
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().set(index, editedTip);
+    }
+
+    /**
+     * Method that removes the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param tip
+     */
+    private void removeGridViewTip(TipModel tip) {
+//        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(signal);
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().remove(tip);
+    }
+
+
 
     /**
      *  // TODO: Refactor this signals behavior into a parent class
@@ -387,6 +456,71 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         };
     }
 
+    /**
+     * Method that shows the "Add New Tip" window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param actorTypes
+     */
+    private void showNewTipDialog(List<TypeModel> actorTypes) {
+        Stage stage = (Stage) newStateRoot.getScene().getWindow();
+
+        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mActorTypes.size(), this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newTipDialog.getNewTipItemRootDialog());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that shows the "Edit Tip" window
+     *
+     * @param tipToEdit
+     * @param actorTypes
+     */
+    private void showEditTipDialog(TipModel tipToEdit, List<TypeModel> actorTypes) {
+        Stage stage = (Stage) newStateRoot.getScene().getWindow();
+
+//     TODO   EditTipViewController tipDialog = new EditTipViewController(tipToEdit, actorTypes, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+//        dialog.setContent(tipDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that implements the action behavior to launch a new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewTipClickListener(List<TypeModel> actorTypes) {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showNewTipDialog(actorTypes);
+            }
+        };
+    }
+
 
     /********************************************************************************************************************
      * CALLBACKS INTERFACE                                                                                              *
@@ -421,5 +555,10 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     @Override
     public void onSignalGridItemClick(SignalModel clickedItem) {
         showEditSignalDialog(clickedItem, this.mSignalTypes);
+    }
+
+    @Override
+    public void onNewTipAcceptClicked(TipModel newTipModel) {
+        // TODO:
     }
 }

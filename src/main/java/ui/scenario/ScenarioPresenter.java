@@ -7,6 +7,7 @@ package ui.scenario;
 import dao.ScenarioDAO;
 import dao.model.*;
 import events.dao.ActionTypesEvent;
+import events.dao.ActorTypesEvent;
 import events.dao.ScenarioEvent;
 import events.ui.SideMenuEvent;
 import events.dao.SignalTypesEvent;
@@ -21,8 +22,9 @@ public class ScenarioPresenter {
     private ScenarioUIView mView;
     private ScenarioDAO mDAO;
 
-    private List<TypeModel> actionTypes = null;
-    private List<SignalTemplateModel> signalTypes = null;
+    private List<TypeModel> mActionTypes = null;
+    private List<TypeModel> mActorTypes = null;
+    private List<SignalTemplateModel> mSignalTypes = null;
 
     private ScenarioModel mScenario = null;
 
@@ -35,9 +37,10 @@ public class ScenarioPresenter {
         EventBus.getDefault().register(this);
         mDAO = new ScenarioDAO();
 
-        actionTypes = new ArrayList<TypeModel>();
-        signalTypes = new ArrayList<SignalTemplateModel>();
+        mActionTypes = new ArrayList<TypeModel>();
+        mSignalTypes = new ArrayList<SignalTemplateModel>();
         mDAO.requestDefaultActionTypes();
+        mDAO.requestDefaultActorTypes();
         mDAO.requestDefaultSignals();
 
         requestScenarioById(0);
@@ -82,7 +85,7 @@ public class ScenarioPresenter {
         if(this.mView == null) return;
 
         if (event.isSuccess()) {
-            this.actionTypes = event.getActionTypes();
+            this.mActionTypes = event.getActionTypes();
         } else if (event.isNetworkError()) {
             // TODO: deal with it
         } else {
@@ -100,7 +103,25 @@ public class ScenarioPresenter {
         if(this.mView == null) return;
 
         if (event.isSuccess()) {
-            this.signalTypes = event.getSignalTypes();
+            this.mSignalTypes = event.getSignalTypes();
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
+        }
+    };
+
+    /**
+     * Receives a Scenario Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ActorTypesEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            this.mActorTypes = event.getActorTypes();
         } else if (event.isNetworkError()) {
             // TODO: deal with it
         } else {
@@ -217,7 +238,7 @@ public class ScenarioPresenter {
 
         if(stateIndex != -1){
             //deselectSelectedPane();
-            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates(), this.signalTypes);
+            this.mView.showStateEditDialog(this.mScenario.getStates().get(stateIndex), this.mScenario.getStates(), this.mSignalTypes);
         }
     }
 
@@ -263,7 +284,7 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewStateView() {
-        this.mView.showNewStateDialog(this.mScenario.getStates(), this.signalTypes);
+        this.mView.showNewStateDialog(this.mScenario.getStates(), this.mSignalTypes, this.mActorTypes);
     }
 
 
@@ -272,7 +293,7 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewActionView() {
-        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.actionTypes, this.signalTypes);
+        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.mActionTypes, this.mSignalTypes);
     }
 
     /**
@@ -387,7 +408,7 @@ public class ScenarioPresenter {
 
         if(index != -1){
 //            deselectSelectedPane();
-            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.actionTypes, this.signalTypes);
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.mActionTypes, this.mSignalTypes);
         }
     }
 

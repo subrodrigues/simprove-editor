@@ -8,6 +8,7 @@ import base.ErrorType;
 import base.ResponseError;
 import dao.model.*;
 import events.dao.ActionTypesEvent;
+import events.dao.ActorTypesEvent;
 import events.dao.ScenarioEvent;
 import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
@@ -316,7 +317,7 @@ public class ScenarioDAO {
         List<TypeModel> actionTypes = null;
 
         try {
-            actionTypes = ReadDataUtils.getActionTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
+            actionTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
@@ -414,5 +415,22 @@ public class ScenarioDAO {
             e.printStackTrace();
             // TODO: Deal with this
         }
+    }
+
+    /**
+     * Method that accesses the resources and load the Actor Types in the resources actor data file.
+     *
+     * @return List<TypeModel> containing all the TypeModels saved at the local file.
+     */
+    public void requestDefaultActorTypes() {
+        List<TypeModel> actorTypes = null;
+
+        try {
+            actorTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/actor_types.txt"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        EventBus.getDefault().post(new ActorTypesEvent(actorTypes));
     }
 }

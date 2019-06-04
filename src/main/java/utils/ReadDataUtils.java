@@ -54,7 +54,7 @@ public class ReadDataUtils {
         while( line != null ) {
             // Process each line
             String[] tempArray = line.split(CSV_DELIMITER);
-            actionTypesList.add(new TypeModel(Integer.valueOf(tempArray[0]), 0, tempArray[1]));
+            actionTypesList.add(new TypeModel(actionTypesList.size(), Integer.valueOf(tempArray[0]), tempArray[1]));
 
             line = br.readLine();
         }
