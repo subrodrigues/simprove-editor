@@ -37,7 +37,15 @@ public class ReadDataUtils {
         return lines;
     }
 
-    public static List<TypeModel> getActionTypesFromResourceURL(FileInputStream pathIs) throws IOException, URISyntaxException {
+    /**
+     * Method that loads data from a .csv formatted file (e.g. actor and actions data)
+     *
+     * @param pathIs
+     * @return
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    public static List<TypeModel> getDataTypesFromResourceURL(FileInputStream pathIs) throws IOException, URISyntaxException {
         List<TypeModel> actionTypesList = new ArrayList<TypeModel>();
 
         InputStreamReader isr = new InputStreamReader( pathIs, "UTF-8" );
