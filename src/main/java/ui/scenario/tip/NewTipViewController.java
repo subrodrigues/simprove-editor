@@ -110,7 +110,6 @@ public class NewTipViewController {
                     if (actorCustomName.getText().isEmpty()) {
                         actorCustomName.clear();
                 }
-
                     actorCustomName.setDisable(true);
                 } else {
                     actorCustomName.setDisable(false);

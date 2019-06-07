@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXTextField;
 
 /**
  * A JJFXTextField widget that only allows numeric input.
- *
  */
 public class JFXNumericTextField extends JFXTextField {
 

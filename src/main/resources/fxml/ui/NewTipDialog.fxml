@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ui.widgets.JFXNumericTextField?>
 
 <!--
   ~ Created by Filipe André Rodrigues on 04-06-2019 20:38
@@ -30,13 +31,19 @@
                             <children>
 
                                 <HBox>
-                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                    <VBox alignment="CENTER_LEFT">
                                         <Text fx:id="actorType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Actor:" />
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
                                     </VBox>
                                     <JFXComboBox fx:id="actorTypeComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select Actor Type" styleClass="combo-box">
+                                        <HBox.margin>
+                                            <Insets right="6.0" />
+                                        </HBox.margin>
                                     </JFXComboBox>
 
-                                    <JFXTextField fx:id="actorCustomName" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Actor Name" styleClass="edit-dialog-parameter-input">
+                                    <JFXTextField fx:id="actorCustomName" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Actor name" styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
                                                 <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
@@ -48,6 +55,30 @@
                                         <Insets top="32.0" />
                                     </VBox.margin>
 
+                                </HBox>
+
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT">
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Time: " />
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </VBox>
+                                    <JFXNumericTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0" promptText="Activation time (seconds)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
+                                    </JFXNumericTextField>
+
+                                    <VBox alignment="CENTER_RIGHT">
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Duration: ">
+                                 <VBox.margin>
+                                    <Insets left="6.0" />
+                                 </VBox.margin></Text>
+                                    </VBox>
+                                    <JFXNumericTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0" promptText="Viewing time (seconds)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
+                                    </JFXNumericTextField>
+
+                                    <VBox.margin>
+                                        <Insets top="32.0" />
+                                    </VBox.margin>
                                 </HBox>
 
                                 <VBox>
