@@ -287,7 +287,6 @@ public class ScenarioPresenter {
         this.mView.showNewStateDialog(this.mScenario.getStates(), this.mSignalTypes, this.mActorTypes, this.mScenario.getActions());
     }
 
-
     /**
      * Method that requests the presenter to launch the New Action view
      *

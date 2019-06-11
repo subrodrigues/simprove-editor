@@ -14,7 +14,7 @@ import org.controlsfx.control.GridCell;
 import utils.DisplayUtils;
 import utils.WidgetUtils;
 
-public class TextableColorGridCell extends GridCell<SignalModel> {
+public class SignalTextableColorGridCell extends GridCell<SignalModel> {
     private static final boolean debug = false;
     final String IDLE_BUTTON_STYLE = "-fx-effect: null;";
     final String HOVERED_BUTTON_STYLE = "-fx-effect: dropshadow(three-pass-box, rgba(13, 213, 252,0.7), 10, 0.8, 0, 0)";
@@ -32,7 +32,7 @@ public class TextableColorGridCell extends GridCell<SignalModel> {
     /**
      * Creates a default ColorGridCell instance.
      */
-    public TextableColorGridCell(OnTextableColorGridClickListener listener) {
+    public SignalTextableColorGridCell(OnTextableColorGridClickListener listener) {
         this.mListener = listener;
 
         this.mColorRect = new Rectangle(60, 60);

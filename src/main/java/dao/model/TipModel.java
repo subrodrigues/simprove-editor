@@ -87,6 +87,14 @@ public class TipModel implements Serializable {
         this.actionsTodo = actionsTodo;
     }
 
+    public ActorModel getActor() {
+        return actor;
+    }
+
+    public void setActor(ActorModel actor) {
+        this.actor = actor;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

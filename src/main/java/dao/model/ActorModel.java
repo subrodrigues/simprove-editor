@@ -19,6 +19,12 @@ public class ActorModel  implements Serializable {
         this.type = type;
     }
 
+    public ActorModel(String name, TypeModel type) {
+        this.id = -1;
+        this.name = name;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

@@ -30,7 +30,7 @@ import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.JFXNumericTextField;
-import ui.widgets.grid.TextableColorGridCell;
+import ui.widgets.grid.SignalTextableColorGridCell;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import java.util.List;
 
 public class EditStateViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        TextableColorGridCell.OnTextableColorGridClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener {
     // UI Bind variables
     @FXML
     private StackPane editStateRoot;
@@ -193,11 +193,11 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
         signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
 
         //(top/right/bottom/left)
-        TextableColorGridCell.OnTextableColorGridClickListener context = this;
+        SignalTextableColorGridCell.OnTextableColorGridClickListener context = this;
         signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
             @Override
             public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
-                return new TextableColorGridCell(context);
+                return new SignalTextableColorGridCell(context);
             }
         });
 

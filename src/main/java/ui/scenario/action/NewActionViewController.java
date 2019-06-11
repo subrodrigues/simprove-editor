@@ -6,9 +6,6 @@ package ui.scenario.action;
 
 import com.jfoenix.controls.*;
 import dao.model.*;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +25,7 @@ import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
-import ui.widgets.grid.TextableColorGridCell;
+import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.ConstantUtils;
 import utils.TextUtils;
 
@@ -38,7 +35,7 @@ import java.util.List;
 
 public class NewActionViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        TextableColorGridCell.OnTextableColorGridClickListener{
+        SignalTextableColorGridCell.OnTextableColorGridClickListener{
     // UI Bind variables
     @FXML
     private StackPane newActionRoot;
@@ -181,11 +178,11 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
 
         //(top/right/bottom/left)
-        TextableColorGridCell.OnTextableColorGridClickListener context = this;
+        SignalTextableColorGridCell.OnTextableColorGridClickListener context = this;
         signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
             @Override
             public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
-                return new TextableColorGridCell(context);
+                return new SignalTextableColorGridCell(context);
             }
         });
 

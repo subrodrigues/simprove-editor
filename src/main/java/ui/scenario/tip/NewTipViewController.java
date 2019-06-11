@@ -6,6 +6,7 @@ package ui.scenario.tip;
 
 import com.jfoenix.controls.*;
 import dao.model.ActionModel;
+import dao.model.ActorModel;
 import dao.model.TipModel;
 import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
@@ -108,6 +109,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
         // Init Actor Types ComboBox
         this.actorTypeComboBox.getItems().add(new TypeModel(-1, -1,"NONE"));
         this.actorTypeComboBox.getItems().addAll(this.mActorTypes);
+        this.actorTypeComboBox.getSelectionModel().select(0);
 
         /*
          * Set Listeners and Bindings
@@ -225,9 +227,18 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
                 // Set state (type) name
                 // TODO: Update tipmodel
+                mTipModel.setActor(new ActorModel(actorCustomName.getText(),
+                        actorTypeComboBox.getSelectionModel().getSelectedItem()));
+
+                mTipModel.setDuration((duration != null &&
+                        duration.getLength() > 0 ? Integer.valueOf(duration.getText()) : 0));
+
+                mTipModel.setTime((activationTime != null &&
+                        activationTime.getLength() > 0 ? Float.valueOf(activationTime.getText()) : -1));
+
+                mTipModel.setMessage(inputMessage.getText());
 
                 mListener.onNewTipAcceptClicked(mTipModel);
 

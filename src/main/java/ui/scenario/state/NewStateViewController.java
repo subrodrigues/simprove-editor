@@ -27,7 +27,8 @@ import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.scenario.tip.NewTipViewController;
 import ui.widgets.JFXNumericTextField;
-import ui.widgets.grid.TextableColorGridCell;
+import ui.widgets.grid.SignalTextableColorGridCell;
+import ui.widgets.grid.TipTextableColorGridCell;
 import utils.TextUtils;
 
 import java.io.IOException;
@@ -36,7 +37,8 @@ import java.util.List;
 
 public class NewStateViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        TextableColorGridCell.OnTextableColorGridClickListener,
+        SignalTextableColorGridCell.OnTextableColorGridClickListener,
+        TipTextableColorGridCell.OnTextableColorGridClickListener,
         NewTipViewController.OnNewTipClickListener {
 
     // UI Bind variables
@@ -125,6 +127,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     private void setupState(StateModel state, List<ActionModel> actions) {
         this.mStateSignals = new ArrayList<SignalModel>();
+        this.mStateTips = new ArrayList<>();
+
         this.mStateModel = state;
 
         setupSignalsGrid();
@@ -187,23 +191,23 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      *  // TODO: Refactor this tips behavior into a parent class (maybe with templates to be used by the signals logic too)
      */
     private void setupTipsGrid() {
-        final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
+        final ObservableList<TipModel> list = FXCollections.<TipModel>observableArrayList();
 
-        GridView<SignalModel> signalGrid = new GridView<>(list);
-        signalGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
-        signalGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
-        signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
+        GridView<TipModel> tipGrid = new GridView<>(list);
+        tipGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
+        tipGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
+        tipGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
 
         //(top/right/bottom/left)
-        TextableColorGridCell.OnTextableColorGridClickListener context = this;
-        signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
+        TipTextableColorGridCell.OnTextableColorGridClickListener context = this;
+        tipGrid.setCellFactory(new Callback<GridView<TipModel>, GridCell<TipModel>>() {
             @Override
-            public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
-                return new TextableColorGridCell(context);
+            public GridCell<TipModel> call(GridView<TipModel> arg0) {
+                return new TipTextableColorGridCell(context);
             }
         });
 
-        this.tipsRootPane.getChildren().add(signalGrid);
+        this.tipsRootPane.getChildren().add(tipGrid);
         this.addTipButton.setOnAction(getNewTipClickListener(this.mActorTypes));
     }
 
@@ -253,11 +257,11 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         signalGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
 
         //(top/right/bottom/left)
-        TextableColorGridCell.OnTextableColorGridClickListener context = this;
+        SignalTextableColorGridCell.OnTextableColorGridClickListener context = this;
         signalGrid.setCellFactory(new Callback<GridView<SignalModel>, GridCell<SignalModel>>() {
             @Override
             public GridCell<SignalModel> call(GridView<SignalModel> arg0) {
-                return new TextableColorGridCell(context);
+                return new SignalTextableColorGridCell(context);
             }
         });
 
@@ -469,7 +473,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void showNewTipDialog(List<TypeModel> actorTypes) {
         Stage stage = (Stage) newStateRoot.getScene().getWindow();
 
-        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mActorTypes.size(), this.mCurrentActions, this);
+        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mStateTips.size(), this.mCurrentActions, this);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 
@@ -563,6 +567,12 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     @Override
     public void onNewTipAcceptClicked(TipModel newTipModel) {
-        // TODO:
+        this.mStateTips.add(newTipModel);
+        this.addTipToGridView(newTipModel);
+    }
+
+    @Override
+    public void onTipGridItemClick(TipModel clickedItem) {
+        // TODO
     }
 }
