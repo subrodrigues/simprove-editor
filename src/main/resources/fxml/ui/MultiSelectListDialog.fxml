@@ -64,7 +64,7 @@
                         </HBox.margin>
                     </JFXButton>
 
-                    <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="60"
+                    <JFXButton fx:id="applyButton" buttonType="RAISED" prefHeight="40" prefWidth="60"
                                styleClass="smaller-apply-jfx-button-raised" text="Apply"
                                StackPane.alignment="CENTER_RIGHT">
                         <HBox.margin>

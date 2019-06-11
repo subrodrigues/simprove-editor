@@ -5,6 +5,7 @@
 package dao.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TipModel implements Serializable {
@@ -24,8 +25,8 @@ public class TipModel implements Serializable {
         this.actor = null;
         this.duration = 0;
         this.time = 0;
-        this.actionsDone = null;
-        this.actionsTodo = null;
+        this.actionsDone = new ArrayList<>();
+        this.actionsTodo = new ArrayList<>();
     }
 
     public TipModel(int id, String message, ActorModel actor, int duration, float time, List<ActionModel> actionsDone, List<ActionModel> actionsTodo) {

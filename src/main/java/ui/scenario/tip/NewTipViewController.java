@@ -25,7 +25,7 @@ import ui.widgets.MultiSelectListController;
 import java.io.IOException;
 import java.util.List;
 
-public class NewTipViewController {
+public class NewTipViewController implements MultiSelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
     private StackPane newTipRoot;
@@ -192,7 +192,14 @@ public class NewTipViewController {
     private void showEditConditions() {
         Stage stage = (Stage) newTipRoot.getScene().getWindow();
 
-        MultiSelectListController multiSelectList = new MultiSelectListController(this.mCurrentActions);
+        MultiSelectListController multiSelectList = new MultiSelectListController(
+                "Select Conditions",
+                "Actions Required",
+                "Actions Missing",
+                this.mCurrentActions,
+                this.mTipModel.getActionsDone(),
+                this.mTipModel.getActionsTodo(),
+                this);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 
@@ -243,4 +250,16 @@ public class NewTipViewController {
         };
     }
 
+    /**
+     * On multi select list Apply click.
+     * This method deals with templates, since MultiSelectListController is a generic class.
+     *
+     * @param firstListIds
+     * @param secondListIds
+     * @param <T>
+     */
+    public <T> void onMultiSelectListApplyClick(List<T> firstListIds, List<T> secondListIds) {
+        this.mTipModel.setActionsDone((List<ActionModel>) firstListIds);
+        this.mTipModel.setActionsTodo((List<ActionModel>) secondListIds);
+    }
 }
