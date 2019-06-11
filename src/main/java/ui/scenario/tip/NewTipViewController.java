@@ -4,10 +4,7 @@
 
 package ui.scenario.tip;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import dao.model.TipModel;
 import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
@@ -17,9 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.JFXNumericTextField;
+import ui.widgets.MultiSelectListController;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +49,9 @@ public class NewTipViewController {
 
     @FXML
     private JFXButton cancelButton;
+
+    @FXML
+    private JFXButton tipConditions;
 
     // Private variables
     private TipModel mTipModel;
@@ -118,6 +121,8 @@ public class NewTipViewController {
         });
         actorCustomName.setDisable(true);
 
+        tipConditions.setOnAction(getEditTipConditionsClickListener());
+
         this.acceptButton.setDisable(true);
         this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.inputMessage.textProperty()));
@@ -150,6 +155,22 @@ public class NewTipViewController {
     }
 
     /**
+     * Method that implements the Accept new Tip click listener behavior.
+     * It updates the mTipModel with new content and returns it.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getEditTipConditionsClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                showEditConditions();
+            }
+        };
+    }
+
+    /**
      * Method that closes this DialogWindow view
      */
     private void closeDialogWindow() {
@@ -157,6 +178,29 @@ public class NewTipViewController {
         Stage stage = (Stage) newTipRoot.getScene().getWindow();
         // do what you have to do
         stage.close();
+    }
+
+    /**
+     * Method that shows the edit action conditions window
+     * TODO: Customize with actions list, window and tab titles
+     */
+    private void showEditConditions() {
+        Stage stage = (Stage) newTipRoot.getScene().getWindow();
+
+        MultiSelectListController multiSelectList = new MultiSelectListController();
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(multiSelectList.getItemRoot());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
     }
 
     /**

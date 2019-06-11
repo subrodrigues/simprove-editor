@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<!--
+  ~ Created by Filipe André Rodrigues on 07-06-2019 17:40
+  -->
+
+<StackPane fx:id="multiSelectListRoot" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <children>
+        <VBox>
+            <children>
+                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Text fx:id="title" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="Title">
+                            <StackPane.margin>
+                                <Insets top="16.0" />
+                            </StackPane.margin>
+                        </Text>
+                    </children>
+                </StackPane>
+
+                <TabPane fx:id="tabPane">
+                    <tabs>
+                        <Tab fx:id="firstTab" closable="false" text="Tab1">
+                            <JFXListView fx:id="firstList">
+                                <Label fx:id="new_scenario" styleClass="drawer-item">Action cenas</Label>
+                                <Label fx:id="save_scenario" styleClass="drawer-item">Coiso e tal</Label>
+                                <Label fx:id="load_scenario" styleClass="drawer-item">Diz que é capaz</Label>
+                                <Label fx:id="export_scenario" styleClass="drawer-item">Tem dias</Label>
+                            </JFXListView>
+                        </Tab>
+                        <Tab fx:id="secondTab" closable="false" text="Tab2">
+                            <JFXListView fx:id="secondList">
+                                <Label styleClass="drawer-item">Action cenas</Label>
+                                <Label styleClass="drawer-item">Coiso e tal</Label>
+                                <Label styleClass="drawer-item">Diz que é capaz</Label>
+                                <Label styleClass="drawer-item">Tem dias</Label>
+                            </JFXListView>
+
+                        </Tab>
+
+                    </tabs>
+
+                    <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+                </TabPane>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

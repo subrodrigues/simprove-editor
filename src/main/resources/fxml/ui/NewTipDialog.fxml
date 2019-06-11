@@ -16,15 +16,18 @@
   ~ Created by Filipe André Rodrigues on 04-06-2019 20:38
   -->
 
-<StackPane fx:id="newTipRoot" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="newTipRoot" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style"
+           xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
-                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0"
+                           VBox.vgrow="ALWAYS">
                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Tip">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title"
+                              text="New Tip">
                             <StackPane.margin>
-                                <Insets top="16.0" />
+                                <Insets top="16.0"/>
                             </StackPane.margin>
                         </Text>
                         <VBox prefWidth="100.0" StackPane.alignment="CENTER">
@@ -32,18 +35,22 @@
 
                                 <HBox>
                                     <VBox alignment="CENTER_LEFT">
-                                        <Text fx:id="actorType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Actor:" />
+                                        <Text fx:id="actorType" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Actor:"/>
                                         <HBox.margin>
-                                            <Insets right="8.0" />
+                                            <Insets right="8.0"/>
                                         </HBox.margin>
                                     </VBox>
-                                    <JFXComboBox fx:id="actorTypeComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Select Actor Type" styleClass="combo-box">
+                                    <JFXComboBox fx:id="actorTypeComboBox" prefHeight="30.0" prefWidth="200.0"
+                                                 promptText="Select Actor Type" styleClass="combo-box">
                                         <HBox.margin>
-                                            <Insets right="6.0" />
+                                            <Insets right="6.0"/>
                                         </HBox.margin>
                                     </JFXComboBox>
 
-                                    <JFXTextField fx:id="actorCustomName" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Actor name" styleClass="edit-dialog-parameter-input">
+                                    <JFXTextField fx:id="actorCustomName" labelFloat="true" prefHeight="30.0"
+                                                  prefWidth="200.0" promptText="Actor name"
+                                                  styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
                                                 <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
@@ -52,54 +59,85 @@
                                     </JFXTextField>
 
                                     <VBox.margin>
-                                        <Insets top="32.0" />
+                                        <Insets top="32.0"/>
                                     </VBox.margin>
 
                                 </HBox>
 
                                 <HBox>
                                     <VBox alignment="CENTER_LEFT">
-                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Time: " />
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Time: "/>
                                         <HBox.margin>
-                                            <Insets right="8.0" />
+                                            <Insets right="8.0"/>
                                         </HBox.margin>
                                     </VBox>
-                                    <JFXNumericTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0" promptText="Activation time (seconds)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
+                                    <JFXNumericTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0"
+                                                         promptText="Activation time (seconds)"
+                                                         styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
                                     </JFXNumericTextField>
 
                                     <VBox alignment="CENTER_RIGHT">
-                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Duration: ">
-                                 <VBox.margin>
-                                    <Insets left="6.0" />
-                                 </VBox.margin></Text>
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Duration: ">
+                                            <VBox.margin>
+                                                <Insets left="6.0"/>
+                                            </VBox.margin>
+                                        </Text>
                                     </VBox>
-                                    <JFXNumericTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0" promptText="Viewing time (seconds)" styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
+                                    <JFXNumericTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0"
+                                                         promptText="Viewing time (seconds)"
+                                                         styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
                                     </JFXNumericTextField>
 
                                     <VBox.margin>
-                                        <Insets top="32.0" />
+                                        <Insets top="32.0"/>
                                     </VBox.margin>
                                 </HBox>
 
                                 <VBox>
-                                    <Text fx:id="tipMessage" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Message">
+                                    <Text fx:id="tipMessage" strokeType="OUTSIDE" strokeWidth="0.0"
+                                          styleClass="edit-dialog-parameter-title-black" text="Message">
                                         <VBox.margin>
-                                            <Insets top="24.0" />
+                                            <Insets/>
                                         </VBox.margin>
                                     </Text>
-                                    <JFXTextArea fx:id="inputMessage" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a message to be shown to the Actor" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                                    <JFXTextArea fx:id="inputMessage" minHeight="120" prefColumnCount="80"
+                                                 prefRowCount="40" promptText="Write a message to be shown to the Actor"
+                                                 style="-fx-background-color: #fafafa"
+                                                 styleClass="edit-dialog-parameter-input-black">
                                         <VBox.margin>
-                                            <Insets top="6.0" />
+                                            <Insets top="6.0"/>
                                         </VBox.margin>
                                         <padding>
-                                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
                                         </padding>
                                     </JFXTextArea>
+                                    <VBox.margin>
+                                        <Insets top="32.0"/>
+                                    </VBox.margin>
                                 </VBox>
+
+                                <HBox alignment="CENTER">
+                                    <JFXButton fx:id="tipConditions" alignment="CENTER" buttonType="FLAT"
+                                               prefHeight="20" prefWidth="120" styleClass="cancel-jfx-button-raised"
+                                               text="Select Conditions" StackPane.alignment="CENTER_RIGHT">
+                                        <HBox.margin>
+                                            <Insets bottom="6.0" left="6.0" right="6.0"/>
+                                        </HBox.margin>
+
+                                        <VBox.margin>
+                                            <Insets top="32.0"/>
+                                        </VBox.margin>
+                                    </JFXButton>
+                                    <VBox.margin>
+                                        <Insets top="24.0"/>
+                                    </VBox.margin>
+                                </HBox>
 
                             </children>
                             <StackPane.margin>
-                                <Insets left="22.0" right="22.0" top="46.0" />
+                                <Insets left="22.0" right="22.0" top="46.0"/>
                             </StackPane.margin>
                         </VBox>
                     </children>
@@ -108,28 +146,32 @@
 
                     <HBox alignment="CENTER" StackPane.alignment="CENTER">
 
-                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100" styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
+                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100"
+                                   styleClass="cancel-jfx-button-raised" text="Cancel"
+                                   StackPane.alignment="CENTER_RIGHT">
                             <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                         </JFXButton>
 
-                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100" styleClass="apply-jfx-button-raised" text="Accept" StackPane.alignment="CENTER_RIGHT">
+                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100"
+                                   styleClass="apply-jfx-button-raised" text="Accept"
+                                   StackPane.alignment="CENTER_RIGHT">
                             <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                         </JFXButton>
                     </HBox>
                     <StackPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </StackPane.margin>
                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="32.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="32.0"/>
                     </VBox.margin>
                 </StackPane>
             </children>
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
         </VBox>
 

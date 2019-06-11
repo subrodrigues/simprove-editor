@@ -1431,3 +1431,47 @@
     -fx-fill: #212121;
     -fx-cursor: hand;
 }
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab{
+}
+
+.tab-pane .tab{
+    -fx-background-color: #616161;
+}
+
+.tab-pane .tab:selected{
+    -fx-background-color: #484848;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: rgba(250.0, 250.0, 250.0, 0.4);
+    -fx-font-family: "Roboto";
+    -fx-font-size: 14.0;
+    -fx-font-weight: BOLD;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #fafafa;
+}
+.tab-down-button {
+    -fx-padding: 0;
+}
+
+.tab-down-button .arrow {
+    -fx-padding: 0;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: #fafafa;
+}
+
