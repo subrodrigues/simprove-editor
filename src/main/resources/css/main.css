@@ -1275,6 +1275,23 @@
     -fx-text-fill: WHITE;
 }
 
+.smaller-apply-jfx-button-raised .jfx-rippler {
+    -jfx-rippler-fill: #cddc39;
+}
+
+.smaller-apply-jfx-button-raised {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 16.0px;
+    -fx-font-weight: BOLD;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #8bc34a;
+    -fx-pref-width: 80.0;
+    -fx-text-fill: WHITE;
+}
+
+
 .cancel-jfx-button-raised .jfx-rippler {
     -jfx-rippler-fill: #fafafa;
 }
@@ -1288,6 +1305,22 @@
     -jfx-button-type: RAISED;
     -fx-background-color: #bdbdbd;
     -fx-pref-width: 200.0;
+    -fx-text-fill: WHITE;
+}
+
+.smaller-cancel-jfx-button-raised .jfx-rippler {
+    -jfx-rippler-fill: #fafafa;
+}
+
+.smaller-cancel-jfx-button-raised {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 16.0px;
+    -fx-font-weight: BOLD;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #bdbdbd;
+    -fx-pref-width: 80.0;
     -fx-text-fill: WHITE;
 }
 

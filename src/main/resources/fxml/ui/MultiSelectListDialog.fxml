@@ -55,8 +55,17 @@
             <StackPane>
                 <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT">
 
-                    <JFXButton fx:id="okButton" buttonType="RAISED" prefHeight="40" prefWidth="60"
-                               styleClass="apply-jfx-button-raised" text="Ok"
+
+                    <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="60"
+                               styleClass="smaller-cancel-jfx-button-raised" text="Cancel"
+                               StackPane.alignment="CENTER_RIGHT">
+                        <HBox.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </HBox.margin>
+                    </JFXButton>
+
+                    <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="60"
+                               styleClass="smaller-apply-jfx-button-raised" text="Apply"
                                StackPane.alignment="CENTER_RIGHT">
                         <HBox.margin>
                             <Insets bottom="10.0" right="10.0" top="10.0"/>

@@ -4,6 +4,7 @@
 
 package ui.widgets;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,9 @@ public class MultiSelectListController<T> {
     @FXML
     private JFXListView<T> secondList;
 
+    @FXML
+    private JFXButton acceptButton;
+
     public MultiSelectListController(List<T> listContent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/MultiSelectListDialog.fxml"));
         fxmlLoader.setController(this);
@@ -56,8 +60,10 @@ public class MultiSelectListController<T> {
         setMultipleSelectionBehavior();
         setTabPaneFitWidthBehavior();
 
-        firstList.getItems().addAll(listContent);
-        secondList.getItems().addAll(listContent);
+        this.firstList.getItems().addAll(listContent);
+        this.secondList.getItems().addAll(listContent);
+
+//        this.okButton.setOnAction();
     }
 
     private void setTabPaneFitWidthBehavior() {
