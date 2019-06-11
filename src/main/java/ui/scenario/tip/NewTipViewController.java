@@ -5,6 +5,7 @@
 package ui.scenario.tip;
 
 import com.jfoenix.controls.*;
+import dao.model.ActionModel;
 import dao.model.TipModel;
 import dao.model.TypeModel;
 import javafx.beans.binding.Bindings;
@@ -58,7 +59,10 @@ public class NewTipViewController {
     private OnNewTipClickListener mListener;
     private int mStateId = -1;
 
-    private List<TypeModel> mActorTypes;
+    private List<TypeModel> mActorTypes
+            ;
+    // Current Actions (for conditions)
+    private List<ActionModel> mCurrentActions;
 
     public interface OnNewTipClickListener {
         void onNewTipAcceptClicked(TipModel newTipModel);
@@ -78,9 +82,10 @@ public class NewTipViewController {
      * Constructor with respective click listener.
      *
      * @param actorTypes
+     * @param currentActions
      * @param listener
      */
-    public NewTipViewController(List<TypeModel> actorTypes, int id, OnNewTipClickListener listener) {
+    public NewTipViewController(List<TypeModel> actorTypes, int id, List<ActionModel> currentActions, OnNewTipClickListener listener) {
         this.mListener = listener;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewTipDialog.fxml"));
@@ -93,11 +98,12 @@ public class NewTipViewController {
 
         mTipModel = new TipModel(id);
 
-        setupUI(actorTypes);
+        setupUI(actorTypes, currentActions);
     }
 
-    private void setupUI(List<TypeModel> actorTypes) {
+    private void setupUI(List<TypeModel> actorTypes, List<ActionModel> currentActions) {
         this.mActorTypes = actorTypes;
+        this.mCurrentActions = currentActions;
 
         // Init Actor Types ComboBox
         this.actorTypeComboBox.getItems().add(new TypeModel(-1, -1,"NONE"));
@@ -164,7 +170,6 @@ public class NewTipViewController {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-
                 showEditConditions();
             }
         };
@@ -187,7 +192,7 @@ public class NewTipViewController {
     private void showEditConditions() {
         Stage stage = (Stage) newTipRoot.getScene().getWindow();
 
-        MultiSelectListController multiSelectList = new MultiSelectListController();
+        MultiSelectListController multiSelectList = new MultiSelectListController(this.mCurrentActions);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 

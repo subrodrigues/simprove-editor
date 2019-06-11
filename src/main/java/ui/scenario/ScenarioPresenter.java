@@ -284,7 +284,7 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewStateView() {
-        this.mView.showNewStateDialog(this.mScenario.getStates(), this.mSignalTypes, this.mActorTypes);
+        this.mView.showNewStateDialog(this.mScenario.getStates(), this.mSignalTypes, this.mActorTypes, this.mScenario.getActions());
     }
 
 

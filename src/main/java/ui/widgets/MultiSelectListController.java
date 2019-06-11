@@ -14,8 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.List;
 
-public class MultiSelectListController {
+public class MultiSelectListController<T> {
     // UI Bind variables
     @FXML
     private StackPane multiSelectListRoot;
@@ -33,12 +34,12 @@ public class MultiSelectListController {
     private TabPane tabPane;
 
     @FXML
-    private JFXListView firstList;
+    private JFXListView<T> firstList;
 
     @FXML
-    private JFXListView secondList;
+    private JFXListView<T> secondList;
 
-    public MultiSelectListController() {
+    public MultiSelectListController(List<T> listContent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/MultiSelectListDialog.fxml"));
         fxmlLoader.setController(this);
         try {
@@ -47,8 +48,34 @@ public class MultiSelectListController {
             throw new RuntimeException(e);
         }
 
-        firstList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setupUI(listContent);
+    }
 
+
+    private void setupUI(List<T> listContent) {
+        setMultipleSelectionBehavior();
+        setTabPaneFitWidthBehavior();
+
+        firstList.getItems().addAll(listContent);
+        secondList.getItems().addAll(listContent);
+    }
+
+    private void setTabPaneFitWidthBehavior() {
+        tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            final double tabWidth = tabPane.getWidth() / 2;
+
+            tabPane.setTabMinWidth(tabWidth);
+            tabPane.setTabMaxWidth(tabWidth);
+            tabPane.setTabMaxWidth(tabWidth);
+        });
+
+        final double tabPaneWidth = (tabPane.getTabs().size()) + 55;
+        tabPane.setMinWidth(tabPaneWidth);//set the tabPane's minWidth and maybe max width to the tabs combined width + a padding value
+        tabPane.setPrefWidth(tabPaneWidth);//set the tabPane's minWidth and maybe max width to the tabs combined width + a padding value
+    }
+
+    private void setMultipleSelectionBehavior() {
+        firstList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         firstList.addEventFilter(MouseEvent.MOUSE_PRESSED, evt -> {
             Node node = evt.getPickResult().getIntersectedNode();
 
@@ -115,19 +142,6 @@ public class MultiSelectListController {
                 }
             }
         });
-
-        tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            final double tabWidth = tabPane.getWidth() / 2;
-
-            tabPane.setTabMinWidth(tabWidth);
-            tabPane.setTabMaxWidth(tabWidth);
-            tabPane.setTabMaxWidth(tabWidth);
-        });
-
-        final double tabPaneWidth = (tabPane.getTabs().size()) + 55;
-        tabPane.setMinWidth(tabPaneWidth);//set the tabPane's minWidth and maybe max width to the tabs combined width + a padding value
-        tabPane.setPrefWidth(tabPaneWidth);//set the tabPane's minWidth and maybe max width to the tabs combined width + a padding value
-
     }
 
     public StackPane getItemRoot() {

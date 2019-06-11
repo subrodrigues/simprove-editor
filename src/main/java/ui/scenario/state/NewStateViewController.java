@@ -82,6 +82,9 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     // Available Actors
     private List<TypeModel> mActorTypes;
 
+    // Current Actions (for conditions)
+    private List<ActionModel> mCurrentActions;
+
     public interface OnScenarioNewStateClickListener {
         void onNewStateAcceptClicked(StateModel newStateModel);
     }
@@ -102,10 +105,11 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      * @param states
      * @param listener
      */
-    public NewStateViewController(List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, OnScenarioNewStateClickListener listener) {
+    public NewStateViewController(List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, List<ActionModel> actions, OnScenarioNewStateClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
         this.mActorTypes = actorTypes;
+        this.mCurrentActions = actions;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewStateDialog.fxml"));
         fxmlLoader.setController(this);
@@ -115,11 +119,11 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
             throw new RuntimeException(e);
         }
 
-        setupState(new StateModel(states.size())); // Create new state with index = states.size
+        setupState(new StateModel(states.size()), actions); // Create new state with index = states.size
         setupUI(states);
     }
 
-    private void setupState(StateModel state) {
+    private void setupState(StateModel state, List<ActionModel> actions) {
         this.mStateSignals = new ArrayList<SignalModel>();
         this.mStateModel = state;
 
@@ -465,7 +469,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void showNewTipDialog(List<TypeModel> actorTypes) {
         Stage stage = (Stage) newStateRoot.getScene().getWindow();
 
-        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mActorTypes.size(), this);
+        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mActorTypes.size(), this.mCurrentActions, this);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 

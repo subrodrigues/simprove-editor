@@ -32,22 +32,12 @@
                     <tabs>
                         <Tab fx:id="firstTab" closable="false" text="Tab1">
                             <JFXListView fx:id="firstList">
-                                <Label fx:id="new_scenario" styleClass="drawer-item">Action cenas</Label>
-                                <Label fx:id="save_scenario" styleClass="drawer-item">Coiso e tal</Label>
-                                <Label fx:id="load_scenario" styleClass="drawer-item">Diz que é capaz</Label>
-                                <Label fx:id="export_scenario" styleClass="drawer-item">Tem dias</Label>
                             </JFXListView>
                         </Tab>
                         <Tab fx:id="secondTab" closable="false" text="Tab2">
                             <JFXListView fx:id="secondList">
-                                <Label styleClass="drawer-item">Action cenas</Label>
-                                <Label styleClass="drawer-item">Coiso e tal</Label>
-                                <Label styleClass="drawer-item">Diz que é capaz</Label>
-                                <Label styleClass="drawer-item">Tem dias</Label>
                             </JFXListView>
-
                         </Tab>
-
                     </tabs>
 
                     <opaqueInsets>
