@@ -540,8 +540,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param state
      * @param states
      */
-    void showStateEditDialog(StateModel state, List<StateModel> states, List<SignalTemplateModel> signalTypes) {
-        EditStateViewController editStateDialog = new EditStateViewController(state, states, signalTypes, this);
+    void showStateEditDialog(StateModel state, List<StateModel> states,
+                             List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, List<ActionModel> actions) {
+        EditStateViewController editStateDialog = new EditStateViewController(state, states, signalTypes, actorTypes, actions, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context
 
@@ -563,7 +564,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param actorTypes
      * @param actions
      */
-    void showNewStateDialog(List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, List<ActionModel> actions) {
+    void showNewStateDialog(List<StateModel> states, List<SignalTemplateModel> signalTypes,
+                            List<TypeModel> actorTypes, List<ActionModel> actions) {
         NewStateViewController newStateDialog = new NewStateViewController(states, signalTypes, actorTypes, actions, this);
 
         JFXAlert dialog = new JFXAlert((Stage) statesGridView.getScene().getWindow()); // get window context

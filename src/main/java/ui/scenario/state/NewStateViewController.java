@@ -41,7 +41,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         SignalTextableColorGridCell.OnTextableColorGridClickListener,
         TipTextableColorGridCell.OnTextableColorGridClickListener,
         NewTipViewController.OnNewTipClickListener,
-        EditTipViewController.OnEditTipClickListener{
+        EditTipViewController.OnEditTipClickListener {
 
     // UI Bind variables
     @FXML
@@ -83,6 +83,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
+
     // Available Actors
     private List<TypeModel> mActorTypes;
 
@@ -244,8 +245,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().remove(tip);
     }
 
-
-
     /**
      *  // TODO: Refactor this signals behavior into a parent class
      */
@@ -378,6 +377,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
                 }
 
                 mStateModel.setSignals(mStateSignals);
+                mStateModel.setTips(mStateTips);
 
                 mListener.onNewStateAcceptClicked(mStateModel);
 

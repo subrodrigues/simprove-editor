@@ -5,10 +5,7 @@
 package ui.scenario.state;
 
 import com.jfoenix.controls.*;
-import dao.model.SignalModel;
-import dao.model.SignalTemplateModel;
-import dao.model.StateModel;
-import dao.model.TransitionModel;
+import dao.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,8 +26,11 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
+import ui.scenario.tip.EditTipViewController;
+import ui.scenario.tip.NewTipViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.SignalTextableColorGridCell;
+import ui.widgets.grid.TipTextableColorGridCell;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,11 @@ import java.util.List;
 
 public class EditStateViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        SignalTextableColorGridCell.OnTextableColorGridClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener,
+        TipTextableColorGridCell.OnTextableColorGridClickListener,
+        NewTipViewController.OnNewTipClickListener,
+        EditTipViewController.OnEditTipClickListener {
+
     // UI Bind variables
     @FXML
     private StackPane editStateRoot;
@@ -67,16 +71,29 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     @FXML
     private JFXButton addSignalButton;
 
+    @FXML
+    private StackPane tipsRootPane;
+
+    @FXML
+    private JFXButton addTipButton;
+
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioEditStateClickListener mListener;
     private int mStateId = -1;
 
     private List<SignalModel> mStateSignals;
+    private List<TipModel> mStateTips;
 
     // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
 
+    // Available Actors
+    private List<TypeModel> mActorTypes;
+
+    // Current Actions (for conditions)
+    private List<ActionModel> mCurrentActions;
 
     public interface OnScenarioEditStateClickListener {
         void onStateEditApplyClicked(StateModel newStateModel);
@@ -100,9 +117,11 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
      * @param states
      * @param listener
      */
-    public EditStateViewController(StateModel state, List<StateModel> states, List<SignalTemplateModel> signalTypes, OnScenarioEditStateClickListener listener) {
+    public EditStateViewController(StateModel state, List<StateModel> states, List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes, List<ActionModel> actions,  OnScenarioEditStateClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
+        this.mActorTypes = actorTypes;
+        this.mCurrentActions = actions;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditStateDialog.fxml"));
         fxmlLoader.setController(this);
@@ -120,9 +139,13 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
         this.mStateSignals = new ArrayList<SignalModel>();
         this.mStateSignals = state.getSignals();
 
+        this.mStateTips = new ArrayList<>();
+        this.mStateTips = state.getTips();
+
         this.mStateModel = state;
 
         setupSignalsGrid(state.getSignals());
+        setupTipsGrid(state.getTips());
     }
 
     private void setupUI(List<StateModel> states) {
@@ -206,6 +229,63 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that setups the Tips Grid view filling it with data
+     *
+     *  // TODO: Refactor this tips behavior into a parent class (maybe with templates to be used by the signals logic too)
+     */
+    private void setupTipsGrid(List<TipModel> tips) {
+        final ObservableList<TipModel> list = FXCollections.<TipModel>observableArrayList(tips);
+
+        GridView<TipModel> tipGrid = new GridView<>(list);
+        tipGrid.setHorizontalCellSpacing(-4); //horizontal gap in pixels => that's what you are asking for
+        tipGrid.setVerticalCellSpacing(-4); //vertical gap in pixels
+        tipGrid.setPadding(new Insets(6, 6, 6, 6)); //margins around the whole grid
+
+        //(top/right/bottom/left)
+        TipTextableColorGridCell.OnTextableColorGridClickListener context = this;
+        tipGrid.setCellFactory(new Callback<GridView<TipModel>, GridCell<TipModel>>() {
+            @Override
+            public GridCell<TipModel> call(GridView<TipModel> arg0) {
+                return new TipTextableColorGridCell(context);
+            }
+        });
+
+        this.tipsRootPane.getChildren().add(tipGrid);
+        this.addTipButton.setOnAction(getNewTipClickListener(this.mActorTypes));
+    }
+
+    /**
+     * Method that updates the GridView UI. Adding a new Tip
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param tip
+     */
+    private void addTipToGridView(TipModel tip) {
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().add(tip);
+    }
+
+    /**
+     * Method that updates the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param editedTip
+     */
+    private void updateGridViewTip(TipModel editedTip) {
+        final int index = ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().indexOf(editedTip);
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().set(index, editedTip);
+    }
+
+    /**
+     * Method that removes the GridView specified item.
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param tip
+     */
+    private void removeGridViewTip(TipModel tip) {
+        ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().remove(tip);
+    }
+
+    /**
      * Method that returns the current Transition duration in case it is defined, -1 otherwise.
      *
      * @return duration value or -1
@@ -262,6 +342,7 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
                 }
 
                 mStateModel.setSignals(mStateSignals);
+                mStateModel.setTips(mStateTips);
 
                 mListener.onStateEditApplyClicked(mStateModel);
 
@@ -425,6 +506,72 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     }
 
 
+    /**
+     * Method that shows the "Add New Tip" window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @param actorTypes
+     */
+    private void showNewTipDialog(List<TypeModel> actorTypes) {
+        Stage stage = (Stage) editStateRoot.getScene().getWindow();
+
+        NewTipViewController newTipDialog = new NewTipViewController(actorTypes, this.mStateTips.size(), this.mCurrentActions, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(newTipDialog.getNewTipItemRootDialog());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that shows the "Edit Tip" window
+     *
+     * @param tipToEdit
+     * @param actorTypes
+     */
+    private void showEditTipDialog(TipModel tipToEdit, List<TypeModel> actorTypes) {
+        Stage stage = (Stage) editStateRoot.getScene().getWindow();
+
+        EditTipViewController tipDialog = new EditTipViewController(tipToEdit, actorTypes, this.mCurrentActions, this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(tipDialog.getEditSignalItemRootDialog());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that implements the action behavior to launch a new signal window
+     *  // TODO: Refactor this signals behavior into a parent class
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getNewTipClickListener(List<TypeModel> actorTypes) {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showNewTipDialog(actorTypes);
+            }
+        };
+    }
+
+
     /********************************************************************************************************************
      * CALLBACKS INTERFACE                                                                                              *
      ********************************************************************************************************************/
@@ -457,6 +604,36 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     @Override
     public void onSignalGridItemClick(SignalModel clickedItem) {
         showEditSignalDialog(clickedItem, this.mSignalTypes);
+    }
+
+    @Override
+    public void onEditTipAcceptClicked(TipModel mTipModel) {
+        if(this.mStateTips.contains(mTipModel)){
+            this.mStateTips.set(this.mStateTips.indexOf(mTipModel), mTipModel);
+
+            updateGridViewTip(mTipModel);
+        }
+    }
+
+    @Override
+    public void onEditTipDeleteClicked(TipModel mTipModel) {
+        int indexToRemove = this.mStateTips.indexOf(mTipModel);
+
+        if(indexToRemove != -1) {
+            this.mStateTips.remove(indexToRemove); // clean data
+            this.removeGridViewTip(mTipModel); // Refresh UI
+        }
+    }
+
+    @Override
+    public void onNewTipAcceptClicked(TipModel newTipModel) {
+        this.mStateTips.add(newTipModel);
+        this.addTipToGridView(newTipModel);
+    }
+
+    @Override
+    public void onTipGridItemClick(TipModel clickedItem) {
+        this.showEditTipDialog(clickedItem, mActorTypes);
     }
 
 }

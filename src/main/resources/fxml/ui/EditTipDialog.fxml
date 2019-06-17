@@ -29,7 +29,7 @@
                            VBox.vgrow="ALWAYS">
                     <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title"
-                              text="New Tip">
+                              text="Edit Tip">
                             <StackPane.margin>
                                 <Insets top="16.0"/>
                             </StackPane.margin>
