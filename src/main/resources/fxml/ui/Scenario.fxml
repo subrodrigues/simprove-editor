@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import ui.widgets.JFXNumericTextField?>
 
 <!--
   ~ Created by Filipe André Rodrigues on 20-02-2019 19:42
@@ -24,72 +25,74 @@
 
 <StackPane fx:id="scenarioRoot" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
-<StackPane fx:id="scenarioContent">
+    <StackPane fx:id="scenarioContent">
 
-    <SplitPane dividerPositions="0.84" orientation="VERTICAL" style="-fx-box-border: transparent;  -fx-background-insets: 0; -fx-padding: 0;" VBox.vgrow="ALWAYS">
+        <SplitPane dividerPositions="0.84" orientation="VERTICAL" style="-fx-box-border: transparent;  -fx-background-insets: 0; -fx-padding: 0;" VBox.vgrow="ALWAYS">
 
-        <VBox>
+            <VBox>
 
-            <SplitPane dividerPositions="0.4" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
-                <items>
-                    <StackPane>
-                        <StackPane styleClass="pane-title-background">
-                            <padding>
-                                <Insets top="42" />
-                            </padding>
-                            <ScrollPane fx:id="statesScrollPane" fitToWidth="true" hbarPolicy="NEVER">
-                                <content>
-                                    <JFXMasonryPane fx:id="statesGridView" HSpacing="10" VSpacing="10">
+                <SplitPane dividerPositions="0.4" style="-fx-box-border: transparent;" VBox.vgrow="ALWAYS">
+                    <items>
+                        <StackPane>
+                            <StackPane styleClass="pane-title-background">
+                                <padding>
+                                    <Insets top="42" />
+                                </padding>
+                                <ScrollPane fx:id="statesScrollPane" fitToWidth="true" hbarPolicy="NEVER">
+                                    <content>
+                                        <JFXMasonryPane fx:id="statesGridView" HSpacing="10" VSpacing="10">
+                                            <padding>
+                                                <Insets bottom="16" left="16" right="16" top="16" />
+                                            </padding>
+                                        </JFXMasonryPane>
+                                    </content>
+                                </ScrollPane>
+                                <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
+                                    <graphic>
+                                        <StackPane>
+                                            <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
+                                        </StackPane>
+                                    </graphic>
+                                    <StackPane.margin>
+                                        <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
+                                    </StackPane.margin>
+                                </JFXButton>
+
+                            </StackPane>
+                            <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
+                                States
+                            </Label>
+
+                        </StackPane>
+                        <StackPane>
+                            <StackPane styleClass="pane-title-background">
+                                <padding>
+                                    <Insets top="42" />
+                                </padding>
+                                <ScrollPane fx:id="actionsScrollPane" fitToWidth="true" hbarPolicy="NEVER">
+                                    <JFXMasonryPane fx:id="actionsGridView" HSpacing="10" VSpacing="10">
                                         <padding>
                                             <Insets bottom="16" left="16" right="16" top="16" />
                                         </padding>
                                     </JFXMasonryPane>
-                                </content>
-                            </ScrollPane>
-                            <JFXButton fx:id="addStateButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
-                                <graphic>
-                                    <StackPane>
-                                        <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
-                                    </StackPane>
-                                </graphic>
-                           <StackPane.margin>
-                              <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
-                           </StackPane.margin></JFXButton>
-
+                                </ScrollPane>
+                                <JFXButton fx:id="addActionButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
+                                    <graphic>
+                                        <StackPane>
+                                            <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
+                                        </StackPane>
+                                    </graphic>
+                                    <StackPane.margin>
+                                        <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
+                                    </StackPane.margin>
+                                </JFXButton>
+                            </StackPane>
+                            <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
+                                Actions
+                            </Label>
                         </StackPane>
-                        <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
-                            States
-                        </Label>
-
-                    </StackPane>
-                    <StackPane>
-                        <StackPane styleClass="pane-title-background">
-                            <padding>
-                                <Insets top="42" />
-                            </padding>
-                            <ScrollPane fx:id="actionsScrollPane" fitToWidth="true" hbarPolicy="NEVER">
-                                <JFXMasonryPane fx:id="actionsGridView" HSpacing="10" VSpacing="10">
-                                    <padding>
-                                        <Insets bottom="16" left="16" right="16" top="16" />
-                                    </padding>
-                                </JFXMasonryPane>
-                            </ScrollPane>
-                            <JFXButton fx:id="addActionButton" buttonType="RAISED" prefHeight="60" prefWidth="60" ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="BOTTOM_RIGHT">
-                                <graphic>
-                                    <StackPane>
-                                        <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-icon" />
-                                    </StackPane>
-                                </graphic>
-                                <StackPane.margin>
-                                    <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
-                                </StackPane.margin></JFXButton>
-                        </StackPane>
-                        <Label styleClass="pane-title-label" StackPane.alignment="TOP_CENTER">
-                            Actions
-                        </Label>
-                    </StackPane>
-                </items>
-            </SplitPane>
+                    </items>
+                </SplitPane>
 
             </VBox>
             <VBox>
@@ -103,55 +106,113 @@
     </StackPane>
 
     <HBox fx:id="slider" alignment="CENTER_LEFT" maxWidth="-Infinity" pickOnBounds="false" styleClass="split-pane" StackPane.alignment="CENTER_LEFT">
-            <VBox fx:id="sliderContent" maxWidth="400" pickOnBounds="false" prefWidth="300" styleClass="sliding-content-style">
+        <VBox fx:id="sliderContent" maxWidth="400" pickOnBounds="false" prefWidth="300" styleClass="sliding-content-style">
 
-                <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
+            <Text fx:id="scenarioName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Name" />
 
-                <JFXTextField fx:id="inputScenarioName" promptText="Desired scenario name" styleClass="edit-dialog-parameter-input-black">
-                    <validators>
-                        <RequiredFieldValidator message="Input Required!">
-                            <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                        </RequiredFieldValidator>
-                    </validators>
-                    <VBox.margin>
-                        <Insets top="6.0" />
-                    </VBox.margin>
+            <JFXTextField fx:id="inputScenarioName" promptText="Desired scenario name" styleClass="edit-dialog-parameter-input-black">
+                <validators>
+                    <RequiredFieldValidator message="Input Required!">
+                        <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                    </RequiredFieldValidator>
+                </validators>
+                <VBox.margin>
+                    <Insets top="6.0" />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                </padding>
+            </JFXTextField>
+            
+
+            <HBox>
+
+                <VBox>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Score" HBox.hgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets top="24.0" />
+                        </VBox.margin>
+                    </Text>
+
+                    <JFXNumericTextField fx:id="inputScore" promptText="Start value" text="100" styleClass="edit-dialog-parameter-input-black" HBox.hgrow="ALWAYS">
+                        <validators>
+                            <RequiredFieldValidator message="Input Required!">
+                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                            </RequiredFieldValidator>
+                        </validators>
+                        <VBox.margin>
+                            <Insets top="6.0" />
+                        </VBox.margin>
+                        <padding>
+                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                        </padding>
+                    </JFXNumericTextField>
+               <HBox.margin>
+                  <Insets right="3.0" />
+               </HBox.margin>
+                </VBox>
+
+                <VBox>
+
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Min. Score" HBox.hgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets top="24.0" />
+                        </VBox.margin>
+                    </Text>
+
+                    <JFXNumericTextField fx:id="inputMinScore" promptText="Floor value" text="0" styleClass="edit-dialog-parameter-input-black" HBox.hgrow="ALWAYS">
+                        <validators>
+                            <RequiredFieldValidator message="Input Required!">
+                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                            </RequiredFieldValidator>
+                        </validators>
+                        <VBox.margin>
+                            <Insets top="6.0" />
+                        </VBox.margin>
+                        <padding>
+                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                        </padding>
+                    </JFXNumericTextField>
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin>
+                </VBox>
+            </HBox>
+
+
+            <Text fx:id="scenarioBriefing" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Briefing">
+                <VBox.margin>
+                    <Insets top="24.0" />
+                </VBox.margin>
+            </Text>
+            <JFXTextArea fx:id="inputBriefing" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a briefing to this scenario" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                <VBox.margin>
+                    <Insets top="6.0" />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                </padding>
+            </JFXTextArea>
             <padding>
-               <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
-                </JFXTextField>
 
-                <Text fx:id="scenarioBriefing" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Briefing">
-                    <VBox.margin>
-                        <Insets top="24.0" />
-                    </VBox.margin></Text>
-                <JFXTextArea fx:id="inputBriefing" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a briefing to this scenario" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
-                    <VBox.margin>
-                        <Insets top="6.0" />
-                    </VBox.margin>
-            <padding>
-               <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-            </padding></JFXTextArea>
-         <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-         </padding>
-
-            </VBox>
+        </VBox>
         <StackPane pickOnBounds="false" styleClass="expand-btn-background">
             <JFXRippler alignment="CENTER_LEFT" maskType="CIRCLE" maxHeight="44" maxWidth="44" ripplerFill="#fafafa" ripplerRadius="44" StackPane.alignment="CENTER_LEFT">
-                    <JFXHamburger fx:id="expandButton" styleClass="jfx-hamburger-black">
-                        <HamburgerBackArrowBasicTransition />
-                    </JFXHamburger>
-            <StackPane.margin>
-               <Insets />
-            </StackPane.margin>
+                <JFXHamburger fx:id="expandButton" styleClass="jfx-hamburger-black">
+                    <HamburgerBackArrowBasicTransition />
+                </JFXHamburger>
+                <StackPane.margin>
+                    <Insets />
+                </StackPane.margin>
             </JFXRippler>
-         <HBox.margin>
-            <Insets left="-16.0" />
-         </HBox.margin>
+            <HBox.margin>
+                <Insets left="-16.0" />
+            </HBox.margin>
         </StackPane>
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
     </HBox>
 </StackPane>

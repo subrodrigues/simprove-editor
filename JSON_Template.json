@@ -55,6 +55,12 @@
 			"transition": {
 				"id": int,
 				"stateId": int
+			},
+			"score": {
+				"startStates": [int], // state IDs
+				"endStates": [int], // state IDs
+				"lostValue": float, // Immediately lost value
+				"lossOvertime": float // Value that will be lost overtime (until completion...)
 			}
 		}
 	]
