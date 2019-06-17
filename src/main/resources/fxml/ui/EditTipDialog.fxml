@@ -13,6 +13,10 @@
 <?import ui.widgets.JFXNumericTextField?>
 
 <!--
+  ~ Created by Filipe André Rodrigues on 17-06-2019 11:32
+  -->
+
+<!--
   ~ Created by Filipe André Rodrigues on 04-06-2019 20:38
   -->
 
@@ -147,6 +151,13 @@
 
                     <HBox alignment="CENTER" StackPane.alignment="CENTER">
 
+                        <JFXButton fx:id="deleteButton" buttonType="FLAT" prefHeight="40" prefWidth="100"
+                                   styleClass="cancel-jfx-button-flat" text="Delete" StackPane.alignment="CENTER_RIGHT">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </HBox.margin>
+                        </JFXButton>
+
                         <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100"
                                    styleClass="cancel-jfx-button-raised" text="Cancel"
                                    StackPane.alignment="CENTER_RIGHT">
@@ -156,7 +167,7 @@
                         </JFXButton>
 
                         <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100"
-                                   styleClass="apply-jfx-button-raised" text="Accept"
+                                   styleClass="apply-jfx-button-raised" text="Apply"
                                    StackPane.alignment="CENTER_RIGHT">
                             <HBox.margin>
                                 <Insets bottom="10.0" right="10.0" top="10.0"/>

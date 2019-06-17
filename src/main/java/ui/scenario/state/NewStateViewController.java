@@ -25,6 +25,7 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
+import ui.scenario.tip.EditTipViewController;
 import ui.scenario.tip.NewTipViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.SignalTextableColorGridCell;
@@ -39,7 +40,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
         EditSignalViewController.OnEditSignalClickListener,
         SignalTextableColorGridCell.OnTextableColorGridClickListener,
         TipTextableColorGridCell.OnTextableColorGridClickListener,
-        NewTipViewController.OnNewTipClickListener {
+        NewTipViewController.OnNewTipClickListener,
+        EditTipViewController.OnEditTipClickListener{
 
     // UI Bind variables
     @FXML
@@ -239,7 +241,6 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      * @param tip
      */
     private void removeGridViewTip(TipModel tip) {
-//        final int index = ((GridView<SignalModel>) this.signalsRootPane.getChildren().get(0)).getItems().indexOf(signal);
         ((GridView<TipModel>) this.tipsRootPane.getChildren().get(0)).getItems().remove(tip);
     }
 
@@ -498,14 +499,14 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private void showEditTipDialog(TipModel tipToEdit, List<TypeModel> actorTypes) {
         Stage stage = (Stage) newStateRoot.getScene().getWindow();
 
-//     TODO   EditTipViewController tipDialog = new EditTipViewController(tipToEdit, actorTypes, this);
+        EditTipViewController tipDialog = new EditTipViewController(tipToEdit, actorTypes, this.mCurrentActions, this);
 
         JFXAlert dialog = new JFXAlert(stage); // get window context
 
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-//        dialog.setContent(tipDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+        dialog.setContent(tipDialog.getEditSignalItemRootDialog());
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
@@ -573,6 +574,25 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
 
     @Override
     public void onTipGridItemClick(TipModel clickedItem) {
-        // TODO
+        this.showEditTipDialog(clickedItem, mActorTypes);
+    }
+
+    @Override
+    public void onEditTipAcceptClicked(TipModel mTipModel) {
+        if(this.mStateTips.contains(mTipModel)){
+            this.mStateTips.set(this.mStateTips.indexOf(mTipModel), mTipModel);
+
+            updateGridViewTip(mTipModel);
+        }
+    }
+
+    @Override
+    public void onEditTipDeleteClicked(TipModel mTipModel) {
+        int indexToRemove = this.mStateTips.indexOf(mTipModel);
+
+        if(indexToRemove != -1) {
+            this.mStateTips.remove(indexToRemove); // clean data
+            this.removeGridViewTip(mTipModel); // Refresh UI
+        }
     }
 }

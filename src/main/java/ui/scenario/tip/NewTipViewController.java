@@ -29,35 +29,35 @@ import java.util.List;
 public class NewTipViewController implements MultiSelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
-    private StackPane newTipRoot;
+    protected StackPane newTipRoot;
 
     @FXML
-    private JFXComboBox<TypeModel> actorTypeComboBox;
+    protected JFXComboBox<TypeModel> actorTypeComboBox;
 
     @FXML
-    private JFXTextField actorCustomName;
+    protected JFXTextField actorCustomName;
 
     @FXML
-    private JFXTextArea inputMessage;
+    protected JFXTextArea inputMessage;
 
     @FXML
-    private JFXNumericTextField duration;
+    protected JFXNumericTextField durationTime;
 
     @FXML
-    private JFXNumericTextField activationTime;
+    protected JFXNumericTextField activationTime;
 
     @FXML
     private JFXButton acceptButton;
 
     @FXML
-    private JFXButton cancelButton;
+    protected JFXButton cancelButton;
 
     @FXML
     private JFXButton tipConditions;
 
     // Private variables
-    private TipModel mTipModel;
-    private OnNewTipClickListener mListener;
+    protected TipModel mTipModel;
+    protected OnNewTipClickListener mListener;
     private int mStateId = -1;
 
     private List<TypeModel> mActorTypes
@@ -100,9 +100,10 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
         mTipModel = new TipModel(id);
 
         setupUI(actorTypes, currentActions);
+        setButtonActions();
     }
 
-    private void setupUI(List<TypeModel> actorTypes, List<ActionModel> currentActions) {
+    protected void setupUI(List<TypeModel> actorTypes, List<ActionModel> currentActions) {
         this.mActorTypes = actorTypes;
         this.mCurrentActions = currentActions;
 
@@ -130,7 +131,12 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
         actorCustomName.setDisable(true);
 
         tipConditions.setOnAction(getEditTipConditionsClickListener());
+    }
 
+    /**
+     * Method that sets the button action controls
+     */
+    protected void setButtonActions() {
         this.acceptButton.setDisable(true);
         this.acceptButton.disableProperty().bind(
                 Bindings.isEmpty(this.inputMessage.textProperty()));
@@ -180,7 +186,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
     /**
      * Method that closes this DialogWindow view
      */
-    private void closeDialogWindow() {
+    protected void closeDialogWindow() {
         // get a handle to the stage
         Stage stage = (Stage) newTipRoot.getScene().getWindow();
         // do what you have to do
@@ -232,11 +238,11 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
                 mTipModel.setActor(new ActorModel(actorCustomName.getText(),
                         actorTypeComboBox.getSelectionModel().getSelectedItem()));
 
-                mTipModel.setDuration((duration != null &&
-                        duration.getLength() > 0 ? Integer.valueOf(duration.getText()) : 0));
+                mTipModel.setDuration((durationTime != null &&
+                        durationTime.getLength() > 0 ? Integer.valueOf(durationTime.getText()) : 0));
 
                 mTipModel.setTime((activationTime != null &&
-                        activationTime.getLength() > 0 ? Float.valueOf(activationTime.getText()) : -1));
+                        activationTime.getLength() > 0 ? Integer.valueOf(activationTime.getText()) : -1));
 
                 mTipModel.setMessage(inputMessage.getText());
 
@@ -252,7 +258,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
      *
      * @return the EventHandler with correspondent behavior
      */
-    private EventHandler<ActionEvent> getCancelClickListener() {
+    protected EventHandler<ActionEvent> getCancelClickListener() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
