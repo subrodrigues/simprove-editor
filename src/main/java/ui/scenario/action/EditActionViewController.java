@@ -28,6 +28,7 @@ import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.AutoCompleteComboBoxListener;
 import ui.widgets.JFXNumericTextField;
+import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.ConstantUtils;
 import utils.TextUtils;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class EditActionViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        SignalTextableColorGridCell.OnTextableColorGridClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
     private StackPane editActionRoot;
@@ -96,6 +97,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
 
+    // Current States (for conditions)
+    private List<StateModel> mCurrentStates;
+
     public interface OnScenarioEditActionClickListener {
         void onActionEditApplyClicked(ActionModel newActionModel);
 
@@ -130,14 +134,15 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
             throw new RuntimeException(e);
         }
 
-        setupAction(action);
+        setupAction(action, states);
         setupUI(states, actionTypes);
     }
 
-    private void setupAction(ActionModel action) {
+    private void setupAction(ActionModel action, List<StateModel> states) {
         this.mActionSignals = new ArrayList<SignalModel>();
         this.mActionSignals = action.getResults();
 
+        this.mCurrentStates = states;
         this.mActionModel = action;
 
         setupSignalsGrid(action.getResults());
@@ -201,6 +206,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
         this.cancelButton.setOnAction(getCancelClickListener());
 
+        this.scoreConditions.setOnAction(getEditTipConditionsClickListener());
 
         // Tooltips added
         Tooltip scoreButtonDescription = new Tooltip("Conditions required to avoid score loss");
@@ -468,6 +474,49 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         };
     }
 
+    /**
+     * Method that shows the edit action conditions window
+     * TODO: Customize with actions list, window and tab titles
+     */
+    private void showEditConditions() {
+        Stage stage = (Stage) editActionRoot.getScene().getWindow();
+
+        MultiSelectListController multiSelectList = new MultiSelectListController(
+                "Select Required States",
+                "Starting States",
+                "Ending States",
+                this.mCurrentStates,
+                this.mActionModel.getScore().getStartStates(),
+                this.mActionModel.getScore().getEndStates(),
+                this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(multiSelectList.getItemRoot());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
+     * Method that launches the ScoreConditions dialog.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getEditTipConditionsClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showEditConditions();
+            }
+        };
+    }
 
     /********************************************************************************************************************
      * CALLBACKS INTERFACE                                                                                              *
@@ -503,4 +552,17 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         showEditSignalDialog(clickedItem, this.mSignalTypes);
     }
 
+    /**
+     * On multi select list Apply click.
+     * This method deals with templates, since MultiSelectListController is a generic class.
+     *
+     * @param firstListIds
+     * @param secondListIds
+     * @param <T>
+     */
+    @Override
+    public <T> void onMultiSelectListApplyClick(List<T> firstListIds, List<T> secondListIds) {
+        this.mActionModel.getScore().setStartStates((List<StateModel>) firstListIds);
+        this.mActionModel.getScore().setEndStates((List<StateModel>) secondListIds);
+    }
 }

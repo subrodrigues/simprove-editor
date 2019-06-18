@@ -23,8 +23,12 @@ public class ActionModel implements Serializable {
     private List<SignalModel> results;
     private TransitionModel transition;
     private String errorMessage;
+    private ScoreModel score;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category, int effectTime, int usageLimit, int isComplement, String behavior, List<StateModel> stateConditions, List<SignalModel> results, TransitionModel transition, String errorMessage) {
+    public ActionModel(int id, String name, TypeModel type, TypeModel category,
+                       int effectTime, int usageLimit, int isComplement, String behavior,
+                       List<StateModel> stateConditions, List<SignalModel> results,
+                       TransitionModel transition, String errorMessage, ScoreModel score) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -37,18 +41,21 @@ public class ActionModel implements Serializable {
         this.results = results;
         this.transition = transition;
         this.errorMessage = errorMessage;
+        this.score = score;
     }
 
     public ActionModel(int id, String name) {
         this.id = id;
         this.name = name;
+        this.score = new ScoreModel(id);
 
         this.stateConditions = new ArrayList<>();
     }
 
 
-    public ActionModel(int actionId) {
-        this.id = actionId;
+    public ActionModel(int id) {
+        this.id = id;
+        this.score = new ScoreModel(id);
 
         this.stateConditions = new ArrayList<>();
     }
@@ -156,6 +163,14 @@ public class ActionModel implements Serializable {
 
     public void setUsageLimit(int usageLimit) {
         this.usageLimit = usageLimit;
+    }
+
+    public ScoreModel getScore() {
+        return score;
+    }
+
+    public void setScore(ScoreModel score) {
+        this.score = score;
     }
 
     @Override

@@ -60,8 +60,8 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
     protected OnNewTipClickListener mListener;
     private int mStateId = -1;
 
-    private List<TypeModel> mActorTypes
-            ;
+    private List<TypeModel> mActorTypes;
+
     // Current Actions (for conditions)
     private List<ActionModel> mCurrentActions;
 

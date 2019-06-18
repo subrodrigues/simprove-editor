@@ -99,7 +99,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 1),
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(1, "Oximetry", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -110,7 +111,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(2, "ECG", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 3, "Environment"),
@@ -121,7 +123,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(3, "Blood Pressure", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -132,7 +135,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(4, "Epinephrine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
@@ -143,7 +147,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(5, "Fluids", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
@@ -154,7 +159,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 new TransitionModel(0, 0, 5),
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(6, "Propofol", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
@@ -165,7 +171,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(7, "Temperature", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 3, "Environment"),
@@ -176,7 +183,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(8, "Desloratadine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
@@ -187,7 +195,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(9, "Blood Tests", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -198,7 +207,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(10, "Capillary Refill", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -209,7 +219,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(11, "Basic Life Support", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -220,7 +231,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(12, "Oxygen", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
@@ -231,7 +243,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(13, "Diagnosis", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -242,7 +255,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(14, "Anaphylaxis Reaction", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -253,7 +267,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
         mockedActions.add(new ActionModel(15, "Pulmonary Edema", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
@@ -264,7 +279,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
 
         mockedActions.add(new ActionModel(16, "Hemorragic Shock", new TypeModel(-1, 1, "Tipo Coiso"),
@@ -276,7 +292,8 @@ public class ScenarioDAO {
                 new ArrayList<StateModel>(),
                 new ArrayList<SignalModel>(),
                 null,
-                "Oops, you screwed it."));
+                "Oops, you screwed it.",
+                new ScoreModel(0)));
 
 
         ScenarioModel mockedScenario = new ScenarioModel(0, "IntraHospital",
