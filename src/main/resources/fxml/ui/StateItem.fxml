@@ -15,6 +15,9 @@
             <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" style="-fx-background-radius: 5 5 0 0; -fx-background-color: #2F65A5;" VBox.vgrow="ALWAYS">
                <children>
                   <Label fx:id="stateName" styleClass="card-name-title" text="State Name" StackPane.alignment="TOP_CENTER">
+                     <VBox.margin>
+                        <Insets left="6.0" right="6.0" />
+                     </VBox.margin>
                      <StackPane.margin>
                         <Insets top="16.0" />
                      </StackPane.margin>
