@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -77,6 +78,13 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     @FXML
     private ToggleGroup behaviorToggleGroup;
+
+    @FXML
+    private JFXButton scoreConditions;
+
+    @FXML
+    private JFXNumericTextField inputLossOvertime;
+
 
     // Private variables
     private ActionModel mActionModel;
@@ -192,7 +200,14 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         this.deleteButton.setOnAction(getDeleteClickListener());
 
         this.cancelButton.setOnAction(getCancelClickListener());
-        //TODO
+
+
+        // Tooltips added
+        Tooltip scoreButtonDescription = new Tooltip("Conditions required to avoid score loss");
+        this.scoreConditions.setTooltip(scoreButtonDescription);
+
+        Tooltip lossOvertimeDescription = new Tooltip("Ammount of score loss per second");
+        this.inputLossOvertime.setTooltip(lossOvertimeDescription);
     }
 
     private void setupSignalsGrid(List<SignalModel> signals) {

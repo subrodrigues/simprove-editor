@@ -184,15 +184,21 @@
                                         </HBox.margin>
                                     </JFXNumericTextField>
 
-                                    <JFXButton fx:id="scoreConditions" alignment="BASELINE_CENTER" buttonType="FLAT" maxHeight="16.0" prefHeight="12" styleClass="cancel-jfx-button-raised" text="Score Conditions" HBox.hgrow="ALWAYS" StackPane.alignment="CENTER_RIGHT">
-                                        <HBox.margin>
-                                            <Insets bottom="6.0" left="24.0" right="6.0" />
-                                        </HBox.margin>
+                                    <JFXButton fx:id="scoreConditions" alignment="CENTER" buttonType="FLAT"
+                                               prefHeight="20" styleClass="option-jfx-button" text="Select conditions"
+                                               StackPane.alignment="CENTER_RIGHT">
 
+                                        <HBox.margin>
+                                            <Insets left="16.0"/>
+                                        </HBox.margin>
                                     </JFXButton>
 
                                     <VBox.margin>
-                                        <Insets top="14.0" />
+                                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                                    </VBox.margin>
+
+                                    <VBox.margin>
+                                        <Insets top="14.0"/>
                                     </VBox.margin>
 
                                 </HBox>
