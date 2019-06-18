@@ -1324,6 +1324,20 @@
     -fx-text-fill: WHITE;
 }
 
+.option-jfx-button .jfx-rippler {
+    -jfx-rippler-fill: #212121;
+}
+
+.option-jfx-button {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 16.0px;
+    -fx-text-fill: #fafafa;
+    -fx-cursor: hand;
+    -fx-background-color: #616161;
+}
+
 .delete-jfx-button-flat .jfx-rippler {
     -jfx-rippler-fill: #F44336;
 }

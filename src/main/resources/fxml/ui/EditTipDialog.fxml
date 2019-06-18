@@ -122,22 +122,26 @@
                                     </VBox.margin>
                                 </VBox>
 
-                                <HBox alignment="CENTER">
-                                    <JFXButton fx:id="tipConditions" alignment="CENTER" buttonType="FLAT"
-                                               prefHeight="20" prefWidth="120" styleClass="cancel-jfx-button-raised"
-                                               text="Select Conditions" StackPane.alignment="CENTER_RIGHT">
-                                        <HBox.margin>
-                                            <Insets bottom="6.0" left="6.0" right="6.0"/>
-                                        </HBox.margin>
-
+                                <VBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                          styleClass="edit-dialog-parameter-title-black" text="Conditions required to show the Tip">
                                         <VBox.margin>
-                                            <Insets top="32.0"/>
+                                            <Insets/>
                                         </VBox.margin>
+                                    </Text>
+                                    <JFXButton fx:id="tipConditions" alignment="CENTER" buttonType="FLAT"
+                                               prefHeight="20" styleClass="option-jfx-button"
+                                               text="Select conditions" StackPane.alignment="CENTER_RIGHT">
+                                        <VBox.margin>
+                                            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                                        </VBox.margin>
+
                                     </JFXButton>
                                     <VBox.margin>
                                         <Insets top="24.0"/>
                                     </VBox.margin>
-                                </HBox>
+                                </VBox>
+
 
                             </children>
                             <StackPane.margin>
