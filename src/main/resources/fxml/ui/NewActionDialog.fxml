@@ -222,7 +222,7 @@
                                     <JFXButton fx:id="scoreConditions" alignment="CENTER" buttonType="FLAT"
                                                prefHeight="20" styleClass="option-jfx-button" text="Select conditions"
                                                StackPane.alignment="CENTER_RIGHT">
-
+                                  
                                         <HBox.margin>
                                             <Insets left="16.0"/>
                                         </HBox.margin>

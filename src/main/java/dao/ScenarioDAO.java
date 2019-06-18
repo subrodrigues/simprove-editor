@@ -298,7 +298,7 @@ public class ScenarioDAO {
 
         ScenarioModel mockedScenario = new ScenarioModel(0, "IntraHospital",
                 "A 27-year old male patient who arrived to the emergency department by ambulance with abdominal pain, vomiting, and shortness of breath shortly after eating a meal at a nearby Asian restaurant.",
-                mockedStates, mockedActions);
+                100, 10, mockedStates, mockedActions);
 
         EventBus.getDefault().post(new ScenarioEvent(mockedScenario));
 

@@ -14,6 +14,8 @@ public class ScenarioModel implements Serializable {
     private int id;
     private String name;
     private String briefing;
+    private int score;
+    private int minScore;
     private List<StateModel> states;
     private List<ActionModel> actions;
 
@@ -21,14 +23,18 @@ public class ScenarioModel implements Serializable {
         this.id = 0;
         this.name = "";
         this.briefing = "";
+        this.score = 100;
+        this.minScore = 0;
         this.states = new ArrayList<>();
         this.actions = new ArrayList<>();
     }
 
-    public ScenarioModel(int id, String name, String briefing, List<StateModel> states, List<ActionModel> actions) {
+    public ScenarioModel(int id, String name, String briefing, int score, int minScore, List<StateModel> states, List<ActionModel> actions) {
         this.id = id;
         this.name = name;
         this.briefing = briefing;
+        this.score = score;
+        this.minScore = minScore;
         this.states = states;
         this.actions = actions;
     }
@@ -55,6 +61,22 @@ public class ScenarioModel implements Serializable {
 
     public void setBriefing(String briefing) {
         this.briefing = briefing;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getMinScore() {
+        return minScore;
+    }
+
+    public void setMinScore(int minScore) {
+        this.minScore = minScore;
     }
 
     public List<StateModel> getStates() {

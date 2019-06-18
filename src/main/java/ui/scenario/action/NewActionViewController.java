@@ -25,6 +25,7 @@ import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.AutoCompleteComboBoxListener;
+import ui.widgets.JFXDecimalTextField;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
@@ -82,7 +83,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXNumericTextField inputLostValue;
 
     @FXML
-    private JFXNumericTextField inputLossOvertime;
+    private JFXDecimalTextField inputLossOvertime;
 
     // Private variables
     private ActionModel mActionModel;

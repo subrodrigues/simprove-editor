@@ -35,6 +35,7 @@ import ui.scenario.inflatables.ActionItemViewController;
 import ui.scenario.state.EditStateViewController;
 import ui.scenario.inflatables.StateItemViewController;
 import ui.scenario.state.NewStateViewController;
+import ui.widgets.JFXNumericTextField;
 import ui.widgets.graph.CustomLayoutGrid;
 import ui.widgets.graph.DirectionalCorneredEdge;
 import ui.widgets.graph.TextableRectangleCell;
@@ -97,6 +98,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private JFXTextArea inputBriefing;
+
+    @FXML
+    private JFXNumericTextField inputScore;
+
+    @FXML
+    private JFXNumericTextField inputMinScore;
 
     private boolean isSlidingContentVisible = true;
 
@@ -182,6 +189,14 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         inputBriefing.textProperty().addListener((observable, oldValue, newValue) -> {
             this.mPresenter.updateBriefingContent(newValue);
         });
+
+        inputScore.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPresenter.updateScoreContent(newValue);
+        });
+
+        inputMinScore.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPresenter.updateMinScoreContent(newValue);
+        });
     }
 
     /**
@@ -229,8 +244,11 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         this.inputScenarioName.setText(scenario.getName());
         this.inputBriefing.setText(scenario.getBriefing());
 
-        statesGridView.getChildren().clear();
-        actionsGridView.getChildren().clear();
+        this.inputScore.setText(String.valueOf(scenario.getScore()));
+        this.inputMinScore.setText(String.valueOf(scenario.getMinScore()));
+
+        this.statesGridView.getChildren().clear();
+        this.actionsGridView.getChildren().clear();
 
         // Fill States
         for (int i = 0; i < scenario.getStates().size(); i++) {

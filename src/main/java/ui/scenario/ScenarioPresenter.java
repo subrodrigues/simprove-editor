@@ -481,6 +481,14 @@ public class ScenarioPresenter {
         this.mScenario.setBriefing(briefing);
     }
 
+    void updateScoreContent(String score) {
+        this.mScenario.setScore(Integer.valueOf(score));
+    }
+
+    void updateMinScoreContent(String score) {
+        this.mScenario.setMinScore(Integer.valueOf(score));
+    }
+
     void requestExportJSONWithPath(String absolutePath) {
         this.mDAO.saveJSONFileWithPath(absolutePath, this.mScenario);
     }
