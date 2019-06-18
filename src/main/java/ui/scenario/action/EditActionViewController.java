@@ -84,8 +84,10 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private JFXButton scoreConditions;
 
     @FXML
-    private JFXNumericTextField inputLossOvertime;
+    private JFXNumericTextField inputLostValue;
 
+    @FXML
+    private JFXNumericTextField inputLossOvertime;
 
     // Private variables
     private ActionModel mActionModel;
@@ -181,6 +183,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         // Set Complementary Action flag
         this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
 
+        // Set initial score lost
+        this.inputLostValue.setText((String.valueOf(mActionModel.getScore().getScoreLost())));
+
+        // Set overtime score lost
+        this.inputLossOvertime.setText((String.valueOf(mActionModel.getScore().getLossOvertime())));
+
         // Set behavior option
         this.behaviorToggleGroup.getToggles().forEach(toggle -> {
             if(((JFXRadioButton)toggle).getText().equals(mActionModel.getBehavior())) {
@@ -256,6 +264,25 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         return inputUsageLimit != null && inputUsageLimit.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
     }
 
+
+    /**
+     * Method that returns the current Immediate Score Loss in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private int getScoreLostValue() {
+        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
+    }
+
+    /**
+     * Method that returns the current Immediate Score Loss in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private float getScoreOvertimeLoss() {
+        return inputLossOvertime != null && inputLossOvertime.getLength() > 0 ? Float.valueOf(inputLossOvertime.getText()) : 0.0f;
+    }
+
     public StackPane getEditActionItemRootDialog() {
         return editActionRoot;
     }
@@ -312,6 +339,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
+
+                mActionModel.getScore().setScoreLost(getScoreLostValue());
+                mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
                 mListener.onActionEditApplyClicked(mActionModel);
                 closeDialogWindow();

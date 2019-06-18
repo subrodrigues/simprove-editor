@@ -79,6 +79,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXButton scoreConditions;
 
     @FXML
+    private JFXNumericTextField inputLostValue;
+
+    @FXML
     private JFXNumericTextField inputLossOvertime;
 
     // Private variables
@@ -258,6 +261,24 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that returns the current Immediate Score Loss in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private int getScoreLostValue() {
+        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
+    }
+
+    /**
+     * Method that returns the current Immediate Score Loss in case it is defined, 0 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private float getScoreOvertimeLoss() {
+        return inputLossOvertime != null && inputLossOvertime.getLength() > 0 ? Float.valueOf(inputLossOvertime.getText()) : 0.0f;
+    }
+
+    /**
      * Method that returns the root view with a specific width and height
      *
      * @param width
@@ -333,7 +354,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 // Set Behavior
                 mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
 
-                mActionModel.getScore().set
+                mActionModel.getScore().setScoreLost(getScoreLostValue());
+                mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 
