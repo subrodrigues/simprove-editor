@@ -568,12 +568,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      */
     @Override
     public <T> void onMultiSelectListApplyClick(List<T> firstListIds, List<T> secondListIds) {
-        List<StateModel> startStates = new ArrayList<>(firstListIds.size());
-        getInstancedConditions(firstListIds, startStates);
+        List<StateModel> startStates = getInstancedConditions(firstListIds);
         this.mActionModel.getScore().setStartStates(startStates);
 
-        List<StateModel> endStates = new ArrayList<>(secondListIds.size());
-        getInstancedConditions(secondListIds, endStates);
+        List<StateModel> endStates = getInstancedConditions(secondListIds);
         this.mActionModel.getScore().setEndStates(endStates);
     }
 
@@ -582,16 +580,19 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      * It creates instanced class types in order to be serialized with success.
      *
      * @param listIds
-     * @param states
      * @param <T>
      */
-    private <T> void getInstancedConditions(List<T> listIds, List<StateModel> states) {
+    private <T> List<StateModel> getInstancedConditions(List<T> listIds) {
+        List<StateModel> finalStatesList = new ArrayList<>(listIds.size());
+
         for (int i = 0; i < listIds.size(); i++) {
             StateModel item = ((List<StateModel>) listIds).get(i);
 
-            states.add(i, new StateModel(item.getId(), item.getName(), item.getType(), item.getSignals(),
+            finalStatesList.add(i, new StateModel(item.getId(), item.getName(), item.getType(), item.getSignals(),
                     item.getTransition(), item.getTips()));
         }
+
+        return finalStatesList;
     }
 
 }

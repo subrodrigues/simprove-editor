@@ -24,6 +24,7 @@ import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewTipViewController implements MultiSelectListController.OnMultiSelectListClickListener {
@@ -276,7 +277,31 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
      * @param <T>
      */
     public <T> void onMultiSelectListApplyClick(List<T> firstListIds, List<T> secondListIds) {
-        this.mTipModel.setActionsDone((List<ActionModel>) firstListIds);
-        this.mTipModel.setActionsTodo((List<ActionModel>) secondListIds);
+        List<ActionModel> actionsDone = getInstancedConditions(firstListIds);
+        this.mTipModel.setActionsDone(actionsDone);
+
+        List<ActionModel> actionsTodo = getInstancedConditions(secondListIds);
+        this.mTipModel.setActionsTodo(actionsTodo);
+    }
+
+    /**
+     * Auxiliar method to onMultiSelectListApplyClick().
+     * It creates instanced class types in order to be serialized with success.
+     *
+     * @param listIds
+     * @param <T>
+     */
+    private <T> List<ActionModel> getInstancedConditions(List<T> listIds) {
+        List<ActionModel> finalActionsList = new ArrayList<>(listIds.size());
+
+        for (int i = 0; i < listIds.size(); i++) {
+            ActionModel item = ((List<ActionModel>) listIds).get(i);
+
+            finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
+                    item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getIsComplement(), item.getBehavior(),
+                    item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(), item.getScore()));
+        }
+
+        return finalActionsList;
     }
 }
