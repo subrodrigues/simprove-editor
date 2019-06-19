@@ -1,0 +1,48 @@
+0,Check patency of the airway
+1,Check Respiratory Rate
+2,Pulmonary Auscultation
+3,Place oximeter
+4,Check skin
+5,Check Pulse - Central
+6,Check Pulse - Peripheral
+7,Check capillary nail refill
+8,Cardiac Auscultation
+9,Place ECG electrodes
+10,Place blood pressure (BP) cuff
+11,Place arterial line
+12,Check bandages
+13,Check diaper
+14,Check drainage blood system
+15,Check eyes
+16,Measure temperature
+17,Check for trauma/exposure
+18,Monitor glucose
+19,Check Vomiting
+20,"Arterial Blood Gas Test (Gasometry)"
+21,Check urinary output
+22,Bispectral Index (BIS)
+23,Neuromuscular tonus monitor - Train-of four (TOF)
+24,Capnography
+25,Place urinary catheter
+26,Place central line
+27,Place IV access
+28,Manual ventilation
+29,Intubation
+30,Compressions
+31,Defibrillation
+32,Oxygen administration
+33,Isotonic saline administration
+34,Crystalloid solution administration
+35,Glucose administration
+36,Colloids administration
+37,Blood administration
+38,Plasma administration
+39,Epinephrine administration
+40,Naloxone administration
+41,Amiodarone administration
+42,Propofol administration
+43,Morphine administration
+44,Speak with patient
+45,Call for emergency team
+46,Request
+47,Speak with bystanders

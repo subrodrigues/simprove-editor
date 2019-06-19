@@ -62,6 +62,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private JFXComboBox<TypeModel> categoryComboBox;
 
     @FXML
+    private JFXComboBox<TypeModel> subCategoryComboBox;
+
+    @FXML
     private JFXButton deleteButton;
 
     @FXML
@@ -126,7 +129,10 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
      * @param states
      * @param listener
      */
-    public EditActionViewController(ActionModel action, List<StateModel> states, List<TypeModel> actionTypes, List<SignalTemplateModel> signalTypes, OnScenarioEditActionClickListener listener) {
+    public EditActionViewController(ActionModel action, List<StateModel> states,
+                                    List<TypeModel> actionTypes, List<TypeModel> actionCategories,
+                                    List<TypeModel> actionSubCategories, List<SignalTemplateModel> signalTypes,
+                                    OnScenarioEditActionClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
 
@@ -139,7 +145,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         }
 
         setupAction(action, states);
-        setupUI(states, actionTypes);
+        setupUI(states, actionTypes, actionCategories, actionSubCategories);
     }
 
     private void setupAction(ActionModel action, List<StateModel> states) {
@@ -152,7 +158,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         setupSignalsGrid(action.getResults());
     }
 
-    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
+    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes,
+                         List<TypeModel> actionCategories, List<TypeModel> actionSubCategories) {
+
         this.actionTypeComboBox.setValue(new TypeModel(-1, -1, mActionModel.getName()));
 
         this.actionTypeComboBox.getItems().addAll(actionTypes);
@@ -162,7 +170,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
 
-        this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
+        this.categoryComboBox.getItems().addAll(actionCategories);
+        this.subCategoryComboBox.getItems().addAll(actionSubCategories);
 
         // Set selected Transition
         if (mActionModel.getTransition() != null) {
@@ -175,6 +184,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
         // Set selected Category
         this.categoryComboBox.getSelectionModel().select(mActionModel.getCategory());
+        this.subCategoryComboBox.getSelectionModel().select(mActionModel.getSubCategory());
 
         // Set action effect time duration
         this.inputEffectTime.setText(String.valueOf(mActionModel.getEffectTime()));

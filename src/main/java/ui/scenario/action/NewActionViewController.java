@@ -60,6 +60,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXComboBox<TypeModel> categoryComboBox;
 
     @FXML
+    private JFXComboBox<TypeModel> subCategoryComboBox;
+
+    @FXML
     private JFXButton acceptButton;
 
     @FXML
@@ -119,7 +122,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      * @param actionTypes
      * @param listener
      */
-    public NewActionViewController(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, List<SignalTemplateModel> signalTypes, OnScenarioNewActionClickListener listener) {
+    public NewActionViewController(List<ActionModel> actions, List<StateModel> states,
+                                   List<TypeModel> actionTypes, List<TypeModel> actionCategories,
+                                   List<TypeModel> actionSubCategories, List<SignalTemplateModel> signalTypes,
+                                   OnScenarioNewActionClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
 
@@ -132,7 +138,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         }
 
         setupAction(actions.size(), states);
-        setupUI(states, actionTypes);
+        setupUI(states, actionTypes, actionCategories, actionSubCategories);
     }
 
 
@@ -144,14 +150,16 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         setupSignalsGrid();
     }
 
-    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes) {
-//        this.inputName.setText(mActionModel.getName() != null ? mActionModel.getName() : "");
+    private void setupUI(List<StateModel> states, List<TypeModel> actionTypes,
+                         List<TypeModel> actionCategories, List<TypeModel> actionSubCategories) {
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
         this.transitionComboBox.getItems().addAll(states);
 
-        this.categoryComboBox.getItems().addAll(ConstantUtils.requestActionCategories());
+        this.categoryComboBox.getItems().addAll(actionCategories);
+        this.subCategoryComboBox.getItems().addAll(actionSubCategories);
+
 
         this.actionTypeComboBox.getItems().addAll(actionTypes);
         new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
@@ -360,7 +368,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                     }
                 }
 
+                // Set Categories
                 mActionModel.setCategory(categoryComboBox.getValue());
+                mActionModel.setSubCategory(subCategoryComboBox.getValue());
+
                 mActionModel.setResults(mActionSignals);
 
                 // Set the complementary action flag

@@ -671,8 +671,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param action
      * @param states
      */
-    public void showActionEditDialog(ActionModel action, List<StateModel> states,  List<TypeModel> actionTypes, List<SignalTemplateModel> signalTypes) {
-        EditActionViewController editActionDialog = new EditActionViewController(action, states, actionTypes, signalTypes, this);
+    public void showActionEditDialog(ActionModel action, List<StateModel> states,  List<TypeModel> actionTypes,
+                                     List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
+                                     List<SignalTemplateModel> signalTypes) {
+
+        EditActionViewController editActionDialog = new EditActionViewController(action, states, actionTypes,
+                actionCategories, actionSubcategories,
+                signalTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 
@@ -756,10 +761,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param actions
      * @param states
      * @param actionTypes
+     * @param actionCategories
+     * @param actionSubcategories
      * @param signalTypes
      */
-    void showNewActionDialog(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes, List<SignalTemplateModel> signalTypes) {
-        NewActionViewController newActDialog = new NewActionViewController(actions, states, actionTypes, signalTypes, this);
+    void showNewActionDialog(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes,
+                             List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
+                             List<SignalTemplateModel> signalTypes) {
+        NewActionViewController newActDialog = new NewActionViewController(actions, states, actionTypes,
+                actionCategories, actionSubcategories, signalTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 

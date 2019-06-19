@@ -14,6 +14,7 @@ public class ActionModel implements Serializable {
     private int id;
     private TypeModel type;
     private TypeModel category;
+    private TypeModel subCategory;
     private int effectTime;
     private int usageLimit;
     private int isComplement;
@@ -25,7 +26,7 @@ public class ActionModel implements Serializable {
     private String errorMessage;
     private ScoreModel score;
 
-    public ActionModel(int id, String name, TypeModel type, TypeModel category,
+    public ActionModel(int id, String name, TypeModel type, TypeModel category, TypeModel subCategory,
                        int effectTime, int usageLimit, int isComplement, String behavior,
                        List<StateModel> stateConditions, List<SignalModel> results,
                        TransitionModel transition, String errorMessage, ScoreModel score) {
@@ -33,6 +34,7 @@ public class ActionModel implements Serializable {
         this.name = name;
         this.type = type;
         this.category = category;
+        this.subCategory = subCategory;
         this.effectTime = effectTime;
         this.usageLimit = usageLimit;
         this.isComplement = isComplement;
@@ -171,6 +173,14 @@ public class ActionModel implements Serializable {
 
     public void setScore(ScoreModel score) {
         this.score = score;
+    }
+
+    public TypeModel getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(TypeModel subCategory) {
+        this.subCategory = subCategory;
     }
 
     @Override

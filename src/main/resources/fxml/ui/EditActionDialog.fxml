@@ -46,6 +46,44 @@
                                 </HBox>
 
                                 <HBox>
+
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
+                                    </VBox>
+
+                                    <JFXComboBox fx:id="categoryComboBox" minWidth="210.0" prefHeight="30.0" promptText="Select Category" styleClass="combo-box">
+                                        <validators>
+                                            <RequiredFieldValidator message="Category Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                    </JFXComboBox>
+
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="actionSubCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Subcategory:">
+                                            <VBox.margin>
+                                                <Insets left="6.0" />
+                                            </VBox.margin>
+                                        </Text>
+                                    </VBox>
+
+                                    <JFXComboBox fx:id="subCategoryComboBox" minWidth="210.0" prefHeight="30.0" promptText="Select Subcategory" styleClass="combo-box">
+                                        <validators>
+                                            <RequiredFieldValidator message="Subcategory Required!">
+                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                            </RequiredFieldValidator>
+                                        </validators>
+                                        <HBox.margin>
+                                            <Insets left="6.0" />
+                                        </HBox.margin>
+                                    </JFXComboBox>
+                                    <VBox.margin>
+                                        <Insets top="28.0" />
+                                    </VBox.margin>
+
+                                </HBox>
+
+                                <HBox>
                                     <HBox prefHeight="30.0">
                                         <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                             <Text fx:id="actionTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
@@ -57,7 +95,7 @@
                                         </VBox>
 
                                         <HBox.margin>
-                                            <Insets right="3.0" top="16.0" />
+                                            <Insets right="3.0" />
                                         </HBox.margin>
                                     </HBox>
 
@@ -79,26 +117,12 @@
                                         </JFXToggleButton>
 
                                         <HBox.margin>
-                                            <Insets top="16.0" />
+                                            <Insets />
                                         </HBox.margin>
                                     </HBox>
-                                </HBox>
-
-                                <HBox>
-                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                        <Text fx:id="actionCategory" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Category:" />
-                                    </VBox>
-                                    <JFXComboBox fx:id="categoryComboBox" prefHeight="30.0" prefWidth="600.0" promptText="Select Category" styleClass="combo-box">
-                                        <validators>
-                                            <RequiredFieldValidator message="Category Required!">
-                                                <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
-                                            </RequiredFieldValidator>
-                                        </validators>
-                                    </JFXComboBox>
-                                    <VBox.margin>
-                                        <Insets top="16.0" />
-                                    </VBox.margin>
-
+                           <VBox.margin>
+                              <Insets top="16.0" />
+                           </VBox.margin>
                                 </HBox>
 
                                 <HBox>
@@ -115,7 +139,7 @@
                                     </JFXNumericTextField>
 
                                     <VBox.margin>
-                                        <Insets top="32.0" />
+                                        <Insets top="16.0" />
                                     </VBox.margin>
                                 </HBox>
 
@@ -184,21 +208,19 @@
                                         </HBox.margin>
                                     </JFXNumericTextField>
 
-                                    <JFXButton fx:id="scoreConditions" alignment="CENTER" buttonType="FLAT"
-                                               prefHeight="20" styleClass="option-jfx-button" text="Select conditions"
-                                               StackPane.alignment="CENTER_RIGHT">
+                                    <JFXButton fx:id="scoreConditions" alignment="CENTER" buttonType="FLAT" prefHeight="20" styleClass="option-jfx-button" text="Select conditions" StackPane.alignment="CENTER_RIGHT">
 
                                         <HBox.margin>
-                                            <Insets left="16.0"/>
+                                            <Insets left="16.0" />
                                         </HBox.margin>
                                     </JFXButton>
 
                                     <VBox.margin>
-                                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                                     </VBox.margin>
 
                                     <VBox.margin>
-                                        <Insets top="14.0"/>
+                                        <Insets top="14.0" />
                                     </VBox.margin>
 
                                 </HBox>

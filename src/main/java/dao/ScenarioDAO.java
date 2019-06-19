@@ -7,10 +7,7 @@ package dao;
 import base.ErrorType;
 import base.ResponseError;
 import dao.model.*;
-import events.dao.ActionTypesEvent;
-import events.dao.ActorTypesEvent;
-import events.dao.ScenarioEvent;
-import events.dao.SignalTypesEvent;
+import events.dao.*;
 import org.greenrobot.eventbus.EventBus;
 import utils.ReadDataUtils;
 import utils.FileUtils;
@@ -92,6 +89,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(0, "Start", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 1,
@@ -104,6 +102,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(1, "Oximetry", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 0,
@@ -116,6 +115,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(2, "ECG", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 3, "Environment"),
+                new TypeModel(0, 0, "Standard"),
                 2,
                 0,
                 1,
@@ -128,6 +128,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(3, "Blood Pressure", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 5,
                 0,
                 1,
@@ -140,6 +141,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(4, "Epinephrine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 0,
@@ -152,6 +154,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(5, "Fluids", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 1,
@@ -164,6 +167,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(6, "Propofol", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 0,
@@ -176,6 +180,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(7, "Temperature", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 3, "Environment"),
+                new TypeModel(0, 0, "Standard"),
                 2,
                 0,
                 0,
@@ -188,6 +193,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(8, "Desloratadine", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 0,
@@ -200,6 +206,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(9, "Blood Tests", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 0,
@@ -212,6 +219,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(10, "Capillary Refill", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 1,
@@ -224,6 +232,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(11, "Basic Life Support", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 1,
@@ -236,6 +245,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(12, "Oxygen", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 1, "Procedure"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 1,
@@ -248,6 +258,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(13, "Diagnosis", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 1,
@@ -260,6 +271,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(14, "Anaphylaxis Reaction", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 1,
                 0,
                 1,
@@ -272,6 +284,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(15, "Pulmonary Edema", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 1,
@@ -285,6 +298,7 @@ public class ScenarioDAO {
 
         mockedActions.add(new ActionModel(16, "Hemorragic Shock", new TypeModel(-1, 1, "Tipo Coiso"),
                 new TypeModel(0, 2, "Diagnosis"),
+                new TypeModel(0, 0, "Standard"),
                 0,
                 0,
                 0,
@@ -334,7 +348,7 @@ public class ScenarioDAO {
         List<TypeModel> actionTypes = null;
 
         try {
-            actionTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/actions_data.txt"));
+            actionTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/action_types.csv"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
@@ -342,6 +356,39 @@ public class ScenarioDAO {
         EventBus.getDefault().post(new ActionTypesEvent(actionTypes));
     }
 
+    /**
+     * Method that accesses the resources and load the Action Categories in the resources action data file.
+     *
+     * @return List<TypeModel> containing all the TypeModels saved at the local file.
+     */
+    public void requestDefaultActionCategories() {
+        List<TypeModel> actionCategories = null;
+
+        try {
+            actionCategories = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/action_categories.csv"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        EventBus.getDefault().post(new ActionCategoriesEvent(actionCategories));
+    }
+
+    /**
+     * Method that accesses the resources and load the Action Subcategories in the resources action data file.
+     *
+     * @return List<TypeModel> containing all the TypeModels saved at the local file.
+     */
+    public void requestDefaultActionSubCategories() {
+        List<TypeModel> actionSubCategories = null;
+
+        try {
+            actionSubCategories = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/action_subcategories.csv"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        EventBus.getDefault().post(new ActionSubCategoriesEvent(actionSubCategories));
+    }
 
     /**
      * Method that accesses the resources and load the SignalTemplateModel in the resources action data file.
@@ -443,7 +490,7 @@ public class ScenarioDAO {
         List<TypeModel> actorTypes = null;
 
         try {
-            actorTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/actor_types.txt"));
+            actorTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/actor_types.csv"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }

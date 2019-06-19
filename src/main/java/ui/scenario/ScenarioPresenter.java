@@ -6,11 +6,8 @@ package ui.scenario;
 
 import dao.ScenarioDAO;
 import dao.model.*;
-import events.dao.ActionTypesEvent;
-import events.dao.ActorTypesEvent;
-import events.dao.ScenarioEvent;
+import events.dao.*;
 import events.ui.SideMenuEvent;
-import events.dao.SignalTypesEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -23,6 +20,8 @@ public class ScenarioPresenter {
     private ScenarioDAO mDAO;
 
     private List<TypeModel> mActionTypes = null;
+    private List<TypeModel> mActionCategories = null;
+    private List<TypeModel> mActionSubCategories = null;
     private List<TypeModel> mActorTypes = null;
     private List<SignalTemplateModel> mSignalTypes = null;
 
@@ -40,6 +39,8 @@ public class ScenarioPresenter {
         mActionTypes = new ArrayList<TypeModel>();
         mSignalTypes = new ArrayList<SignalTemplateModel>();
         mDAO.requestDefaultActionTypes();
+        mDAO.requestDefaultActionCategories();
+        mDAO.requestDefaultActionSubCategories();
         mDAO.requestDefaultActorTypes();
         mDAO.requestDefaultSignals();
 
@@ -86,6 +87,42 @@ public class ScenarioPresenter {
 
         if (event.isSuccess()) {
             this.mActionTypes = event.getActionTypes();
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
+        }
+    };
+
+    /**
+     * Receives a Scenario Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ActionCategoriesEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            this.mActionCategories = event.getActionCategories();
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
+        }
+    };
+
+    /**
+     * Receives a Scenario Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ActionSubCategoriesEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            this.mActionSubCategories = event.getActionSubCategories();
         } else if (event.isNetworkError()) {
             // TODO: deal with it
         } else {
@@ -292,7 +329,9 @@ public class ScenarioPresenter {
      *
      */
     void requestLaunchNewActionView() {
-        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(), this.mActionTypes, this.mSignalTypes);
+        this.mView.showNewActionDialog(this.mScenario.getActions(), this.mScenario.getStates(),
+                this.mActionTypes, this.mActionCategories,
+                this.mActionSubCategories, this.mSignalTypes);
     }
 
     /**
@@ -407,7 +446,7 @@ public class ScenarioPresenter {
 
         if(index != -1){
 //            deselectSelectedPane();
-            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.mActionTypes, this.mSignalTypes);
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.mActionTypes, this.mActionCategories, this.mActionSubCategories, this.mSignalTypes);
         }
     }
 
