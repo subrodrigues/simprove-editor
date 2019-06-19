@@ -174,4 +174,5 @@ public class EditTipViewController extends NewTipViewController {
             }
         };
     }
+
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
 <!--
   ~ Created by Filipe André Rodrigues on 20-02-2019 19:50
   -->
 
-<?import javafx.scene.control.Label?>
 <StackPane fx:id="stateItemRoot" prefHeight="150.0" prefWidth="150.0" styleClass="item-card-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="stateItemContent" prefHeight="200.0" prefWidth="150.0">
@@ -19,7 +20,7 @@
                         <Insets left="6.0" right="6.0" />
                      </VBox.margin>
                      <StackPane.margin>
-                        <Insets top="16.0" />
+                        <Insets left="6.0" right="6.0" top="16.0" />
                      </StackPane.margin>
                   </Label>
                </children>
