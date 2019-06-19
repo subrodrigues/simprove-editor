@@ -6,6 +6,7 @@ package ui.scenario.action;
 
 import com.jfoenix.controls.*;
 import dao.model.*;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +26,6 @@ import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.widgets.AutoCompleteComboBoxListener;
-import ui.widgets.JFXDecimalTextField;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
@@ -83,7 +83,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXNumericTextField inputLostValue;
 
     @FXML
-    private JFXDecimalTextField inputLossOvertime;
+    private JFXNumericTextField inputLossOvertime;
 
     // Private variables
     private ActionModel mActionModel;
@@ -172,6 +172,15 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 this.categoryComboBox.validate();
             }
         });
+
+
+        /** Accept Button binding conditions */
+        BooleanBinding booleanBinding = this.actionTypeComboBox.getSelectionModel().selectedItemProperty().isNull()
+                .or(this.transitionComboBox.getSelectionModel().selectedItemProperty().isNull())
+                .or(this.categoryComboBox.getSelectionModel().selectedItemProperty().isNull());
+        this.acceptButton.disableProperty ().bind(booleanBinding);
+        /** Accept Button binding conditions */
+
 
         this.acceptButton.setOnAction(getNewActionAcceptClickListener());
 
@@ -322,6 +331,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if(actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1){
+                    actionTypeComboBox.getSelectionModel().clearSelection();
+                    return;
+                }
 
                 // Set state (type) name
                 mActionModel.setName(actionTypeComboBox.getEditor().textProperty().getValue());

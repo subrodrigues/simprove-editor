@@ -7,6 +7,7 @@ package ui.scenario.action;
 
 import com.jfoenix.controls.*;
 import dao.model.*;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -208,6 +209,15 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
             }
         });
 
+
+        /** Accept Button binding conditions */
+        BooleanBinding booleanBinding = this.actionTypeComboBox.getSelectionModel().selectedItemProperty().isNull()
+                .or(this.transitionComboBox.getSelectionModel().selectedItemProperty().isNull())
+                .or(this.categoryComboBox.getSelectionModel().selectedItemProperty().isNull());
+        this.applyButton.disableProperty ().bind(booleanBinding);
+        /** Accept Button binding conditions */
+
+
         this.applyButton.setOnAction(getApplyClickListener());
 
         this.deleteButton.setOnAction(getDeleteClickListener());
@@ -307,6 +317,10 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if(actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1){
+                    actionTypeComboBox.getSelectionModel().clearSelection();
+                    return;
+                }
 
                 // Set state (type) name
                 mActionModel.setName(actionTypeComboBox.getEditor().textProperty().getValue());
