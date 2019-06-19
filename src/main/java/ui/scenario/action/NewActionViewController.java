@@ -31,6 +31,7 @@ import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.ConstantUtils;
 import utils.TextUtils;
+import utils.WidgetUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -333,6 +334,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
             public void handle(ActionEvent e) {
                 if(actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1){
                     actionTypeComboBox.getSelectionModel().clearSelection();
+                    WidgetUtils.warningMessageAlert((Stage) acceptButton.getScene().getWindow(),
+                            "Warning",
+                            "Please select a valid Action Type from the list\n",
+                            "Ok");
                     return;
                 }
 
