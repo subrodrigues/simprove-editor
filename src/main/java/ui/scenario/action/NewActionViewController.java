@@ -286,7 +286,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      * @return duration value or 0
      */
     private int getScoreLostValue() {
-        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
+        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputLostValue.getText()) : 0;
     }
 
     /**

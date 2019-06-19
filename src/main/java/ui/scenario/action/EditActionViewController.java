@@ -296,7 +296,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
      * @return duration value or 0
      */
     private int getScoreLostValue() {
-        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputUsageLimit.getText()) : 0;
+        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputLostValue.getText()) : 0;
     }
 
     /**

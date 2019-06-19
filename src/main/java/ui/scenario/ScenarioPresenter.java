@@ -44,11 +44,11 @@ public class ScenarioPresenter {
         mDAO.requestDefaultActorTypes();
         mDAO.requestDefaultSignals();
 
-        requestScenarioById(0);
+        requestDemoScenario();
     }
 
-    private void requestScenarioById(int id){
-        this.mDAO.requestScenarioById(id);
+    private void requestDemoScenario(){
+        this.requestOpenScenarioFile("./scenarios/Demo Scenario.bin");
     }
 
     /*******************************************************************************************************************
