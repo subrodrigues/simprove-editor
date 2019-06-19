@@ -32,6 +32,7 @@ import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.ConstantUtils;
+import utils.LogicUtils;
 import utils.TextUtils;
 import utils.WidgetUtils;
 
@@ -161,10 +162,13 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private void setupUI(List<StateModel> states, List<TypeModel> actionTypes,
                          List<TypeModel> actionCategories, List<TypeModel> actionSubCategories) {
 
-        this.actionTypeComboBox.setValue(new TypeModel(-1, -1, mActionModel.getName()));
-
+        // Set Action types
         this.actionTypeComboBox.getItems().addAll(actionTypes);
         new AutoCompleteComboBoxListener<>(this.actionTypeComboBox);
+
+        // Select current action type
+        this.actionTypeComboBox.setValue(new TypeModel(-1, -1, mActionModel.getName()));
+        this.actionTypeComboBox.getSelectionModel().select(mActionModel.getType());
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));

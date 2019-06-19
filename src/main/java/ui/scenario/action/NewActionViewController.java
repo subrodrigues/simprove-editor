@@ -30,6 +30,7 @@ import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.ConstantUtils;
+import utils.LogicUtils;
 import utils.TextUtils;
 import utils.WidgetUtils;
 
@@ -367,6 +368,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                         mActionModel.setTransition(new TransitionModel(transitionComboBox.getValue().getId()));
                     }
                 }
+
+                // Set Action Type
+                TypeModel actionType = LogicUtils.getActionTypeByName(mActionModel.getName(), actionTypeComboBox.getItems());
+                mActionModel.setType(actionType);
 
                 // Set Categories
                 mActionModel.setCategory(categoryComboBox.getValue());
