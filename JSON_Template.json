@@ -3,6 +3,10 @@
 	"score": int,
 	"minScore": int,
 	"briefing": String,
+	"defaultActionError": { // TODO
+		"actor": String,
+		"message": String
+	},
 	"states":[
 		{
 			"id": int,
@@ -19,14 +23,14 @@
 					"id": int,
 					"message": String,
 					"actor": String,
-					"activationTime": float,
+					"activationTime": float, // percentage [0,1] (related to state duration)
 					"duration": int,
 					"actionsDone": [int], // action IDs
 					"actionsTodo": [int] // action IDs
 				}
 			],
 			"transition": {
-				"id": int,
+				"id": int, // TODO: Remove?
 				"duration": int,
 				"stateId": int
 			}
@@ -47,7 +51,7 @@
 			"subcategory": {
 				"id": int, // Subcategory ID accordingly to action_subcategories.csv
 				"name": String // This is the same as action.name
-			},
+			}, // TODO only in JSON: [{category},{subcategory}]
 			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
 			"behavior": String,
 			"effectTime": int,
@@ -61,7 +65,7 @@
 				}
 			],
 			"transition": {
-				"id": int,
+				"id": int, // TODO: Remove?
 				"stateId": int
 			},
 			"score": {
@@ -69,6 +73,10 @@
 				"endStates": [int], // state IDs
 				"lostValue": float, // Immediately lost value
 				"lossOvertime": float // Value that will be lost overtime (until completion...)
+			},
+			"errorMsg": { // TODO
+				"actor": String,
+				"message": String
 			}
 		}
 	]
