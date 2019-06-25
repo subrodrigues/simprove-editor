@@ -37,8 +37,16 @@
 			"id": int,
 			"name": String,
 			"type": {
-				"id": int,
+				"id": int, // Type ID accordingly to action_types.csv
+				"name": String // This is the same as action.name
+			},
+			"category": {
+				"id": int, // Category ID accordingly to action_categories.csv
 				"name": String
+			},
+			"subcategory": {
+				"id": int, // Subcategory ID accordingly to action_subcategories.csv
+				"name": String // This is the same as action.name
 			},
 			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
 			"behavior": String,
