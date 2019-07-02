@@ -72,16 +72,9 @@ public class ReadDataUtils {
         BufferedReader br = new BufferedReader( isr );
         String line = br.readLine();
         while( line != null ) {
+
             // process lines of text
-            String content = line.trim();
-
-            // If dont start with the ID, continue to next line
-            if(!Character.isDigit(content.charAt(0))){
-                line = br.readLine();
-                continue;
-            }
-
-            String[] tempArray = content.split(STRING_DELIMITER);
+            String[] tempArray = line.split(CSV_DELIMITER);
 
             int type = Integer.valueOf(tempArray[1]);
             switch(type){
@@ -98,6 +91,10 @@ public class ReadDataUtils {
                     break;
                 case 1:
                     String[] physicalOptions = tempArray[3].split(CSV_DELIMITER);
+
+                    // Parse physical options as a new list from index 3 onwards
+                    List<String> categoricalOptions = new ArrayList<>(Arrays.asList(tempArray).subList(3, tempArray.length));
+
                     signalsList.add(new SignalTemplateModel(Integer.valueOf(tempArray[0]),
                             type,
                             tempArray[2],
@@ -105,7 +102,7 @@ public class ReadDataUtils {
                             -1,
                             -1,
                             .0f,
-                            Arrays.asList(physicalOptions)
+                            categoricalOptions
                     ));
                     break;
             }

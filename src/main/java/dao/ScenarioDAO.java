@@ -90,7 +90,7 @@ public class ScenarioDAO {
         List<SignalTemplateModel> signals = new ArrayList<>();
 
         try {
-            signals = ReadDataUtils.getSignalsFromResourceURL(new FileInputStream("raw/signals_data.txt"));
+            signals = ReadDataUtils.getSignalsFromResourceURL(new FileInputStream("raw/signals_data.csv"));
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
