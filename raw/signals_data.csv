@@ -1,0 +1,39 @@
+0,0,Arterial Blood Pressure,mmHg,0,400,.0f
+4,0,TOF,%,0,100,.0f
+5,0,Heart Rate,bpm,0,200,.0f
+6,0,Systolic Blood Pressure,mmHg,0,1000,.0f
+7,0,Mean Arterial Blood Pressure,mmHg,0,1000,.0f
+8,0,Diastolic,Blood Pressure,mmHg,0,1000,.0f
+9,0,Oxygen Saturation,%,0,100,.0f
+10,0,Body Temperature	Celsius,0,100,.1f
+11,0,Blood pH,NONE,0,14,.2f
+12,0,Oxygen Partial Pressure (pO2),mmHg,0,200,.1f
+13,0,Carbon Dioxide Partial Pressure (pCO2),mmHg,0,200,.1f
+14,0,Bicarbonate concentration (HCO3),mmol/l,0,200,.1f
+15,0,Base Excess (BE),mmol/l,-100,100,.1f
+16,0,Buffer Base (BB),mmol/l,-100,100,.1f
+17,0,BIS,%,0,100,.0f
+18,0,Glucose,mg/dl,0,600,.0f
+19,0,EtCO2,mmHg,0,100,.0f
+20,0,Respiratory Rate,rpm,0,200,1
+21,1,Pulmonary Sounds,Normal,Abnormal,Crackles,Rhonchi,Stridor,Wheezes
+22,1,Bandages Status,No bandages,Clean,Blood
+23,1,Diaper Status,No content,No diaper,Normal feces,Melenas
+24,1,Urinary Output - Quantity,Absent,Normal,Abnormal
+25,1,Urinary Output - Type,Normal,Bloody,Concentrated
+26,1,Rash,Absent,Present
+27,1,Sweat/Diaphoretic,Normal,Abnormal
+28,1,Skin Pruritus,Absent,Present
+29,1,Pale Skin,Absent,Present
+30,1,Capillary nail refill,Normal,Abnormal
+31,1,Cyanosis,Absent,Present
+32,1,Drainage Status,Empty,Normal blood loss,Abnormal blood loss
+33,1,Eyes,Open,Closed,Blinking symmetrically,Blinking asymmetrically
+34,1,Eye Pupils,Fixed,Dilated,Mydriasis
+35,1,Airway,Stable,Unstable
+36,1,Voice,Responsive,Only words,Mumbling,Unresponsive
+37,1,Heart Sounds,Normal,Abnormal,Aortic stenosis,Mitral valve prolapse,Diastolic murmur,Pericarditis,Systolic murmur,Aortic insufficiency,Absent
+38,1,Body Exposure,Normal,Trauma,Foreign Bodies
+39,1,Central Pulse,Present,Absent
+40,1,Peripheral Pulse,Present,Absent
+41,1,Vomiting,Absent,Present

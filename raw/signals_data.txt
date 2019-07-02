@@ -7,3 +7,14 @@ ID # TYPE = 1 # NAME # CATEGORICAL_OPTIONS (delim = ',')
 3 # 0 # Glucose # mg/dl # 0 # 600 # .0f
 4 # 0 # Body Temperature # ºC # 0 # 100 # .1f
 5 # 1 # Rash # absent,present
+
+
+AJ Heart Sounds Physical
+
+[Normal, Abnormal, Aortic stenosis, Mitral valve prolapse, Diastolic murmur, Pericarditis, Systolic murmur, Aortic insufficiency, Absent]
+
+AK Body Exposure Physical Signs of trauma/wounds or foreign bodies.
+[Normal, Trauma, Foreign Bodies]
+AL Central Pulse Physical [Present, Absent]
+AM Peripheral Pulse Physical [Present, Absent]
+AN Vomiting Physical [Absent, Present]
