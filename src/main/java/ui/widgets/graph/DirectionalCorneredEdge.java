@@ -87,6 +87,8 @@ public class DirectionalCorneredEdge extends AbstractEdge {
             };
             text.parentProperty().addListener((obs, oldVal, newVal) -> recalculateWidth.run());
             text.textProperty().addListener((obs, oldVal, newVal) -> recalculateWidth.run());
+            text.setStroke(Color.WHITE);
+            text.setStrokeWidth(0.15);
 
             group = new Group();
             lineA = new Line();
