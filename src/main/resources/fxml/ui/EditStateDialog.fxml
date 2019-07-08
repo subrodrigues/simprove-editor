@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import ui.widgets.JFXDecimalTextField?>
 <StackPane fx:id="editStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style"
            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -62,7 +63,7 @@
                                                  promptText="Select State" styleClass="combo-box">
                                     </JFXComboBox>
 
-                                    <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true"
+                                    <JFXDecimalTextField fx:id="inputTransitionDuration" labelFloat="true"
                                                          prefHeight="30.0" prefWidth="200.0"
                                                          promptText="Transition time (seconds)"
                                                          styleClass="edit-dialog-parameter-input">
@@ -75,7 +76,7 @@
                                         <HBox.margin>
                                             <Insets left="10.0"/>
                                         </HBox.margin>
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox.margin>
                                         <Insets top="32.0"/>

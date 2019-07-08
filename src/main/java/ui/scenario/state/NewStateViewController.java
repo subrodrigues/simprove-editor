@@ -27,6 +27,7 @@ import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
 import ui.scenario.tip.EditTipViewController;
 import ui.scenario.tip.NewTipViewController;
+import ui.widgets.JFXDecimalTextField;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import ui.widgets.grid.TipTextableColorGridCell;
@@ -54,7 +55,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     private JFXComboBox<StateModel> transitionComboBox;
 
     @FXML
-    private JFXNumericTextField inputTransitionDuration;
+    private JFXDecimalTextField inputTransitionDuration;
 
     @FXML
     private JFXButton acceptButton;

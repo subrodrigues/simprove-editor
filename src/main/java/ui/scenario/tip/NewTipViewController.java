@@ -20,6 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ui.widgets.JFXDecimalTextField;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 
@@ -42,10 +43,10 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
     protected JFXTextArea inputMessage;
 
     @FXML
-    protected JFXNumericTextField durationTime;
+    protected JFXDecimalTextField durationTime;
 
     @FXML
-    protected JFXNumericTextField activationTime;
+    protected JFXDecimalTextField activationTime;
 
     @FXML
     private JFXButton acceptButton;

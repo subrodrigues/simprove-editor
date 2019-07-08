@@ -14,8 +14,8 @@ public class TipModel implements Serializable {
     private int id;
     private String message;
     private ActorModel actor;
-    private int duration;
-    private int time; // -1 means that it has no specific time to show
+    private float duration;
+    private float time; // -1 means that it has no specific time to show
     private List<ActionModel> actionsDone; // Used as logical conditions
     private List<ActionModel> actionsTodo; // Used as logical conditions
 

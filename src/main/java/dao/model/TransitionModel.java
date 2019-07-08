@@ -10,7 +10,7 @@ public class TransitionModel  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private int duration;
+    private float duration;
     private int stateId;
 
     public TransitionModel(int id, int duration, int stateId) {

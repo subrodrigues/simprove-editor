@@ -15,7 +15,7 @@ public class ActionModel implements Serializable {
     private TypeModel type;
     private TypeModel category;
     private TypeModel subCategory;
-    private int effectTime;
+    private float effectTime;
     private int usageLimit;
     private int isComplement;
     private String behavior;

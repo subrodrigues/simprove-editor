@@ -12,7 +12,7 @@ public class ScoreModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private int scoreLost;
+    private float scoreLost;
     private float lossOvertime;
     private List<StateModel> startStates;
     private List<StateModel> endStates;

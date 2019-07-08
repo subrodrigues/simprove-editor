@@ -18,6 +18,7 @@
   ~ Created by Filipe André Rodrigues on 13-03-2019 19:29
   -->
 
+<?import ui.widgets.JFXDecimalTextField?>
 <StackPane fx:id="newActionRoot" prefHeight="400.0" prefWidth="700.0" styleClass="float-window-style"
            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -146,10 +147,10 @@
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
                                               styleClass="edit-dialog-parameter-title" text="Duration: "/>
                                     </VBox>
-                                    <JFXNumericTextField fx:id="inputEffectTime" labelFloat="true" prefHeight="30.0"
+                                    <JFXDecimalTextField fx:id="inputEffectTime" labelFloat="true" prefHeight="30.0"
                                                          prefWidth="300.0" promptText="Effect time (seconds)"
                                                          styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox alignment="CENTER_RIGHT" minWidth="52.0">
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
@@ -215,14 +216,14 @@
                                               styleClass="edit-dialog-parameter-title" text="Lost Points: "/>
                                     </VBox>
 
-                                    <JFXNumericTextField fx:id="inputLostValue" alignment="BOTTOM_LEFT"
+                                    <JFXDecimalTextField fx:id="inputLostValue" alignment="BOTTOM_LEFT"
                                                          labelFloat="true" maxWidth="100.0" prefHeight="30.0"
                                                          promptText="Immediate"
                                                          styleClass="edit-dialog-parameter-input">
                                         <HBox.margin>
                                             <Insets left="6.0"/>
                                         </HBox.margin>
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox alignment="CENTER_RIGHT">
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
@@ -233,15 +234,14 @@
                                         </Text>
                                     </VBox>
 
-                                    <JFXNumericTextField fx:id="inputLossOvertime" alignment="BOTTOM_LEFT"
+                                    <JFXDecimalTextField fx:id="inputLossOvertime" alignment="BOTTOM_LEFT"
                                                          labelFloat="true" maxWidth="100.0" prefHeight="30.0"
                                                          promptText="Overtime" styleClass="edit-dialog-parameter-input">
-                                        <!-- TODO: DecimalTextField -->
 
                                         <HBox.margin>
                                             <Insets left="6.0"/>
                                         </HBox.margin>
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <JFXButton fx:id="scoreConditions" alignment="CENTER" buttonType="FLAT"
                                                prefHeight="20" styleClass="option-jfx-button" text="Select conditions"

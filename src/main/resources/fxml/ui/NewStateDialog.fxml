@@ -19,6 +19,7 @@
   ~ Created by Filipe André Rodrigues on 01-03-2019 23:01
   -->
 
+<?import ui.widgets.JFXDecimalTextField?>
 <StackPane fx:id="newStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -54,7 +55,7 @@
                                     <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
                                     </JFXComboBox>
 
-                                    <JFXNumericTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
+                                    <JFXDecimalTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
                                                 <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
@@ -63,7 +64,7 @@
                                         <HBox.margin>
                                             <Insets left="10.0" />
                                         </HBox.margin>
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox.margin>
                                         <Insets top="32.0" />

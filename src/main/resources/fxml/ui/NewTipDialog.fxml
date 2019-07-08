@@ -16,6 +16,7 @@
   ~ Created by Filipe André Rodrigues on 04-06-2019 20:38
   -->
 
+<?import ui.widgets.JFXDecimalTextField?>
 <StackPane fx:id="newTipRoot" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style"
            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -72,10 +73,10 @@
                                             <Insets right="8.0"/>
                                         </HBox.margin>
                                     </VBox>
-                                    <JFXNumericTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0"
+                                    <JFXDecimalTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0"
                                                          promptText="Activation time (seconds)"
                                                          styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox alignment="CENTER_RIGHT">
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
@@ -85,10 +86,10 @@
                                             </VBox.margin>
                                         </Text>
                                     </VBox>
-                                    <JFXNumericTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0"
+                                    <JFXDecimalTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0"
                                                          promptText="Viewing time (seconds)"
                                                          styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
-                                    </JFXNumericTextField>
+                                    </JFXDecimalTextField>
 
                                     <VBox.margin>
                                         <Insets top="32.0"/>

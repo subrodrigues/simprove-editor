@@ -23,15 +23,15 @@
 					"id": int,
 					"message": String,
 					"actor": String,
-					"activationTime": float, // percentage [0,1] (related to state duration)
-					"duration": int,
+					"activationTime": float, // percentage [0,1] (related to state duration) / OPTION: -1 means that it has no specific time to show
+					"duration": float,
 					"actionsDone": [int], // action IDs
 					"actionsTodo": [int] // action IDs
 				}
 			],
 			"transition": {
 				"id": int, // TODO: Remove?
-				"duration": int,
+				"duration": float,
 				"stateId": int
 			}
 		}
@@ -54,7 +54,7 @@
 			}, // TODO only in JSON: [{category},{subcategory}]
 			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
 			"behavior": String,
-			"effectTime": int,
+			"effectTime": float,
 			"usageLimit": int,
 			"conditions": [int], // state IDs
 			"results": [ // array signals
