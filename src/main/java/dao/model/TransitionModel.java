@@ -19,7 +19,7 @@ public class TransitionModel  implements Serializable {
         this.stateId = stateId;
     }
 
-    public TransitionModel(int duration, int stateId) {
+    public TransitionModel(float duration, int stateId) {
         this.duration = duration;
         this.stateId = stateId;
     }

@@ -29,7 +29,7 @@ public class TipModel implements Serializable {
         this.actionsTodo = new ArrayList<>();
     }
 
-    public TipModel(int id, String message, ActorModel actor, int duration, int time, List<ActionModel> actionsDone, List<ActionModel> actionsTodo) {
+    public TipModel(int id, String message, ActorModel actor, float duration, float time, List<ActionModel> actionsDone, List<ActionModel> actionsTodo) {
         this.id = id;
         this.message = message;
         this.actor = actor;

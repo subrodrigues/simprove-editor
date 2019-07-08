@@ -268,8 +268,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      *
      * @return duration value or 0
      */
-    private int getCurrentEffectDuration() {
-        return inputEffectTime != null && inputEffectTime.getLength() > 0 ? Integer.valueOf(inputEffectTime.getText()) : 0;
+    private float getCurrentEffectDuration() {
+        return inputEffectTime != null && inputEffectTime.getLength() > 0 ? Float.valueOf(inputEffectTime.getText()) : 0;
     }
 
     /**
@@ -286,8 +286,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
      *
      * @return duration value or 0
      */
-    private int getScoreLostValue() {
-        return inputLostValue != null && inputLostValue.getLength() > 0 ? Integer.valueOf(inputLostValue.getText()) : 0;
+    private float getScoreLostValue() {
+        return inputLostValue != null && inputLostValue.getLength() > 0 ? Float.valueOf(inputLostValue.getText()) : 0;
     }
 
     /**

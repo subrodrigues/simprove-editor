@@ -241,10 +241,10 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
                         actorTypeComboBox.getSelectionModel().getSelectedItem()));
 
                 mTipModel.setDuration((durationTime != null &&
-                        durationTime.getLength() > 0 ? Integer.valueOf(durationTime.getText()) : 0));
+                        durationTime.getLength() > 0 ? Float.valueOf(durationTime.getText()) : 0));
 
                 mTipModel.setTime((activationTime != null &&
-                        activationTime.getLength() > 0 ? Integer.valueOf(activationTime.getText()) : -1));
+                        activationTime.getLength() > 0 ? Float.valueOf(activationTime.getText()) : -1));
 
                 mTipModel.setMessage(inputMessage.getText());
 

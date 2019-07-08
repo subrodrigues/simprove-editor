@@ -291,8 +291,8 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
      *
      * @return duration value or -1
      */
-    private int getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
+    private float getCurrentTransitionDuration() {
+        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : -1f;
     }
 
     public StackPane getEditStateItemRootDialog() {
@@ -337,7 +337,7 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
                     // And we are adding a Transition
                     if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
                         mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
+                                inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : -1f),
                                 transitionComboBox.getValue().getId()));
                     }
                 }

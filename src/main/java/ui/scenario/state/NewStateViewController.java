@@ -307,8 +307,8 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
      *
      * @return duration value or -1
      */
-    private int getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1;
+    private float getCurrentTransitionDuration() {
+        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : -1f;
     }
 
     /**
@@ -372,7 +372,7 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
                     // And we are adding a Transition
                     if (transitionComboBox.getValue() != null && transitionComboBox.getValue().getId() != -1) {
                         mStateModel.setTransition(new TransitionModel((inputTransitionDuration != null &&
-                                inputTransitionDuration.getLength() > 0 ? Integer.valueOf(inputTransitionDuration.getText()) : -1),
+                                inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : -1),
                                 transitionComboBox.getValue().getId()));
                     }
                 }

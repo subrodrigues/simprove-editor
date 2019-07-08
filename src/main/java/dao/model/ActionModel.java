@@ -27,7 +27,7 @@ public class ActionModel implements Serializable {
     private ScoreModel score;
 
     public ActionModel(int id, String name, TypeModel type, TypeModel category, TypeModel subCategory,
-                       int effectTime, int usageLimit, int isComplement, String behavior,
+                       float effectTime, int usageLimit, int isComplement, String behavior,
                        List<StateModel> stateConditions, List<SignalModel> results,
                        TransitionModel transition, String errorMessage, ScoreModel score) {
         this.id = id;
