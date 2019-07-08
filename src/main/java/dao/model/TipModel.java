@@ -55,19 +55,19 @@ public class TipModel implements Serializable {
         this.message = message;
     }
 
-    public int getDuration() {
+    public float getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(float duration) {
         this.duration = duration;
     }
 
-    public int getTime() {
+    public float getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(float time) {
         this.time = time;
     }
 

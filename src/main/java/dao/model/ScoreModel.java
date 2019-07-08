@@ -40,11 +40,11 @@ public class ScoreModel implements Serializable {
         this.id = id;
     }
 
-    public int getScoreLost() {
+    public float getScoreLost() {
         return scoreLost;
     }
 
-    public void setScoreLost(int scoreLost) {
+    public void setScoreLost(float scoreLost) {
         this.scoreLost = scoreLost;
     }
 

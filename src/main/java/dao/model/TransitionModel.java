@@ -13,7 +13,7 @@ public class TransitionModel  implements Serializable {
     private float duration;
     private int stateId;
 
-    public TransitionModel(int id, int duration, int stateId) {
+    public TransitionModel(int id, float duration, int stateId) {
         this.id = id;
         this.duration = duration;
         this.stateId = stateId;
@@ -37,11 +37,11 @@ public class TransitionModel  implements Serializable {
         this.id = id;
     }
 
-    public int getDuration() {
+    public float getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(float duration) {
         this.duration = duration;
     }
 

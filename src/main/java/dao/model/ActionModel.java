@@ -151,11 +151,11 @@ public class ActionModel implements Serializable {
         this.isComplement = isComplement;
     }
 
-    public int getEffectTime() {
+    public float getEffectTime() {
         return effectTime;
     }
 
-    public void setEffectTime(int effectTime) {
+    public void setEffectTime(float effectTime) {
         this.effectTime = effectTime;
     }
 
