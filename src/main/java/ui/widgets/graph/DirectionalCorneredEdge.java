@@ -27,16 +27,18 @@ public class DirectionalCorneredEdge extends AbstractEdge {
 
     private final StringProperty textProperty;
     private final Orientation orientation;
+    private final boolean isVisible;
 
-    public DirectionalCorneredEdge(ICell source, ICell target, Orientation orientation) {
+    public DirectionalCorneredEdge(ICell source, ICell target, boolean isVisible, Orientation orientation) {
         super(source, target);
         this.orientation = orientation;
-        textProperty = new SimpleStringProperty();
+        this.textProperty = new SimpleStringProperty();
+        this.isVisible = isVisible;
     }
 
     @Override
     public DirectionalCorneredEdge.EdgeGraphic getGraphic(Graph graph) {
-        return new DirectionalCorneredEdge.EdgeGraphic(graph, this, orientation, textProperty);
+        return new DirectionalCorneredEdge.EdgeGraphic(graph, this, isVisible, orientation, textProperty);
     }
 
     public StringProperty textProperty() {
@@ -61,7 +63,11 @@ public class DirectionalCorneredEdge extends AbstractEdge {
         private DoubleBinding dx;
         private DoubleBinding dy;
 
-        public EdgeGraphic(Graph graph, DirectionalCorneredEdge edge, Orientation orientation, StringProperty textProperty) {
+        private final boolean isVisible;
+
+        public EdgeGraphic(Graph graph, DirectionalCorneredEdge edge, boolean isVisible, Orientation orientation, StringProperty textProperty) {
+            this.isVisible = isVisible;
+
             sourceX = edge.getSource().getXAnchor(graph, edge);
             sourceY = edge.getSource().getYAnchor(graph, edge);
             targetX = edge.getTarget().getXAnchor(graph, edge);
@@ -82,30 +88,42 @@ public class DirectionalCorneredEdge extends AbstractEdge {
             text.parentProperty().addListener((obs, oldVal, newVal) -> recalculateWidth.run());
             text.textProperty().addListener((obs, oldVal, newVal) -> recalculateWidth.run());
 
-            if(orientation == Orientation.HORIZONTAL) {
-                group = new Group();
+            group = new Group();
+            lineA = new Line();
+            lineB = new Line();
+            lineC = new Line();
 
-                lineA = new Line();
+            if (isVisible) {
+                drawLine(orientation);
+            }
+            text.xProperty().bind(centerX.subtract(textWidth.divide(2)));
+            text.yProperty().bind(centerY.subtract(textHeight.divide(2)));
+
+            group.getChildren().add(text);
+            getChildren().add(group);
+        }
+
+        private void drawLine(Orientation orientation) {
+            if (orientation == Orientation.HORIZONTAL) {
+
                 lineA.startXProperty().bind(sourceX);
                 lineA.startYProperty().bind(sourceY);
                 lineA.endXProperty().bind(centerX);
                 lineA.endYProperty().bind(sourceY);
                 lineA.setStrokeWidth(1);
-
                 lineA.setStroke(Color.rgb(97, 97, 97, 0.60));
 
                 group.getChildren().add(lineA);
 
-                lineB = new Line();
                 lineB.startXProperty().bind(centerX);
                 lineB.startYProperty().bind(sourceY);
                 lineB.endXProperty().bind(centerX);
                 lineB.endYProperty().bind(targetY);
                 lineB.setStrokeWidth(2);
                 lineB.setStroke(Color.rgb(97, 97, 97, 0.80));
+
                 group.getChildren().add(lineB);
 
-                lineC = new Line();
                 lineC.startXProperty().bind(centerX);
                 lineC.startYProperty().bind(targetY);
                 lineC.endXProperty().bind(targetX);
@@ -113,13 +131,15 @@ public class DirectionalCorneredEdge extends AbstractEdge {
                 lineC.setStrokeWidth(4);
                 lineC.setStroke(Color.rgb(100, 149, 237, 1.00));
 
-                /** Create Triangle (Arrow) */
-                dx = lineB.endXProperty().add( lineB.startXProperty().negate());
-                dy = lineB.endYProperty().add( lineB.startYProperty().negate());
 
-                triangle = new Polygon(0, 0, - 16, 8, - 16, - 8);
+                /** Create Triangle (Arrow) */
+
+                dx = lineB.endXProperty().add(lineB.startXProperty().negate());
+                dy = lineB.endYProperty().add(lineB.startYProperty().negate());
+
+                triangle = new Polygon(0, 0, -32, 16, -32, -16);
                 triangle.setFill(Color.rgb(100, 149, 237, 1.00));
-                Rotate rotate = new Rotate(0,0,0,1,Rotate.Z_AXIS);
+                Rotate rotate = new Rotate(0, 0, 0, 1, Rotate.Z_AXIS);
                 triangle.getTransforms().add(rotate);
 
                 dx.addListener((observable, oldValue, newValue) -> {
@@ -132,43 +152,36 @@ public class DirectionalCorneredEdge extends AbstractEdge {
 
                 triangle.layoutXProperty().bind(centerX);
                 triangle.layoutYProperty().bind(centerY);
-                /** Create Triangle (Arrow) */
 
                 group.getChildren().addAll(lineC, triangle);
 
-            } else {
-                group = new Group();
 
-                lineA = new Line();
+                /** Create Triangle (Arrow) */
+
+            } else {
+
                 lineA.startXProperty().bind(sourceX);
                 lineA.startYProperty().bind(sourceY);
                 lineA.endXProperty().bind(sourceX);
                 lineA.endYProperty().bind(centerY);
                 group.getChildren().add(lineA);
 
-                lineB = new Line();
                 lineB.startXProperty().bind(sourceX);
                 lineB.startYProperty().bind(centerY);
                 lineB.endXProperty().bind(targetX);
                 lineB.endYProperty().bind(centerY);
                 group.getChildren().add(lineB);
 
-                lineC = new Line();
                 lineC.startXProperty().bind(targetX);
                 lineC.startYProperty().bind(centerY);
                 lineC.endXProperty().bind(targetX);
                 lineC.endYProperty().bind(targetY);
                 group.getChildren().add(lineC);
             }
-            text.xProperty().bind(centerX.subtract(textWidth.divide(2)));
-            text.yProperty().bind(centerY.subtract(textHeight.divide(2)));
-
-            group.getChildren().add(text);
-            getChildren().add(group);
         }
 
 
-        private double getAngle(double dy ,double dx){
+        private double getAngle(double dy, double dx) {
             return Math.toDegrees(Math.atan2(dy, dx));
         }
 

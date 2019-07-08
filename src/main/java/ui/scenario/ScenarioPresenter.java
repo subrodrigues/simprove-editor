@@ -293,7 +293,7 @@ public class ScenarioPresenter {
             this.mScenario.getStates().set(indexToUpdate, stateToUpdate);
             this.mView.updateStateViewItem(indexToUpdate, stateToUpdate, stateToUpdate.getId() == this.mCurrentSelectedStateItem);
 
-            this.mView.updateStatesGraphView(this.mScenario.getStates());
+            this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -312,7 +312,7 @@ public class ScenarioPresenter {
             this.mView.removeStateViewItem(indexToRemove);
             this.cleanSelectedActions();
 
-            this.mView.updateStatesGraphView(this.mScenario.getStates());
+            this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -343,7 +343,7 @@ public class ScenarioPresenter {
         this.mScenario.getStates().add(newStateModel);
         this.mView.addStateViewItem(newStateModel);
 
-        this.mView.updateStatesGraphView(this.mScenario.getStates());
+        this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
 
     }
 

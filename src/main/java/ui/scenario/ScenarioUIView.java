@@ -38,9 +38,11 @@ import ui.scenario.state.NewStateViewController;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.graph.CustomLayoutGrid;
 import ui.widgets.graph.DirectionalCorneredEdge;
+import ui.widgets.graph.LineEdge;
 import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
+import javax.sound.sampled.Line;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -57,11 +59,14 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     private ScenarioPresenter mPresenter;
 
     // UI Bind variables
-    @FXML StackPane scenarioRoot;
+    @FXML
+    StackPane scenarioRoot;
 
-    @FXML StackPane scenarioContent;
+    @FXML
+    StackPane scenarioContent;
 
-    @FXML StackPane statesGraphPane;
+    @FXML
+    StackPane statesGraphPane;
 
     @FXML
     private ScrollPane actionsScrollPane;
@@ -138,7 +143,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     private void setupSlidingMenu() {
         sliderContent.setPrefWidth(300);
-        StackPane.setMargin(scenarioContent, new Insets(0,0,0, sliderContent.getPrefWidth()));
+        StackPane.setMargin(scenarioContent, new Insets(0, 0, 0, sliderContent.getPrefWidth()));
 
         final Transition animateHamburguer = expandButton.getAnimation();
         animateHamburguer.setRate(1);
@@ -163,8 +168,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                 }
 
                 timeline.setOnFinished(event -> {
-                    if(isSlidingContentVisible)
-                        StackPane.setMargin(scenarioContent, new Insets(0,0,0, sliderContent.getPrefWidth()));
+                    if (isSlidingContentVisible)
+                        StackPane.setMargin(scenarioContent, new Insets(0, 0, 0, sliderContent.getPrefWidth()));
                 });
 
                 isSlidingContentVisible = true;
@@ -176,7 +181,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
                 if (!playing) {
                     timeline.playFrom("end");
                 }
-                StackPane.setMargin(scenarioContent, new Insets(0,0,0, 16));
+                StackPane.setMargin(scenarioContent, new Insets(0, 0, 0, 16));
 
                 isSlidingContentVisible = false;
             }
@@ -204,7 +209,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      *
      * @param index the element position index on the Grid (used to create the alternate colors)
      * @param state the StateModel to fill the UIController
-     *
      * @return Node
      * @throws IOException
      */
@@ -219,9 +223,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Helper method that creates a UI Action Card and returns the node to be inflate in the list.
      *
-     * @param index the element position index on the Grid (used to create the alternate colors)
+     * @param index  the element position index on the Grid (used to create the alternate colors)
      * @param action the ActionModel to fill the UIController
-     *
      * @return Node
      * @throws IOException
      */
@@ -232,6 +235,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         return item.getStateItemRootPane();
     }
+
     /**
      * Invoked by the Presenter.
      * Updates the view with a whole new Scenario.
@@ -281,18 +285,16 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         statesGridView.requestLayout();
         actionsGridView.requestLayout();
 
-        updateStatesGraphView(scenario.getStates());
+        updateStatesGraphView(scenario.getStates(), scenario.getActions());
     }
 
     /**
      * Method that redraws the States Graph View
      *
      * @param states
+     * @param actions
      */
-    void updateStatesGraphView(List<StateModel> states) {
-
-//        if(states.size() == 0) return;
-
+    void updateStatesGraphView(List<StateModel> states, List<ActionModel> actions) {
         statesGraphPane.getChildren().clear();
 
         Graph graph = new Graph();
@@ -300,51 +302,83 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         graph.beginUpdate();
 
-        for(StateModel state: states){
+        for (StateModel state : states) {
             final ICell stateCell = new TextableRectangleCell(state.getName(), state.getId());
             model.addCell(stateCell);
         }
 
-        for(StateModel state: states) {
-            if(state.getTransition() != null){
-                ICell source = null, target = null;
+        for (StateModel state : states) {
+            if (state.getTransition() != null) {
+                addTransitionEdge(model, state.getId(), state.getTransition(), true,false, null);
+            }
 
-                for(ICell cell: model.getAddedCells()){
-                    if(((TextableRectangleCell)cell).getId() == state.getId())
-                        source = cell;
-                    else if(((TextableRectangleCell)cell).getId() == state.getTransition().getStateId())
-                        target = cell;
-
-                    if(source != null && target != null){
-                        final DirectionalCorneredEdge edgeAB = new DirectionalCorneredEdge(source, target, Orientation.HORIZONTAL);
-
-                        edgeAB.textProperty().set(state.getTransition().getDuration() != -1 ?
-                                state.getTransition().getDuration() + " sec" : "no timer");
-                        model.addEdge(edgeAB);
-                    }
+            // Action transitions
+            boolean isVisible = true;
+            String newLineAppend = "";
+            for (ActionModel action : actions) {
+                if (action.getStateConditions().contains(state) &&
+                        action.getTransition() != null) {
+                    addTransitionEdge(model, state.getId(), action.getTransition(), isVisible,
+                            true, newLineAppend.concat(action.getName()));
+                    isVisible = false;
+                    newLineAppend += "\n\n";
                 }
             }
         }
 
         graph.endUpdate();
-
         graph.layout(new CustomLayoutGrid()); // TODO: Maybe a tree
 
         statesGraphPane.getChildren().add(graph.getCanvas());
     }
 
     /**
+     * Aux method to the updateStatesGraphView().
+     * It adds Edges to the Model accordingly to the received data.
+     *
+     * @param model
+     * @param sourceId
+     * @param isActionTransition
+     * @param actionName         // Can be null
+     */
+    private void addTransitionEdge(Model model, int sourceId, TransitionModel transition, boolean isVisible, boolean isActionTransition, String actionName) {
+        ICell source = null, target = null;
+
+        for (ICell cell : model.getAddedCells()) {
+            if (((TextableRectangleCell) cell).getId() == sourceId)
+                source = cell;
+            else if (((TextableRectangleCell) cell).getId() == transition.getStateId())
+                target = cell;
+
+            if (source != null && target != null) {
+                if (!isActionTransition) {
+                    final LineEdge edgeAB = new LineEdge(source, target, Orientation.HORIZONTAL);
+
+                    edgeAB.textProperty().set(transition.getDuration() != -1 ?
+                            transition.getDuration() + " sec" : "no timer");
+                    model.addEdge(edgeAB);
+                } else {
+                    final DirectionalCorneredEdge edgeAB = new DirectionalCorneredEdge(source, target, isVisible, Orientation.HORIZONTAL);
+
+                    edgeAB.textProperty().set(actionName);
+                    model.addEdge(edgeAB);
+                }
+            }
+        }
+    }
+
+    /**
      * Method that updates a specific State Item on the StateGridView
      *
-     * @param index to be update
-     * @param state new StateModel data
+     * @param index      to be update
+     * @param state      new StateModel data
      * @param isSelected flags if the state is selected, in order to reselect after the update
      */
     void updateStateViewItem(int index, StateModel state, boolean isSelected) {
         try {
             statesGridView.getChildren().set(index, getInflatableStateItem(index, 0, state));
 
-            if(isSelected)
+            if (isSelected)
                 mPresenter.showSelectedStateUIItem(state.getId());
         } catch (IOException e) {
             e.printStackTrace();
@@ -357,7 +391,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     void selectStateViewItem(int indexToHighlight) {
-        if(statesGridView.getChildren().size() == 0) return;
+        if (statesGridView.getChildren().size() == 0) return;
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
         //        dropshadow(gaussian, rgba(0,0,0,0.26), 10, 0.12, -1, 2)
@@ -370,7 +404,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     public void deselectStateViewItem(int indexToHighlight) {
-        if(statesGridView.getChildren().size() == 0 || indexToHighlight >= statesGridView.getChildren().size()) return;
+        if (statesGridView.getChildren().size() == 0 || indexToHighlight >= statesGridView.getChildren().size()) return;
 
         Node stateView = statesGridView.getChildren().get(indexToHighlight);
         stateView.setStyle("item-card-style");
@@ -382,7 +416,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     void selectActionViewItem(int indexToHighlight) {
-        if(actionsGridView.getChildren().size() == 0) return;
+        if (actionsGridView.getChildren().size() == 0) return;
 
         Node actionView = actionsGridView.getChildren().get(indexToHighlight);
         actionView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(240,0,0,0.7), 10, 0.8, 0, 0)");
@@ -395,7 +429,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param indexToHighlight to be update
      */
     public void deselectActionViewItem(int indexToHighlight) {
-        if(actionsGridView.getChildren().size() == 0) return;
+        if (actionsGridView.getChildren().size() == 0) return;
 
         Node stateView = actionsGridView.getChildren().get(indexToHighlight);
         stateView.setStyle("item-card-style");
@@ -429,8 +463,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Method that updates a specific Action Item on the ActionGridView
      *
-     * @param index to be update
-     * @param action new ActionModel data
+     * @param index      to be update
+     * @param action     new ActionModel data
      * @param isSelected is used to reselect the action after the update
      */
     void updateActionViewItem(int index, ActionModel action, boolean isSelected) {
@@ -438,7 +472,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             actionsGridView.getChildren().set(index, getInflatableActionItem(index, 0, action));
 
             // If it is a selected Action, reselect it.
-            if(isSelected)
+            if (isSelected)
                 mPresenter.showSelectedActionUIItem(action.getId());
         } catch (IOException e) {
             e.printStackTrace();
@@ -577,6 +611,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
+     *
      * @param states
      * @param signalTypes
      * @param actorTypes
@@ -671,7 +706,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param action
      * @param states
      */
-    public void showActionEditDialog(ActionModel action, List<StateModel> states,  List<TypeModel> actionTypes,
+    public void showActionEditDialog(ActionModel action, List<StateModel> states, List<TypeModel> actionTypes,
                                      List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
                                      List<SignalTemplateModel> signalTypes) {
 
@@ -694,9 +729,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Requested by the invoker, to launch the select scenario window
      */
-    void requestLoadScenarioDialog(){
+    void requestLoadScenarioDialog() {
         File recordsDir = new File(Paths.get("./scenarios").toAbsolutePath().normalize().toString());
-        if (! recordsDir.exists()) {
+        if (!recordsDir.exists()) {
             recordsDir.mkdirs();
         }
 
@@ -710,9 +745,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         }
     }
 
-    void requestSaveScenarioDialog(String defaultFilename){
+    void requestSaveScenarioDialog(String defaultFilename) {
         File recordsDir = new File(Paths.get("./scenarios").toAbsolutePath().normalize().toString());
-        if (! recordsDir.exists()) {
+        if (!recordsDir.exists()) {
             recordsDir.mkdirs();
         }
 
@@ -732,9 +767,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         }
     }
 
-    void requestExportJSONScenario(String defaultFilename){
+    void requestExportJSONScenario(String defaultFilename) {
         File recordsDir = new File(Paths.get("./scenarios/exported").toAbsolutePath().normalize().toString());
-        if (! recordsDir.exists()) {
+        if (!recordsDir.exists()) {
             recordsDir.mkdirs();
         }
 

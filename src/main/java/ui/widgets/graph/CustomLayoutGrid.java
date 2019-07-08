@@ -4,6 +4,7 @@
 
 package ui.widgets.graph;
 
+import com.fxgraph.cells.TriangleCell;
 import com.fxgraph.graph.Graph;
 import com.fxgraph.graph.ICell;
 import com.fxgraph.layout.RandomLayout;
@@ -13,7 +14,7 @@ import java.util.Random;
 
 public class CustomLayoutGrid extends RandomLayout {
 
-    public CustomLayoutGrid(){
+    public CustomLayoutGrid() {
     }
 
     @Override
@@ -29,9 +30,10 @@ public class CustomLayoutGrid extends RandomLayout {
             graph.getGraphic(cell).relocate(x, y);
             index++;
 
-            if(index < 10){
-                xInc += ((TextableRectangleCell)cell).getPrefWidth() + 120;
-            } else{
+            if (index < 10) {
+                xInc += ((TextableRectangleCell) cell).getPrefWidth() + 120;
+
+            } else {
                 index = 0;
                 yPos += 160;
                 xInc = 150 + yPos / 2;
