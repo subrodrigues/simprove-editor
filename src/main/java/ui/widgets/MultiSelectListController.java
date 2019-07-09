@@ -144,6 +144,7 @@ public class MultiSelectListController<T> {
                         lv.getSelectionModel().clearSelection(index);
                     } else {
                         lv.getSelectionModel().select(index);
+                        secondList.getSelectionModel().clearSelection(index);
                     }
                 }
             }
@@ -178,6 +179,7 @@ public class MultiSelectListController<T> {
                         lv.getSelectionModel().clearSelection(index);
                     } else {
                         lv.getSelectionModel().select(index);
+                        firstList.getSelectionModel().clearSelection(index);
                     }
                 }
             }
