@@ -25,11 +25,12 @@ public class ActionModel implements Serializable {
     private TransitionModel transition;
     private String errorMessage;
     private ScoreModel score;
+    private float adminTime;
 
     public ActionModel(int id, String name, TypeModel type, TypeModel category, TypeModel subCategory,
                        float effectTime, int usageLimit, int isComplement, String behavior,
                        List<StateModel> stateConditions, List<SignalModel> results,
-                       TransitionModel transition, String errorMessage, ScoreModel score) {
+                       TransitionModel transition, String errorMessage, ScoreModel score, float adminTime) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -44,6 +45,7 @@ public class ActionModel implements Serializable {
         this.transition = transition;
         this.errorMessage = errorMessage;
         this.score = score;
+        this.adminTime = adminTime;
     }
 
     public ActionModel(int id, String name) {
@@ -181,6 +183,14 @@ public class ActionModel implements Serializable {
 
     public void setSubCategory(TypeModel subCategory) {
         this.subCategory = subCategory;
+    }
+
+    public float getAdminTime() {
+        return adminTime;
+    }
+
+    public void setAdminTime(float adminTime) {
+        this.adminTime = adminTime;
     }
 
     @Override

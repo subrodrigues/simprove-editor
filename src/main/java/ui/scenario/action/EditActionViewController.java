@@ -647,7 +647,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
             StateModel item = ((List<StateModel>) listIds).get(i);
 
             finalStatesList.add(i, new StateModel(item.getId(), item.getName(), item.getType(), item.getSignals(),
-                    item.getTransition(), item.getTips()));
+                    item.getTransition(), item.getTips(), item.getIsStartState(), item.getIsEndState()));
         }
 
         return finalStatesList;

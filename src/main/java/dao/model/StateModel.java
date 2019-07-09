@@ -16,6 +16,8 @@ public class StateModel implements Serializable {
     private List<SignalModel> signals;
     private TransitionModel transition;
     private List<TipModel> tips;
+    private int isStartState;
+    private int isEndState;
 
     public StateModel(int id) {
         this.id = id;
@@ -26,13 +28,16 @@ public class StateModel implements Serializable {
         this.name = name;
     }
 
-    public StateModel(int id, String name, TypeModel type, List<SignalModel> signals, TransitionModel transition, List<TipModel> tips) {
+    public StateModel(int id, String name, TypeModel type, List<SignalModel> signals,
+                      TransitionModel transition, List<TipModel> tips, int isStartState, int isEndState) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.signals = signals;
         this.transition = transition;
         this.tips = tips;
+        this.isStartState = isStartState;
+        this.isEndState = isEndState;
     }
 
     public int getId() {
@@ -81,6 +86,22 @@ public class StateModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getIsStartState() {
+        return isStartState;
+    }
+
+    public void setIsStartState(int isStartState) {
+        this.isStartState = isStartState;
+    }
+
+    public int getIsEndState() {
+        return isEndState;
+    }
+
+    public void setIsEndState(int isEndState) {
+        this.isEndState = isEndState;
     }
 
     @Override

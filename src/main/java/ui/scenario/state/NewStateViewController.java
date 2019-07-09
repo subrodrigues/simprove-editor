@@ -75,6 +75,12 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
     @FXML
     private JFXButton addTipButton;
 
+    @FXML
+    private JFXCheckBox startingStateCheckBox;
+
+    @FXML
+    private JFXCheckBox endingStateCheckBox;
+
     // Private variables
     private StateModel mStateModel;
     private OnScenarioNewStateClickListener mListener;
