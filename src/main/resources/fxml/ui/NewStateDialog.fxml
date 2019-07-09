@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
@@ -13,22 +14,24 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import ui.widgets.JFXNumericTextField?>
+<?import ui.widgets.JFXDecimalTextField?>
 
 <!--
   ~ Created by Filipe André Rodrigues on 01-03-2019 23:01
   -->
 
-<?import ui.widgets.JFXDecimalTextField?>
-<StackPane fx:id="newStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="newStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style"
+           xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
-                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+                <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0"
+                           VBox.vgrow="ALWAYS">
                     <children>
-                        <Text fx:id="editStateTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New State">
+                        <Text fx:id="editStateTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              styleClass="edit-dialog-title" text="New State">
                             <StackPane.margin>
-                                <Insets top="16.0" />
+                                <Insets top="16.0"/>
                             </StackPane.margin>
                         </Text>
 
@@ -37,9 +40,12 @@
 
                                 <HBox>
                                     <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                        <Text fx:id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Name: " />
+                                        <Text fx:id="stateName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Name: "/>
                                     </VBox>
-                                    <JFXTextField fx:id="inputName" minWidth="600.0" prefHeight="30.0" prefWidth="Infinity" promptText="State name" styleClass="edit-dialog-parameter-input">
+                                    <JFXTextField fx:id="inputName" minWidth="600.0" prefHeight="30.0"
+                                                  prefWidth="Infinity" promptText="State name"
+                                                  styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
                                                 <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
@@ -50,24 +56,48 @@
 
                                 <HBox>
                                     <VBox alignment="CENTER_LEFT" minWidth="84.0">
-                                        <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Transition:" />
+                                        <Text fx:id="stateFlow" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Flow: "/>
                                     </VBox>
-                                    <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0" promptText="Select State" styleClass="combo-box">
+                                    <JFXCheckBox fx:id="startingStateCheckBox" text="Starting State"/>
+                                    <JFXCheckBox fx:id="endingStateCheckBox" styleClass="custom-jfx-check-box"
+                                                 text="Ending State">
+                                        <HBox.margin>
+                                            <Insets left="12.0"/>
+                                        </HBox.margin>
+                                    </JFXCheckBox>
+
+                                    <VBox.margin>
+                                        <Insets top="34.0"/>
+                                    </VBox.margin>
+                                </HBox>
+
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE"
+                                              strokeWidth="0.0" styleClass="edit-dialog-parameter-title"
+                                              text="Transition:"/>
+                                    </VBox>
+                                    <JFXComboBox fx:id="transitionComboBox" prefHeight="30.0" prefWidth="300.0"
+                                                 promptText="Select State" styleClass="combo-box">
                                     </JFXComboBox>
 
-                                    <JFXDecimalTextField fx:id="inputTransitionDuration" labelFloat="true" prefHeight="30.0" prefWidth="200.0" promptText="Transition time (seconds)" styleClass="edit-dialog-parameter-input">
+                                    <JFXDecimalTextField fx:id="inputTransitionDuration" labelFloat="true"
+                                                         prefHeight="30.0" prefWidth="200.0"
+                                                         promptText="Transition time (seconds)"
+                                                         styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
                                                 <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
                                             </RequiredFieldValidator>
                                         </validators>
                                         <HBox.margin>
-                                            <Insets left="10.0" />
+                                            <Insets left="10.0"/>
                                         </HBox.margin>
                                     </JFXDecimalTextField>
 
                                     <VBox.margin>
-                                        <Insets top="32.0" />
+                                        <Insets top="28.0"/>
                                     </VBox.margin>
 
                                 </HBox>
@@ -76,81 +106,89 @@
 
                                     <VBox GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
                                         <VBox.margin>
-                                            <Insets top="32.0" />
+                                            <Insets top="32.0"/>
                                         </VBox.margin>
-                                        <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Signals " />
+                                        <Text fx:id="stateSignals" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Signals "/>
 
                                         <StackPane fx:id="signalsRootPane" styleClass="colored-grid-style">
                                             <VBox.margin>
-                                                <Insets top="16.0" />
+                                                <Insets top="16.0"/>
                                             </VBox.margin>
                                         </StackPane>
 
                                         <!--<HBox>-->
-                                        <JFXButton fx:id="addSignalButton" buttonType="RAISED" prefHeight="34" prefWidth="34" ripplerFill="#212121" styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
+                                        <JFXButton fx:id="addSignalButton" buttonType="RAISED" prefHeight="34"
+                                                   prefWidth="34" ripplerFill="#212121"
+                                                   styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
                                             <graphic>
                                                 <StackPane>
-                                                    <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-item-grid-icon" />
+                                                    <MaterialIconView glyphName="ADD" size="2em"
+                                                                      styleClass="fab-add-item-grid-icon"/>
                                                 </StackPane>
                                             </graphic>
                                             <VBox.margin>
-                                                <Insets top="6.0" />
+                                                <Insets top="6.0"/>
                                             </VBox.margin>
 
                                         </JFXButton>
                                         <GridPane.margin>
-                                            <Insets right="4.0" />
+                                            <Insets right="4.0"/>
                                         </GridPane.margin>
                                         <!--</HBox>-->
                                     </VBox>
 
                                     <VBox GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
                                         <VBox.margin>
-                                            <Insets top="32.0" />
+                                            <Insets top="32.0"/>
                                         </VBox.margin>
-                                        <Text fx:id="stateTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Tips " />
+                                        <Text fx:id="stateTips" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Tips "/>
 
                                         <StackPane fx:id="tipsRootPane" styleClass="colored-grid-style">
                                             <VBox.margin>
-                                                <Insets top="16.0" />
+                                                <Insets top="16.0"/>
                                             </VBox.margin>
                                         </StackPane>
 
                                         <!--<HBox>-->
-                                        <JFXButton fx:id="addTipButton" buttonType="RAISED" prefHeight="34" prefWidth="34" ripplerFill="#212121" styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
+                                        <JFXButton fx:id="addTipButton" buttonType="RAISED" prefHeight="34"
+                                                   prefWidth="34" ripplerFill="#212121"
+                                                   styleClass="add-item-grid-button" StackPane.alignment="BOTTOM_RIGHT">
                                             <graphic>
                                                 <StackPane>
-                                                    <MaterialIconView glyphName="ADD" size="2em" styleClass="fab-add-item-grid-icon" />
+                                                    <MaterialIconView glyphName="ADD" size="2em"
+                                                                      styleClass="fab-add-item-grid-icon"/>
                                                 </StackPane>
                                             </graphic>
                                             <VBox.margin>
-                                                <Insets top="6.0" />
+                                                <Insets top="6.0"/>
                                             </VBox.margin>
 
                                         </JFXButton>
 
                                         <GridPane.margin>
-                                            <Insets left="4.0" />
+                                            <Insets left="4.0"/>
                                         </GridPane.margin>
                                         <!--</HBox>-->
                                     </VBox>
                                     <columnConstraints>
-                                        <ColumnConstraints />
-                                        <ColumnConstraints />
+                                        <ColumnConstraints/>
+                                        <ColumnConstraints/>
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints />
+                                        <RowConstraints/>
                                     </rowConstraints>
-                           <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin>
+                                    <VBox.margin>
+                                        <Insets top="32.0"/>
+                                    </VBox.margin>
 
                                 </GridPane>
                                 <!-- TODO: Add state tips-->
 
                             </children>
                             <StackPane.margin>
-                                <Insets left="22.0" right="22.0" top="46.0" />
+                                <Insets left="22.0" right="22.0" top="46.0"/>
                             </StackPane.margin>
 
                         </VBox>
@@ -160,28 +198,32 @@
 
                     <HBox alignment="CENTER" StackPane.alignment="CENTER">
 
-                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100" styleClass="cancel-jfx-button-raised" text="Cancel" StackPane.alignment="CENTER_RIGHT">
+                        <JFXButton fx:id="cancelButton" buttonType="FLAT" prefHeight="40" prefWidth="100"
+                                   styleClass="cancel-jfx-button-raised" text="Cancel"
+                                   StackPane.alignment="CENTER_RIGHT">
                             <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                         </JFXButton>
 
-                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100" styleClass="apply-jfx-button-raised" text="Accept" StackPane.alignment="CENTER_RIGHT">
+                        <JFXButton fx:id="acceptButton" buttonType="RAISED" prefHeight="40" prefWidth="100"
+                                   styleClass="apply-jfx-button-raised" text="Accept"
+                                   StackPane.alignment="CENTER_RIGHT">
                             <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                         </JFXButton>
                     </HBox>
                     <StackPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </StackPane.margin>
                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="16.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="16.0"/>
                     </VBox.margin>
                 </StackPane>
             </children>
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
         </VBox>
     </children>

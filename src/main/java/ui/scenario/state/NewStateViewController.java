@@ -383,6 +383,18 @@ public class NewStateViewController implements NewSignalViewController.OnNewSign
                     }
                 }
 
+                if(startingStateCheckBox.isSelected()){
+                    mStateModel.setIsStartState(1);
+                } else {
+                    mStateModel.setIsStartState(0);
+                }
+
+                if(endingStateCheckBox.isSelected()){
+                    mStateModel.setIsEndState(1);
+                } else {
+                    mStateModel.setIsEndState(0);
+                }
+
                 mStateModel.setSignals(mStateSignals);
                 mStateModel.setTips(mStateTips);
 

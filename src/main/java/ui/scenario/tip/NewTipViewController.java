@@ -305,4 +305,5 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
 
         return finalActionsList;
     }
+
 }

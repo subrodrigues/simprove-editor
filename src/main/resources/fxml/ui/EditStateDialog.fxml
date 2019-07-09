@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import ui.widgets.JFXDecimalTextField?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <StackPane fx:id="editStateRoot" prefHeight="400.0" prefWidth="600.0" styleClass="float-window-style"
            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -55,6 +56,24 @@
 
                                 <HBox>
                                     <VBox alignment="CENTER_LEFT" minWidth="84.0">
+                                        <Text fx:id="stateFlow" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              styleClass="edit-dialog-parameter-title" text="Flow: "/>
+                                    </VBox>
+                                    <JFXCheckBox fx:id="startingStateCheckBox" text="Starting State"/>
+                                    <JFXCheckBox fx:id="endingStateCheckBox" styleClass="custom-jfx-check-box"
+                                                 text="Ending State">
+                                        <HBox.margin>
+                                            <Insets left="12.0"/>
+                                        </HBox.margin>
+                                    </JFXCheckBox>
+
+                                    <VBox.margin>
+                                        <Insets top="34.0"/>
+                                    </VBox.margin>
+                                </HBox>
+
+                                <HBox>
+                                    <VBox alignment="CENTER_LEFT" minWidth="84.0">
                                         <Text fx:id="stateTransition" fill="WHITE" strokeType="OUTSIDE"
                                               strokeWidth="0.0" styleClass="edit-dialog-parameter-title"
                                               text="Transition:"/>
@@ -79,7 +98,7 @@
                                     </JFXDecimalTextField>
 
                                     <VBox.margin>
-                                        <Insets top="32.0"/>
+                                        <Insets top="28.0"/>
                                     </VBox.margin>
 
                                 </HBox>

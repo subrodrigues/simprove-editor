@@ -29,7 +29,6 @@ import ui.scenario.signal.NewSignalViewController;
 import ui.scenario.tip.EditTipViewController;
 import ui.scenario.tip.NewTipViewController;
 import ui.widgets.JFXDecimalTextField;
-import ui.widgets.JFXNumericTextField;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import ui.widgets.grid.TipTextableColorGridCell;
 
@@ -77,6 +76,12 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
 
     @FXML
     private JFXButton addTipButton;
+
+    @FXML
+    private JFXCheckBox startingStateCheckBox;
+
+    @FXML
+    private JFXCheckBox endingStateCheckBox;
 
 
     // Private variables
@@ -151,6 +156,10 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
 
     private void setupUI(List<StateModel> states) {
         this.inputName.setText(mStateModel.getName());
+
+        // Set state flow parameters
+        this.startingStateCheckBox.setSelected(mStateModel.getIsStartState() == 1);
+        this.endingStateCheckBox.setSelected(mStateModel.getIsEndState() == 1);
 
         // Init Transition ComboBox
         this.transitionComboBox.getItems().add(new StateModel(-1, "NONE"));
@@ -322,6 +331,19 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
 
                 // Set state name
                 mStateModel.setName(inputName.getText());
+
+                // Set flow state parameters
+                if(startingStateCheckBox.isSelected()){
+                    mStateModel.setIsStartState(1);
+                } else {
+                    mStateModel.setIsStartState(0);
+                }
+
+                if(endingStateCheckBox.isSelected()){
+                    mStateModel.setIsEndState(1);
+                } else {
+                    mStateModel.setIsEndState(0);
+                }
 
                 // Set/Update transition model
                 if (mStateModel.getTransition() != null) {
