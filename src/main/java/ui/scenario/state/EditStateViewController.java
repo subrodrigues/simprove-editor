@@ -206,9 +206,7 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
             }
         });
 
-        this.applyButton.disableProperty().bind(
-                Bindings.or(this.inputName.textProperty().isEmpty(), inputTransitionDuration.textProperty().isEmpty())
-        );
+        this.applyButton.disableProperty().bind(this.inputName.textProperty().isEmpty());
 
         this.applyButton.setOnAction(getApplyClickListener());
 
@@ -296,12 +294,12 @@ public class EditStateViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
-     * Method that returns the current Transition duration in case it is defined, -1 otherwise.
+     * Method that returns the current Transition duration in case it is defined, 0 otherwise.
      *
      * @return duration value or -1
      */
     private float getCurrentTransitionDuration() {
-        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : -1f;
+        return inputTransitionDuration != null && inputTransitionDuration.getLength() > 0 ? Float.valueOf(inputTransitionDuration.getText()) : 0f;
     }
 
     public StackPane getEditStateItemRootDialog() {
