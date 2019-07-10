@@ -1467,7 +1467,8 @@
 .colored-grid-style{
     -fx-background-color: #fafafa;
     -fx-margin: 32 16 16 0;
-    -fx-min-height: 80.0px;
+    -fx-min-height: 66.0px;
+    -fx-background-radius: 4px;
 }
 
 .add-item-grid-button {
@@ -1546,4 +1547,12 @@
 #multi-list .list-cell:filled:hover {
     -fx-background-color: #484848;
     -fx-text-fill: #fafafa;
+}
+
+.scroll-pane-transparent > .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane-transparent {
+   -fx-background-color: transparent;
 }

@@ -30,7 +30,6 @@ import ui.widgets.JFXDecimalTextField;
 import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 import ui.widgets.grid.SignalTextableColorGridCell;
-import utils.ConstantUtils;
 import utils.LogicUtils;
 import utils.TextUtils;
 import utils.WidgetUtils;

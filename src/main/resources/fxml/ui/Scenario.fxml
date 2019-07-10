@@ -179,13 +179,29 @@
                 </VBox>
             </HBox>
 
-
             <Text fx:id="scenarioBriefing" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Briefing">
                 <VBox.margin>
                     <Insets top="24.0" />
                 </VBox.margin>
             </Text>
             <JFXTextArea fx:id="inputBriefing" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write a briefing to this scenario" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                <VBox.margin>
+                    <Insets top="6.0" />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                </padding>
+            </JFXTextArea>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+
+            <Text fx:id="defaultErrorMsg" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title-black" text="Default Error Message">
+                <VBox.margin>
+                    <Insets top="24.0" />
+                </VBox.margin>
+            </Text>
+            <JFXTextArea fx:id="inputDefaultErrorMsg" minHeight="80" prefColumnCount="80" prefRowCount="30" promptText="Message to be shown when something is done wrongly" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
                 <VBox.margin>
                     <Insets top="6.0" />
                 </VBox.margin>
