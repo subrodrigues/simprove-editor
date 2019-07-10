@@ -96,6 +96,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     @FXML
     private JFXDecimalTextField inputLossOvertime;
 
+    @FXML
+    private JFXDecimalTextField inputAdminTime;
+
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioEditActionClickListener mListener;
@@ -193,6 +196,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
         // Set action effect time duration
         this.inputEffectTime.setText(String.valueOf(mActionModel.getEffectTime()));
+        this.inputAdminTime.setText(String.valueOf(mActionModel.getAdminTime()));
 
         // Set usage limit
         this.inputUsageLimit.setText(String.valueOf(mActionModel.getUsageLimit()));
@@ -282,6 +286,15 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     }
 
     /**
+     * Method that returns the current adming time in case it is defined, -1 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private float getCurrentAdminTime() {
+        return inputAdminTime != null && inputAdminTime.getLength() > 0 ? Float.valueOf(inputAdminTime.getText()) : 0;
+    }
+
+    /**
      * Method that returns the current usage limit in case it is defined, 0 otherwise.
      *
      * @return duration value or 0
@@ -368,6 +381,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
+                mActionModel.setAdminTime(getCurrentAdminTime());
 
                 mActionModel.setUsageLimit(getUsageLimit());
 

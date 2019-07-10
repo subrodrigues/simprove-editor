@@ -45,9 +45,11 @@ public class MainApplication extends Application {
         double width = 1366;
         double height = 768;
         try {
-            Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
             width = bounds.getWidth() / 1.5;
             height = bounds.getHeight() / 1.35;
+//            stage.setX(bounds.getMinX());
+//            stage.setY(bounds.getMinY());
         }catch (Exception e){ }
 
         Scene scene = new Scene(decorator, width, height);
@@ -57,6 +59,7 @@ public class MainApplication extends Application {
                 MainApplication.class.getResource("/css/main.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+
     }
 
 }

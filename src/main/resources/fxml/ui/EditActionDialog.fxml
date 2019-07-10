@@ -180,7 +180,7 @@
                                                     </VBox.margin>
                                                 </Text>
                                             </VBox>
-                                            <JFXNumericTextField fx:id="inputAdminTime" labelFloat="true"
+                                            <JFXDecimalTextField fx:id="inputAdminTime" labelFloat="true"
                                                                  prefHeight="30.0"
                                                                  prefWidth="300.0"
                                                                  promptText="Administration time (seconds)"
@@ -189,7 +189,7 @@
                                                 <HBox.margin>
                                                     <Insets left="6.0"/>
                                                 </HBox.margin>
-                                            </JFXNumericTextField>
+                                            </JFXDecimalTextField>
 
                                             <VBox.margin>
                                                 <Insets top="16.0"/>

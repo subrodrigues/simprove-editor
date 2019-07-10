@@ -90,6 +90,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     @FXML
     private JFXDecimalTextField inputLossOvertime;
 
+    @FXML
+    private JFXDecimalTextField inputAdminTime;
+
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioNewActionClickListener mListener;
@@ -272,6 +275,15 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that returns the current adming time in case it is defined, -1 otherwise.
+     *
+     * @return duration value or 0
+     */
+    private float getCurrentAdminTime() {
+        return inputAdminTime != null && inputAdminTime.getLength() > 0 ? Float.valueOf(inputAdminTime.getText()) : 0;
+    }
+
+    /**
      * Method that returns the current usage limit in case it is defined, 0 otherwise.
      *
      * @return duration value or 0
@@ -383,6 +395,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
+                mActionModel.setAdminTime(getCurrentAdminTime());
 
                 mActionModel.setUsageLimit(getUsageLimit());
 
