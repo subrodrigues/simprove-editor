@@ -467,7 +467,7 @@
 
 .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
-    -fx-background-color: #bebebe;
+    -fx-background-color: #484848;
 }
 
 .jfx-list-view {
@@ -1526,8 +1526,8 @@
 
 
 #multi-list .list-cell:filled:selected:focused, #multi-list .list-cell:filled:selected {
-    -fx-background-color: #616161;
-    -fx-text-fill: #373737;
+    -fx-background-color: #484848;
+    -fx-text-fill: #fafafa;
     -fx-font-family: "Roboto";
     -fx-font-weight: BOLD;
 }
@@ -1545,8 +1545,9 @@
 }
 
 #multi-list .list-cell:filled:hover {
-    -fx-background-color: #484848;
+    -fx-background-color: #616161;
     -fx-text-fill: #fafafa;
+    -fx-cursor: hand;
 }
 
 .scroll-pane-transparent > .viewport {
