@@ -708,15 +708,15 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of an edit action event.
-     *
-     * @param action
+     *  @param action
+     * @param actions
      * @param states
      */
-    public void showActionEditDialog(ActionModel action, List<StateModel> states, List<TypeModel> actionTypes,
+    public void showActionEditDialog(ActionModel action, List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes,
                                      List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
                                      List<SignalTemplateModel> signalTypes) {
 
-        EditActionViewController editActionDialog = new EditActionViewController(action, states, actionTypes,
+        EditActionViewController editActionDialog = new EditActionViewController(action, actions, states, actionTypes,
                 actionCategories, actionSubcategories,
                 signalTypes, this);
 
@@ -846,6 +846,18 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @Override
     public void onActionDeleteClicked(int actionId) {
         mPresenter.requestDeleteActionById(actionId);
+    }
+
+
+    /**
+     * Method that asks presenter to update complementary Actions when dependencies change
+     *
+     * @param actionToChange
+     * @param actionsToUpdate
+     */
+    @Override
+    public void updateComplementaryActions(ActionModel actionToChange, List<ActionModel> previousCompActions, List<ActionModel> actionsToUpdate) {
+        this.mPresenter.requestComplementaryActionsUpdate(actionToChange, previousCompActions, actionsToUpdate);
     }
 
     /**

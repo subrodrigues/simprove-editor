@@ -136,7 +136,7 @@ public class FileUtils {
 
             action.addProperty("usageLimit", actionModel.getUsageLimit());
 
-            action.addProperty("is_complement", actionModel.getIsComplement());
+//            action.addProperty("is_complement", actionModel.getIsComplement());
             JsonArray conditions = new JsonArray();
             for(StateModel stateModel: actionModel.getStateConditions()){
                 conditions.add(stateModel.getId());

@@ -299,7 +299,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
             ActionModel item = ((List<ActionModel>) listIds).get(i);
 
             finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
-                    item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getIsComplement(), item.getBehavior(),
+                    item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getComplementaryActions(), item.getBehavior(),
                     item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(), item.getScore(), item.getAdminTime()));
         }
 

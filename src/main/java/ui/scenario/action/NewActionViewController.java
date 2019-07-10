@@ -395,7 +395,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.setResults(mActionSignals);
 
                 // Set the complementary action flag
-                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
+//                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
                 mActionModel.setAdminTime(getCurrentAdminTime());

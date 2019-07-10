@@ -81,7 +81,11 @@ public class MultiSelectListController<T> {
                          List<T> firstListSelected, List<T> secondListSelected) {
         this.title.setText(title);
         this.firstTab.setText(firstTabTitle);
-        this.secondTab.setText(secondTabTitle);
+
+        if(secondTabTitle == null)
+            this.secondTab.setDisable(true);
+        else
+            this.secondTab.setText(secondTabTitle);
 
         setMultipleSelectionBehavior();
         setTabPaneFitWidthBehavior();
@@ -91,10 +95,12 @@ public class MultiSelectListController<T> {
         this.secondList.setId("multi-list");
 
         this.firstList.getItems().addAll(listContent);
-        this.secondList.getItems().addAll(listContent);
-
         setSelectedItems(this.firstList, firstListSelected);
-        setSelectedItems(this.secondList, secondListSelected);
+
+        if(secondTabTitle != null) {
+            this.secondList.getItems().addAll(listContent);
+            setSelectedItems(this.secondList, secondListSelected);
+        }
 
         this.applyButton.setOnAction(getApplyClickListener());
         this.cancelButton.setOnAction(getCancelClickListener());
@@ -149,6 +155,8 @@ public class MultiSelectListController<T> {
                 }
             }
         });
+
+        if(this.secondTab == null) return;
 
         secondList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         secondList.addEventFilter(MouseEvent.MOUSE_PRESSED, evt -> {

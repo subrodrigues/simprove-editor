@@ -17,9 +17,10 @@ public class ActionModel implements Serializable {
     private TypeModel subCategory;
     private float effectTime;
     private int usageLimit;
-    private int isComplement;
+//    private int isComplement;
     private String behavior;
     private String name;
+    private List<ActionModel> complementaryActions;
     private List<StateModel> stateConditions;
     private List<SignalModel> results;
     private TransitionModel transition;
@@ -28,7 +29,7 @@ public class ActionModel implements Serializable {
     private float adminTime;
 
     public ActionModel(int id, String name, TypeModel type, TypeModel category, TypeModel subCategory,
-                       float effectTime, int usageLimit, int isComplement, String behavior,
+                       float effectTime, int usageLimit, List<ActionModel> complementaryActions, String behavior,
                        List<StateModel> stateConditions, List<SignalModel> results,
                        TransitionModel transition, String errorMessage, ScoreModel score, float adminTime) {
         this.id = id;
@@ -38,7 +39,7 @@ public class ActionModel implements Serializable {
         this.subCategory = subCategory;
         this.effectTime = effectTime;
         this.usageLimit = usageLimit;
-        this.isComplement = isComplement;
+        this.complementaryActions = complementaryActions;
         this.behavior = behavior;
         this.stateConditions = stateConditions;
         this.results = results;
@@ -54,6 +55,7 @@ public class ActionModel implements Serializable {
         this.score = new ScoreModel(id);
 
         this.stateConditions = new ArrayList<>();
+        this.complementaryActions = new ArrayList<>();
     }
 
 
@@ -145,12 +147,29 @@ public class ActionModel implements Serializable {
         this.behavior = behavior;
     }
 
-    public int getIsComplement() {
-        return isComplement;
+//    public int getIsComplement() {
+//        return isComplement;
+//    }
+//
+//    public void setIsComplement(int isComplement) {
+//        this.isComplement = isComplement;
+//    }
+
+    public List<ActionModel> getComplementaryActions() {
+        if(complementaryActions == null) complementaryActions = new ArrayList<>();
+        return complementaryActions;
     }
 
-    public void setIsComplement(int isComplement) {
-        this.isComplement = isComplement;
+    public void setComplementaryActions(List<ActionModel> complementaryActions) {
+        this.complementaryActions = complementaryActions;
+    }
+
+    public void addComplementaryAction(ActionModel action){
+        if(!this.complementaryActions.contains(action)) this.complementaryActions.add(action);
+    }
+
+    public void removeComplementaryAction(ActionModel action) {
+        this.complementaryActions.remove(action);
     }
 
     public float getEffectTime() {

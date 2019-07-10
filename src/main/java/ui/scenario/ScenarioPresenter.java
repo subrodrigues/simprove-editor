@@ -446,7 +446,7 @@ public class ScenarioPresenter {
 
         if(index != -1){
 //            deselectSelectedPane();
-            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getStates(),  this.mActionTypes, this.mActionCategories, this.mActionSubCategories, this.mSignalTypes);
+            this.mView.showActionEditDialog(this.mScenario.getActions().get(index), this.mScenario.getActions(), this.mScenario.getStates(),  this.mActionTypes, this.mActionCategories, this.mActionSubCategories, this.mSignalTypes);
         }
     }
 
@@ -464,6 +464,30 @@ public class ScenarioPresenter {
             this.mScenario.getActions().set(indexToUpdate, actionToUpdate);
             this.mView.updateActionViewItem(indexToUpdate, actionToUpdate, selectedActions.contains(actionToUpdate.getId()));
         }
+    }
+
+    /**
+     * Method that updates the Scenario Actions after a change on complementary dependencies
+     *
+     * @param actionToChange
+     * @param previousCompActions
+     * @param actionsToUpdate
+     */
+    void requestComplementaryActionsUpdate(ActionModel actionToChange, List<ActionModel> previousCompActions, List<ActionModel> actionsToUpdate) {
+        /** We start by removing the broken relations **/
+        for(ActionModel previous: previousCompActions){
+            if(!actionsToUpdate.contains(previous)){ // If a previous action relation has been removed
+                int index = this.mScenario.getActions().indexOf(previous);
+                this.mScenario.getActions().get(index).removeComplementaryAction(actionToChange);
+            }
+        }
+
+        /** Then we update the scenario actions with the new relation **/
+        for(ActionModel action: actionsToUpdate){
+            int index = this.mScenario.getActions().indexOf(action);
+            this.mScenario.getActions().get(index).addComplementaryAction(actionToChange);
+        }
+
     }
 
     /**
@@ -535,4 +559,6 @@ public class ScenarioPresenter {
     void updateGeneralErrorMsg(String errorMsg) {
         this.mScenario.setDefaultErrorMessage(errorMsg);
     }
+
+
 }

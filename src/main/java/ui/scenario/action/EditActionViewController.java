@@ -27,13 +27,9 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
-import ui.widgets.AutoCompleteComboBoxListener;
-import ui.widgets.JFXDecimalTextField;
-import ui.widgets.JFXNumericTextField;
-import ui.widgets.MultiSelectListController;
+import ui.widgets.*;
 import ui.widgets.grid.SignalTextableColorGridCell;
-import utils.ConstantUtils;
-import utils.LogicUtils;
+
 import utils.TextUtils;
 import utils.WidgetUtils;
 
@@ -43,7 +39,7 @@ import java.util.List;
 
 public class EditActionViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener, SelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
     private StackPane editActionRoot;
@@ -91,6 +87,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private JFXButton scoreConditions;
 
     @FXML
+    private JFXButton complementaryActions;
+
+    @FXML
     private JFXDecimalTextField inputLostValue;
 
     @FXML
@@ -114,11 +113,14 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     // Current States (for conditions)
     private List<StateModel> mCurrentStates;
+    private List<ActionModel> mCurrentActions;
 
     public interface OnScenarioEditActionClickListener {
         void onActionEditApplyClicked(ActionModel newActionModel);
 
         void onActionDeleteClicked(int actionId);
+
+        void updateComplementaryActions(ActionModel actionToAdd, List<ActionModel>  previousActions, List<ActionModel> actionsToUpdate);
     }
 
     public EditActionViewController() {
@@ -134,10 +136,11 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     /**
      * Constructor with respective click listener.
      *
+     * @param actions
      * @param states
      * @param listener
      */
-    public EditActionViewController(ActionModel action, List<StateModel> states,
+    public EditActionViewController(ActionModel action, List<ActionModel> actions, List<StateModel> states,
                                     List<TypeModel> actionTypes, List<TypeModel> actionCategories,
                                     List<TypeModel> actionSubCategories, List<SignalTemplateModel> signalTypes,
                                     OnScenarioEditActionClickListener listener) {
@@ -152,15 +155,20 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
             throw new RuntimeException(e);
         }
 
-        setupAction(action, states);
+        setupAction(action, states, actions);
         setupUI(states, actionTypes, actionCategories, actionSubCategories);
     }
 
-    private void setupAction(ActionModel action, List<StateModel> states) {
+    private void setupAction(ActionModel action, List<StateModel> states, List<ActionModel> actions) {
         this.mActionSignals = new ArrayList<SignalModel>();
         this.mActionSignals = action.getResults();
 
         this.mCurrentStates = states;
+
+        List<ActionModel> two = new ArrayList(actions);
+        two.remove(action); // Remove the current editable action from the list
+        this.mCurrentActions = two;
+
         this.mActionModel = action;
 
         setupSignalsGrid(action.getResults());
@@ -204,8 +212,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         // Set usage limit
         this.inputUsageLimit.setText(String.valueOf(mActionModel.getUsageLimit()));
 
-        // Set Complementary Action flag
-        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
+        // Set Complementary Actions
+//        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
 
         // Set initial score lost
         this.inputLostValue.setText((String.valueOf(mActionModel.getScore().getScoreLost())));
@@ -250,6 +258,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         this.cancelButton.setOnAction(getCancelClickListener());
 
         this.scoreConditions.setOnAction(getEditTipConditionsClickListener());
+
+        this.complementaryActions.setOnAction(getComplementaryActionsClickListener());
+
 
         // Tooltips added
         Tooltip scoreButtonDescription = new Tooltip("Conditions required to avoid score loss");
@@ -383,7 +394,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setResults(mActionSignals);
 
                 // Set the complementary action flag
-                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
+//                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
 
                 mActionModel.setEffectTime(getCurrentEffectDuration());
                 mActionModel.setAdminTime(getCurrentAdminTime());
@@ -590,6 +601,34 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     }
 
     /**
+     * Method that shows the edit action conditions window
+     * TODO: Customize with actions list, window and tab titles
+     */
+    private void showComplementaryActions() {
+        Stage stage = (Stage) editActionRoot.getScene().getWindow();
+
+        SelectListController multiSelectList = new SelectListController(
+                "Complementary Actions",
+                this.mCurrentActions,
+                this.mActionModel.getComplementaryActions(),
+                this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(multiSelectList.getItemRoot());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+
+    /**
      * Method that launches the ScoreConditions dialog.
      *
      * @return the EventHandler with correspondent behavior
@@ -599,6 +638,20 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
             @Override
             public void handle(ActionEvent e) {
                 showEditConditions();
+            }
+        };
+    }
+
+    /**
+     * Method that launches the ScoreConditions dialog.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getComplementaryActionsClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showComplementaryActions();
             }
         };
     }
@@ -655,6 +708,20 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     }
 
     /**
+     * Method that deals with selection of Complementary Actions
+     *
+     * @param selectedItems
+     * @param <T>
+     */
+    @Override
+    public <T> void onSelectListApplyClick(List<T> selectedItems) {
+        List<ActionModel> compActions = getInstancedComplementaryActions(selectedItems);
+        this.mListener.updateComplementaryActions(this.mActionModel, this.mActionModel.getComplementaryActions(), compActions);
+
+        this.mActionModel.setComplementaryActions(compActions);
+    }
+
+    /**
      * Auxiliar method to onMultiSelectListApplyClick().
      * It creates instanced class types in order to be serialized with success.
      *
@@ -672,6 +739,28 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         }
 
         return finalStatesList;
+    }
+
+    /**
+     * Auxiliar method to onSelectListApplyClick().
+     * It creates instanced class types in order to be serialized with success.
+     *
+     * @param listIds
+     * @param <T>
+     */
+    private <T> List<ActionModel> getInstancedComplementaryActions(List<T> listIds) {
+        List<ActionModel> finalActionsList = new ArrayList<>(listIds.size());
+
+        for (int i = 0; i < listIds.size(); i++) {
+            ActionModel item = ((List<ActionModel>) listIds).get(i);
+
+            finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
+                    item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getComplementaryActions(),
+                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(),
+                    item.getScore(), item.getAdminTime()));
+        }
+
+        return finalActionsList;
     }
 
 }
