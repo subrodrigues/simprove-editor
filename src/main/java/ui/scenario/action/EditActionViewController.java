@@ -99,6 +99,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     @FXML
     private JFXDecimalTextField inputAdminTime;
 
+    @FXML
+    private JFXTextArea inputErrorMsg;
+
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioEditActionClickListener mListener;
@@ -216,6 +219,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 toggle.setSelected(true);
             }
         });
+
+        this.inputErrorMsg.setText(mActionModel.getErrorMessage());
 
         /*
          * Set Listeners and Bindings
@@ -390,6 +395,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
+
+                mActionModel.setErrorMessage(inputErrorMsg.getText());
 
                 mListener.onActionEditApplyClicked(mActionModel);
                 closeDialogWindow();

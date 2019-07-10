@@ -531,4 +531,8 @@ public class ScenarioPresenter {
     void requestExportJSONWithPath(String absolutePath) {
         this.mDAO.saveJSONFileWithPath(absolutePath, this.mScenario);
     }
+
+    void updateGeneralErrorMsg(String errorMsg) {
+        this.mScenario.setDefaultErrorMessage(errorMsg);
+    }
 }

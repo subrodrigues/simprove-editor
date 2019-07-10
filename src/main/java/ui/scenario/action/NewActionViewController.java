@@ -93,6 +93,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     @FXML
     private JFXDecimalTextField inputAdminTime;
 
+    @FXML
+    private JFXTextArea inputErrorMsg;
+
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioNewActionClickListener mListener;
@@ -404,6 +407,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
+
+                mActionModel.setErrorMessage(inputErrorMsg.getText());
 
                 mListener.onNewActionAcceptClicked(mActionModel);
 

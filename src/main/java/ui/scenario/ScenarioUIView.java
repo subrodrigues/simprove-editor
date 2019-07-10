@@ -42,7 +42,6 @@ import ui.widgets.graph.LineEdge;
 import ui.widgets.graph.TextableRectangleCell;
 
 import javax.annotation.PostConstruct;
-import javax.sound.sampled.Line;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -103,6 +102,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private JFXTextArea inputBriefing;
+
+    @FXML
+    private JFXTextArea inputDefaultErrorMsg;
 
     @FXML
     private JFXNumericTextField inputScore;
@@ -195,6 +197,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             this.mPresenter.updateBriefingContent(newValue);
         });
 
+        inputDefaultErrorMsg.textProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPresenter.updateGeneralErrorMsg(newValue);
+        });
+
         inputScore.textProperty().addListener((observable, oldValue, newValue) -> {
             this.mPresenter.updateScoreContent(newValue);
         });
@@ -243,10 +249,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param scenario
      */
     void updateScenarioData(ScenarioModel scenario) {
-        // TODO: fill scenario related data
 
         this.inputScenarioName.setText(scenario.getName());
         this.inputBriefing.setText(scenario.getBriefing());
+        this.inputDefaultErrorMsg.setText(scenario.getDefaultErrorMessage());
 
         this.inputScore.setText(String.valueOf(scenario.getScore()));
         this.inputMinScore.setText(String.valueOf(scenario.getMinScore()));
