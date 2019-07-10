@@ -478,14 +478,23 @@ public class ScenarioPresenter {
         for(ActionModel previous: previousCompActions){
             if(!actionsToUpdate.contains(previous)){ // If a previous action relation has been removed
                 int index = this.mScenario.getActions().indexOf(previous);
-                this.mScenario.getActions().get(index).removeComplementaryAction(actionToChange);
+
+                ActionModel act = this.mScenario.getActions().get(index);
+                act.removeComplementaryAction(actionToChange);
+
+                this.mView.updateActionViewItem(index, act, selectedActions.contains(act.getId()));
+
             }
         }
 
         /** Then we update the scenario actions with the new relation **/
         for(ActionModel action: actionsToUpdate){
             int index = this.mScenario.getActions().indexOf(action);
-            this.mScenario.getActions().get(index).addComplementaryAction(actionToChange);
+
+            ActionModel act = this.mScenario.getActions().get(index);
+            act.addComplementaryAction(actionToChange);
+
+            this.mView.updateActionViewItem(index, act, selectedActions.contains(act.getId()));
         }
 
     }

@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -49,6 +50,9 @@ public class ActionItemViewController {
 
     @FXML
     private Pane highlightCard;
+
+    @FXML
+    private ImageView isComplementary;
 
     // Private variables
     private ActionModel mActionModel;
@@ -115,6 +119,10 @@ public class ActionItemViewController {
         this.mActionModel = action;
         this.mActionId = this.mActionModel.getId();
         this.setActionName(this.mActionModel.getName());
+
+        if(this.mActionModel.getComplementaryActions().size() > 0){
+            this.isComplementary.setVisible(true);
+        }
 
 //        this.actionType.setText(action.getTypeId().getName());
         this.actionCategory.setText(action.getCategory().getName());
