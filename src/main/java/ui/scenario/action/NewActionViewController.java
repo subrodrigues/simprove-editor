@@ -25,10 +25,7 @@ import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
 import ui.scenario.signal.EditSignalViewController;
 import ui.scenario.signal.NewSignalViewController;
-import ui.widgets.AutoCompleteComboBoxListener;
-import ui.widgets.JFXDecimalTextField;
-import ui.widgets.JFXNumericTextField;
-import ui.widgets.MultiSelectListController;
+import ui.widgets.*;
 import ui.widgets.grid.SignalTextableColorGridCell;
 import utils.LogicUtils;
 import utils.TextUtils;
@@ -40,7 +37,7 @@ import java.util.List;
 
 public class NewActionViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener, SelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
     private StackPane newActionRoot;
@@ -85,6 +82,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXButton scoreConditions;
 
     @FXML
+    private JFXButton complementaryActions;
+
+    @FXML
     private JFXDecimalTextField inputLostValue;
 
     @FXML
@@ -104,12 +104,20 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     // Current States (for conditions)
     private List<StateModel> mCurrentStates;
+    private List<ActionModel> mCurrentActions;
 
     // Available Signals
     private List<SignalTemplateModel> mSignalTypes;
 
+
+    // Data related to later update of the complementary actions (when the user presses "Apply")
+    private List<ActionModel> mSelectedComplementaryActions;
+    private List<ActionModel> mPreviousComplementaryActions;
+
     public interface OnScenarioNewActionClickListener {
         void onNewActionAcceptClicked(ActionModel newActionModel);
+
+        void updateComplementaryActions(ActionModel actionToAdd, List<ActionModel>  previousActions, List<ActionModel> actionsToUpdate);
     }
 
     public NewActionViewController() {
@@ -144,15 +152,20 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
             throw new RuntimeException(e);
         }
 
-        setupAction(actions.size(), states);
+        setupAction(actions, states);
         setupUI(states, actionTypes, actionCategories, actionSubCategories);
     }
 
 
-    private void setupAction(int id, List<StateModel> states) {
+    private void setupAction(List<ActionModel> actions, List<StateModel> states) {
         this.mActionSignals = new ArrayList<SignalModel>();
-        this.mActionModel = new ActionModel(id);
+        this.mActionModel = new ActionModel(actions.size());
         this.mCurrentStates = states;
+
+        List<ActionModel> two = new ArrayList(actions);
+        this.mCurrentActions = two;
+
+        this.mSelectedComplementaryActions = new ArrayList<>();
 
         setupSignalsGrid();
     }
@@ -194,7 +207,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         BooleanBinding booleanBinding = this.actionTypeComboBox.getSelectionModel().selectedItemProperty().isNull()
                 .or(this.transitionComboBox.getSelectionModel().selectedItemProperty().isNull())
                 .or(this.categoryComboBox.getSelectionModel().selectedItemProperty().isNull());
-        this.acceptButton.disableProperty ().bind(booleanBinding);
+        this.acceptButton.disableProperty().bind(booleanBinding);
         /** Accept Button binding conditions */
 
 
@@ -203,6 +216,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         this.cancelButton.setOnAction(getCancelClickListener());
 
         this.scoreConditions.setOnAction(getEditTipConditionsClickListener());
+
+        this.complementaryActions.setOnAction(getComplementaryActionsClickListener());
 
         // Tooltips added
         Tooltip scoreButtonDescription = new Tooltip("Conditions required to avoid score loss");
@@ -213,7 +228,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      */
     private void setupSignalsGrid() {
         final ObservableList<SignalModel> list = FXCollections.<SignalModel>observableArrayList();
@@ -238,7 +253,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that updates the GridView UI. Adding a new Signal
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @param signal
      */
@@ -248,7 +263,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that updates the GridView specified item.
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @param editedSignalModel
      */
@@ -259,7 +274,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that removes the GridView specified item.
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @param signal
      */
@@ -356,7 +371,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1){
+                if (actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1) {
                     actionTypeComboBox.getSelectionModel().clearSelection();
                     WidgetUtils.warningMessageAlert((Stage) acceptButton.getScene().getWindow(),
                             "Warning",
@@ -403,13 +418,14 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.setUsageLimit(getUsageLimit());
 
                 // Set Behavior
-                mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
+                mActionModel.setBehavior(((JFXRadioButton) behaviorToggleGroup.getSelectedToggle()).getText());
 
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
                 mActionModel.setErrorMessage(inputErrorMsg.getText());
 
+                mListener.updateComplementaryActions(mActionModel, mPreviousComplementaryActions , mSelectedComplementaryActions);
                 mListener.onNewActionAcceptClicked(mActionModel);
 
                 closeDialogWindow();
@@ -433,7 +449,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that shows the add new signal window
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @param signals
      */
@@ -458,7 +474,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that shows the edit signal window
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @param signals
      */
@@ -483,7 +499,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     /**
      * Method that implements the action behavior to launch a new signal window
-     *  // TODO: Refactor this signals behavior into a parent class
+     * // TODO: Refactor this signals behavior into a parent class
      *
      * @return the EventHandler with correspondent behavior
      */
@@ -527,6 +543,33 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that shows the edit action conditions window
+     * TODO: Customize with actions list, window and tab titles
+     */
+    private void showComplementaryActions() {
+        Stage stage = (Stage) newActionRoot.getScene().getWindow();
+
+        SelectListController multiSelectList = new SelectListController(
+                "Complementary Actions",
+                this.mCurrentActions,
+                this.mActionModel.getComplementaryActions(),
+                this);
+
+        JFXAlert dialog = new JFXAlert(stage); // get window context
+
+        // TODO: Set window current size with a vertical/horizontal threshold
+        dialog.initModality(Modality.APPLICATION_MODAL);
+
+        dialog.setContent(multiSelectList.getItemRoot());
+
+        dialog.setResizable(true);
+        dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+        dialog.show();
+    }
+
+    /**
      * Method that launches the ScoreConditions dialog.
      *
      * @return the EventHandler with correspondent behavior
@@ -540,6 +583,20 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         };
     }
 
+    /**
+     * Method that launches the ScoreConditions dialog.
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getComplementaryActionsClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showComplementaryActions();
+            }
+        };
+    }
+
 
     /********************************************************************************************************************
      * CALLBACKS INTERFACE                                                                                              *
@@ -547,7 +604,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
     @Override
     public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
-        if(this.mActionSignals.contains(editedSignalModel)){
+        if (this.mActionSignals.contains(editedSignalModel)) {
             this.mActionSignals.set(this.mActionSignals.indexOf(editedSignalModel), editedSignalModel);
 
             updateGridViewSignal(editedSignalModel);
@@ -558,7 +615,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     public void onSignalDeleteClicked(SignalModel signal) {
         int indexToRemove = this.mActionSignals.indexOf(signal);
 
-        if(indexToRemove != -1) {
+        if (indexToRemove != -1) {
             this.mActionSignals.remove(indexToRemove); // clean data
             this.removeGridViewSignal(signal); // Refresh UI
         }
@@ -594,6 +651,22 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     }
 
     /**
+     * Method that deals with selection of Complementary Actions
+     *
+     * @param selectedItems
+     * @param <T>
+     */
+    @Override
+    public <T> void onSelectListApplyClick(List<T> selectedItems) {
+        List<ActionModel> compActions = getInstancedComplementaryActions(selectedItems);
+
+        this.mSelectedComplementaryActions = compActions;
+        this.mPreviousComplementaryActions = this.mActionModel.getComplementaryActions();
+
+        this.mActionModel.setComplementaryActions(compActions);
+    }
+
+    /**
      * Auxiliar method to onMultiSelectListApplyClick().
      * It creates instanced class types in order to be serialized with success.
      *
@@ -611,6 +684,28 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         }
 
         return finalStatesList;
+    }
+
+    /**
+     * Auxiliar method to onSelectListApplyClick().
+     * It creates instanced class types in order to be serialized with success.
+     *
+     * @param listIds
+     * @param <T>
+     */
+    private <T> List<ActionModel> getInstancedComplementaryActions(List<T> listIds) {
+        List<ActionModel> finalActionsList = new ArrayList<>(listIds.size());
+
+        for (int i = 0; i < listIds.size(); i++) {
+            ActionModel item = ((List<ActionModel>) listIds).get(i);
+
+            finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
+                    item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getComplementaryActions(),
+                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(),
+                    item.getScore(), item.getAdminTime()));
+        }
+
+        return finalActionsList;
     }
 
 }

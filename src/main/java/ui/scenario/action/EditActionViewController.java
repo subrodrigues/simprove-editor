@@ -39,7 +39,9 @@ import java.util.List;
 
 public class EditActionViewController implements NewSignalViewController.OnNewSignalClickListener,
         EditSignalViewController.OnEditSignalClickListener,
-        SignalTextableColorGridCell.OnTextableColorGridClickListener, MultiSelectListController.OnMultiSelectListClickListener, SelectListController.OnMultiSelectListClickListener {
+        SignalTextableColorGridCell.OnTextableColorGridClickListener,
+        MultiSelectListController.OnMultiSelectListClickListener,
+        SelectListController.OnMultiSelectListClickListener {
     // UI Bind variables
     @FXML
     private StackPane editActionRoot;
@@ -115,12 +117,17 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private List<StateModel> mCurrentStates;
     private List<ActionModel> mCurrentActions;
 
+
+    // Data related to later update of the complementary actions (when the user presses "Apply")
+    private List<ActionModel> mSelectedComplementaryActions;
+    private List<ActionModel> mPreviousComplementaryActions;
+
     public interface OnScenarioEditActionClickListener {
         void onActionEditApplyClicked(ActionModel newActionModel);
 
         void onActionDeleteClicked(int actionId);
 
-        void updateComplementaryActions(ActionModel actionToAdd, List<ActionModel>  previousActions, List<ActionModel> actionsToUpdate);
+        void updateComplementaryActions(ActionModel actionToAdd, List<ActionModel> previousActions, List<ActionModel> actionsToUpdate);
     }
 
     public EditActionViewController() {
@@ -223,7 +230,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
         // Set behavior option
         this.behaviorToggleGroup.getToggles().forEach(toggle -> {
-            if(((JFXRadioButton)toggle).getText().equals(mActionModel.getBehavior())) {
+            if (((JFXRadioButton) toggle).getText().equals(mActionModel.getBehavior())) {
                 toggle.setSelected(true);
             }
         });
@@ -247,7 +254,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         BooleanBinding booleanBinding = this.actionTypeComboBox.getSelectionModel().selectedItemProperty().isNull()
                 .or(this.transitionComboBox.getSelectionModel().selectedItemProperty().isNull())
                 .or(this.categoryComboBox.getSelectionModel().selectedItemProperty().isNull());
-        this.applyButton.disableProperty ().bind(booleanBinding);
+        this.applyButton.disableProperty().bind(booleanBinding);
         /** Accept Button binding conditions */
 
 
@@ -362,7 +369,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1){
+                if (actionTypeComboBox.getSelectionModel().getSelectedIndex() == -1) {
                     actionTypeComboBox.getSelectionModel().clearSelection();
                     WidgetUtils.warningMessageAlert((Stage) applyButton.getScene().getWindow(),
                             "Warning",
@@ -402,14 +409,16 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setUsageLimit(getUsageLimit());
 
                 // Set Behavior
-                mActionModel.setBehavior(((JFXRadioButton)behaviorToggleGroup.getSelectedToggle()).getText());
+                mActionModel.setBehavior(((JFXRadioButton) behaviorToggleGroup.getSelectedToggle()).getText());
 
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
                 mActionModel.setErrorMessage(inputErrorMsg.getText());
 
+                mListener.updateComplementaryActions(mActionModel, mPreviousComplementaryActions , mSelectedComplementaryActions);
                 mListener.onActionEditApplyClicked(mActionModel);
+
                 closeDialogWindow();
             }
         };
@@ -668,7 +677,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
     @Override
     public void onEditSignalAcceptClicked(SignalModel editedSignalModel) {
-        if(this.mActionSignals.contains(editedSignalModel)){
+        if (this.mActionSignals.contains(editedSignalModel)) {
             this.mActionSignals.set(this.mActionSignals.indexOf(editedSignalModel), editedSignalModel);
 
             updateGridViewSignal(editedSignalModel);
@@ -679,7 +688,7 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     public void onSignalDeleteClicked(SignalModel signal) {
         int indexToRemove = this.mActionSignals.indexOf(signal);
 
-        if(indexToRemove != -1) {
+        if (indexToRemove != -1) {
             this.mActionSignals.remove(indexToRemove); // clean data
             this.removeGridViewSignal(signal); // Refresh UI
         }
@@ -716,7 +725,9 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     @Override
     public <T> void onSelectListApplyClick(List<T> selectedItems) {
         List<ActionModel> compActions = getInstancedComplementaryActions(selectedItems);
-        this.mListener.updateComplementaryActions(this.mActionModel, this.mActionModel.getComplementaryActions(), compActions);
+
+        this.mSelectedComplementaryActions = compActions;
+        this.mPreviousComplementaryActions = this.mActionModel.getComplementaryActions();
 
         this.mActionModel.setComplementaryActions(compActions);
     }

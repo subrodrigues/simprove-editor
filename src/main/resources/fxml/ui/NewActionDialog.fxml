@@ -130,31 +130,39 @@
                                             </HBox>
 
                                             <HBox prefHeight="30.0" prefWidth="300.0">
-                                                <VBox alignment="CENTER_LEFT" minWidth="76.0">
-                                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
-                                                          styleClass="edit-dialog-parameter-title"
-                                                          text="Complementary Action:">
-                                                        <VBox.margin>
-                                                            <Insets left="6.0"/>
-                                                        </VBox.margin>
-                                                    </Text>
+                                                <!--<VBox alignment="CENTER_LEFT" minWidth="76.0">-->
+                                                    <!--<Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"-->
+                                                          <!--styleClass="edit-dialog-parameter-title"-->
+                                                          <!--text="Complementary Action:">-->
+                                                        <!--<VBox.margin>-->
+                                                            <!--<Insets left="6.0"/>-->
+                                                        <!--</VBox.margin>-->
+                                                    <!--</Text>-->
+                                                    <!--<HBox.margin>-->
+                                                        <!--<Insets/>-->
+                                                    <!--</HBox.margin>-->
+                                                <!--</VBox>-->
+                                                <!--<JFXToggleButton fx:id="isComplActionToggleBtn"-->
+                                                                 <!--styleClass="custom-jfx-toggle-button">-->
+                                                    <!--<HBox.margin>-->
+                                                        <!--<Insets left="-6.0"/>-->
+                                                    <!--</HBox.margin>-->
+                                                <!--</JFXToggleButton>-->
+
+
+                                                <JFXButton fx:id="complementaryActions" alignment="CENTER" buttonType="FLAT" prefHeight="20" styleClass="option-jfx-button" text="Select Complementary Actions" StackPane.alignment="CENTER_RIGHT">
+
                                                     <HBox.margin>
-                                                        <Insets/>
+                                                        <Insets left="16.0" />
                                                     </HBox.margin>
-                                                </VBox>
-                                                <JFXToggleButton fx:id="isComplActionToggleBtn"
-                                                                 styleClass="custom-jfx-toggle-button">
-                                                    <HBox.margin>
-                                                        <Insets left="-6.0"/>
-                                                    </HBox.margin>
-                                                </JFXToggleButton>
+                                                </JFXButton>
 
                                                 <HBox.margin>
-                                                    <Insets/>
+                                                    <Insets />
                                                 </HBox.margin>
                                             </HBox>
                                             <VBox.margin>
-                                                <Insets top="16.0"/>
+                                                <Insets top="24.0" />
                                             </VBox.margin>
                                         </HBox>
 
@@ -187,12 +195,12 @@
                                                                  styleClass="edit-dialog-parameter-input"
                                                                  HBox.hgrow="ALWAYS">
                                                 <HBox.margin>
-                                                    <Insets left="6.0"/>
+                                                    <Insets left="6.0" />
                                                 </HBox.margin>
                                             </JFXDecimalTextField>
 
                                             <VBox.margin>
-                                                <Insets top="16.0"/>
+                                                <Insets top="28.0" />
                                             </VBox.margin>
                                         </HBox>
 

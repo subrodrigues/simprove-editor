@@ -64,7 +64,6 @@ public class ActionItemViewController {
         void onActionEditClicked(int actionId);
 
         void onActionSelectClicked(int actionId);
-
     }
 
     public ActionItemViewController(int actionId) {
