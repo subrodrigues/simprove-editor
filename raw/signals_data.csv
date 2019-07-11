@@ -6,7 +6,7 @@
 8,0,Diastolic Blood Pressure,mmHg,0,1000,.0f
 9,0,Oxygen Saturation,%,0,100,.0f
 10,0,Body Temperature,	Celsius,0,100,.1f
-11,0,Blood pH,NONE,0,14,.2f
+11,0,Blood pH, ,0,14,.2f
 12,0,Oxygen Partial Pressure (pO2),mmHg,0,200,.1f
 13,0,Carbon Dioxide Partial Pressure (pCO2),mmHg,0,200,.1f
 14,0,Bicarbonate concentration (HCO3),mmol/l,0,200,.1f

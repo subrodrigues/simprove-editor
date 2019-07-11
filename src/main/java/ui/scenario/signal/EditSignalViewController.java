@@ -202,6 +202,21 @@ public class EditSignalViewController {
         signalNumericValue.setMin(mCurrentItem.getMinRange());
         signalNumericValue.setMax(mCurrentItem.getMaxRange());
 
+        // TODO: Find a not hammered solution
+        if(mCurrentItem.getGranularity() == 0.1f) {
+            signalNumericValue.setBlockIncrement(0.1f);
+        } else if(mCurrentItem.getGranularity() == 0.2f) {
+            signalNumericValue.setBlockIncrement(0.01f);
+        }  else if(mCurrentItem.getGranularity() == 0.3f) {
+            signalNumericValue.setBlockIncrement(0.001f);
+        } else if(mCurrentItem.getGranularity() == 0.4f) {
+            signalNumericValue.setBlockIncrement(0.0001f);
+        }  else if(mCurrentItem.getGranularity() == 0.5f) {
+            signalNumericValue.setBlockIncrement(0.00001f);
+        }  else{
+            signalNumericValue.setBlockIncrement(1);
+        }
+
         // Binds the label value to the slider changes
         String granularity = String.valueOf(mCurrentItem.getGranularity());
         String fractionalStr = granularity.substring(granularity.indexOf('.') + 1);
