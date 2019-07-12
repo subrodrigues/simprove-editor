@@ -714,11 +714,11 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      */
     public void showActionEditDialog(ActionModel action, List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes,
                                      List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
-                                     List<SignalTemplateModel> signalTypes) {
+                                     List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes) {
 
         EditActionViewController editActionDialog = new EditActionViewController(action, actions, states, actionTypes,
                 actionCategories, actionSubcategories,
-                signalTypes, this);
+                signalTypes, actorTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 
@@ -798,19 +798,20 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
-     *
-     * @param actions
+     *  @param actions
      * @param states
      * @param actionTypes
      * @param actionCategories
      * @param actionSubcategories
      * @param signalTypes
+     * @param actorTypes
      */
     void showNewActionDialog(List<ActionModel> actions, List<StateModel> states, List<TypeModel> actionTypes,
                              List<TypeModel> actionCategories, List<TypeModel> actionSubcategories,
-                             List<SignalTemplateModel> signalTypes) {
+                             List<SignalTemplateModel> signalTypes, List<TypeModel> actorTypes) {
+
         NewActionViewController newActDialog = new NewActionViewController(actions, states, actionTypes,
-                actionCategories, actionSubcategories, signalTypes, this);
+                actionCategories, actionSubcategories, signalTypes, actorTypes, this);
 
         JFXAlert dialog = new JFXAlert((Stage) actionsGridView.getScene().getWindow()); // get window context
 

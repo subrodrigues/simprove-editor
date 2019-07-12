@@ -20,6 +20,7 @@
   ~ Created by Filipe André Rodrigues on 13-03-2019 17:45
   -->
 
+<?import com.jfoenix.controls.JFXTextField?>
 <StackPane fx:id="editActionRoot" prefHeight="400.0" prefWidth="700.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
@@ -275,7 +276,38 @@
                                             </VBox.margin>
                                         </VBox>
 
-                                        <JFXTextArea fx:id="inputErrorMsg" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write an error message to show when this action is improperly used" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
+                                        <HBox>
+                                            <VBox alignment="CENTER_LEFT">
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                                                      styleClass="edit-dialog-parameter-title" text="Actor:"/>
+                                                <HBox.margin>
+                                                    <Insets right="8.0"/>
+                                                </HBox.margin>
+                                            </VBox>
+                                            <JFXComboBox fx:id="actorErrorMsgComboBox" prefHeight="30.0" prefWidth="200.0"
+                                                         promptText="Select Actor Type" styleClass="combo-box">
+                                                <HBox.margin>
+                                                    <Insets right="6.0"/>
+                                                </HBox.margin>
+                                            </JFXComboBox>
+
+                                            <JFXTextField fx:id="actorErrorMsgCustomName" labelFloat="true" prefHeight="30.0"
+                                                          prefWidth="200.0" promptText="Actor name"
+                                                          styleClass="edit-dialog-parameter-input">
+                                                <validators>
+                                                    <RequiredFieldValidator message="Input Required!">
+                                                        <!--<MaterialIconView glyphName="WARNING" size="1.2em" />-->
+                                                    </RequiredFieldValidator>
+                                                </validators>
+                                            </JFXTextField>
+
+                                            <VBox.margin>
+                                                <Insets top="20.0"/>
+                                            </VBox.margin>
+
+                                        </HBox>
+
+                                        <JFXTextArea fx:id="inputErrorMsg" minHeight="120" prefColumnCount="80" prefRowCount="40" promptText="Write an error message to show when this action is improperly used by the Actor" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
                                             <VBox.margin>
                                                 <Insets top="16.0" />
                                             </VBox.margin>

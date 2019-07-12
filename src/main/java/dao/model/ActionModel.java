@@ -24,6 +24,7 @@ public class ActionModel implements Serializable {
     private List<StateModel> stateConditions;
     private List<SignalModel> results;
     private TransitionModel transition;
+    private ActorModel actorErrorMessage;
     private String errorMessage;
     private ScoreModel score;
     private float adminTime;
@@ -31,7 +32,7 @@ public class ActionModel implements Serializable {
     public ActionModel(int id, String name, TypeModel type, TypeModel category, TypeModel subCategory,
                        float effectTime, int usageLimit, List<ActionModel> complementaryActions, String behavior,
                        List<StateModel> stateConditions, List<SignalModel> results,
-                       TransitionModel transition, String errorMessage, ScoreModel score, float adminTime) {
+                       TransitionModel transition, ActorModel actorErrorMessage, String errorMessage, ScoreModel score, float adminTime) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -44,6 +45,7 @@ public class ActionModel implements Serializable {
         this.stateConditions = stateConditions;
         this.results = results;
         this.transition = transition;
+        this.actorErrorMessage = actorErrorMessage;
         this.errorMessage = errorMessage;
         this.score = score;
         this.adminTime = adminTime;
@@ -147,13 +149,13 @@ public class ActionModel implements Serializable {
         this.behavior = behavior;
     }
 
-//    public int getIsComplement() {
-//        return isComplement;
-//    }
-//
-//    public void setIsComplement(int isComplement) {
-//        this.isComplement = isComplement;
-//    }
+    public ActorModel getActorErrorMessage() {
+        return actorErrorMessage;
+    }
+
+    public void setActorErrorMessage(ActorModel actorErrorMessage) {
+        this.actorErrorMessage = actorErrorMessage;
+    }
 
     public List<ActionModel> getComplementaryActions() {
         if(complementaryActions == null) complementaryActions = new ArrayList<>();

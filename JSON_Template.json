@@ -3,14 +3,13 @@
 	"score": int,
 	"minScore": int,
 	"briefing": String,
-	"defaultActionError": { // TODO
-		"actor": String,
-		"message": String
-	},
+	"defaultActionError": String,
 	"states":[
 		{
 			"id": int,
 			"name": String,
+			"startState": int,
+			"endState": int,
 			"signals": [
 				{
 					"id": int,
@@ -52,7 +51,7 @@
 				"id": int, // Subcategory ID accordingly to action_subcategories.csv
 				"name": String // This is the same as action.name
 			}, // TODO only in JSON: [{category},{subcategory}]
-			"is_complement": int, // Flag to control if is a complementary action (and) or an independent one (or)
+			"complementaryActions": [int], // Complementary Actions IDs
 			"behavior": String,
 			"effectTime": float,
 			"usageLimit": int,

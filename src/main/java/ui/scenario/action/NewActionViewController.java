@@ -7,6 +7,8 @@ package ui.scenario.action;
 import com.jfoenix.controls.*;
 import dao.model.*;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -94,6 +96,12 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private JFXDecimalTextField inputAdminTime;
 
     @FXML
+    private JFXComboBox<TypeModel> actorErrorMsgComboBox;
+
+    @FXML
+    private JFXTextField actorErrorMsgCustomName;
+
+    @FXML
     private JFXTextArea inputErrorMsg;
 
     // Private variables
@@ -101,6 +109,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     private OnScenarioNewActionClickListener mListener;
     private int mStateId = -1;
     private List<SignalModel> mActionSignals;
+    private List<TypeModel> mActorTypes;
 
     // Current States (for conditions)
     private List<StateModel> mCurrentStates;
@@ -140,9 +149,10 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
     public NewActionViewController(List<ActionModel> actions, List<StateModel> states,
                                    List<TypeModel> actionTypes, List<TypeModel> actionCategories,
                                    List<TypeModel> actionSubCategories, List<SignalTemplateModel> signalTypes,
-                                   OnScenarioNewActionClickListener listener) {
+                                   List<TypeModel> actorTypes, OnScenarioNewActionClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
+        this.mActorTypes = actorTypes;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewActionDialog.fxml"));
         fxmlLoader.setController(this);
@@ -166,6 +176,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         this.mCurrentActions = two;
 
         this.mSelectedComplementaryActions = new ArrayList<>();
+        this.mPreviousComplementaryActions = new ArrayList<>();
 
         setupSignalsGrid();
     }
@@ -201,6 +212,29 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 this.categoryComboBox.validate();
             }
         });
+
+        // Init Actor Types ComboBox
+        this.actorErrorMsgComboBox.getItems().add(new TypeModel(-1, -1,"NONE"));
+        this.actorErrorMsgComboBox.getItems().addAll(this.mActorTypes);
+        this.actorErrorMsgComboBox.getSelectionModel().select(0);
+
+        /*
+         * Set Listeners and Bindings
+         */
+        this.actorErrorMsgComboBox.valueProperty().addListener(new ChangeListener<TypeModel>() {
+            @Override
+            public void changed(ObservableValue<? extends TypeModel> observable, TypeModel oldValue, TypeModel newValue) {
+                if (newValue.getId() == -1) {
+                    if (actorErrorMsgCustomName.getText().isEmpty()) {
+                        actorErrorMsgCustomName.clear();
+                    }
+                    actorErrorMsgCustomName.setDisable(true);
+                } else {
+                    actorErrorMsgCustomName.setDisable(false);
+                }
+            }
+        });
+        actorErrorMsgCustomName.setDisable(true);
 
 
         /** Accept Button binding conditions */
@@ -409,9 +443,6 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
                 mActionModel.setResults(mActionSignals);
 
-                // Set the complementary action flag
-//                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
-
                 mActionModel.setEffectTime(getCurrentEffectDuration());
                 mActionModel.setAdminTime(getCurrentAdminTime());
 
@@ -423,6 +454,9 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
+                // Set Actor and Error Msg
+                mActionModel.setActorErrorMessage(new ActorModel(actorErrorMsgCustomName.getText(),
+                        actorErrorMsgComboBox.getSelectionModel().getSelectedItem()));
                 mActionModel.setErrorMessage(inputErrorMsg.getText());
 
                 mListener.updateComplementaryActions(mActionModel, mPreviousComplementaryActions , mSelectedComplementaryActions);
@@ -701,8 +735,8 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
 
             finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
                     item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getComplementaryActions(),
-                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(),
-                    item.getScore(), item.getAdminTime()));
+                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getActorErrorMessage(),
+                    item.getErrorMessage(), item.getScore(), item.getAdminTime()));
         }
 
         return finalActionsList;

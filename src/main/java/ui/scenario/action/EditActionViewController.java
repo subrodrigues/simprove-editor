@@ -101,12 +101,19 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private JFXDecimalTextField inputAdminTime;
 
     @FXML
+    private JFXComboBox<TypeModel> actorErrorMsgComboBox;
+
+    @FXML
+    private JFXTextField actorErrorMsgCustomName;
+
+    @FXML
     private JFXTextArea inputErrorMsg;
 
     // Private variables
     private ActionModel mActionModel;
     private OnScenarioEditActionClickListener mListener;
     private int mActionId = -1;
+    private List<TypeModel> mActorTypes;
 
     private List<SignalModel> mActionSignals;
 
@@ -150,9 +157,10 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     public EditActionViewController(ActionModel action, List<ActionModel> actions, List<StateModel> states,
                                     List<TypeModel> actionTypes, List<TypeModel> actionCategories,
                                     List<TypeModel> actionSubCategories, List<SignalTemplateModel> signalTypes,
-                                    OnScenarioEditActionClickListener listener) {
+                                    List<TypeModel> actorTypes, OnScenarioEditActionClickListener listener) {
         this.mListener = listener;
         this.mSignalTypes = signalTypes;
+        this.mActorTypes = actorTypes;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/EditActionDialog.fxml"));
         fxmlLoader.setController(this);
@@ -169,8 +177,10 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
     private void setupAction(ActionModel action, List<StateModel> states, List<ActionModel> actions) {
         this.mActionSignals = new ArrayList<SignalModel>();
         this.mActionSignals = action.getResults();
-
         this.mCurrentStates = states;
+
+        this.mSelectedComplementaryActions = new ArrayList<>();
+        this.mPreviousComplementaryActions = new ArrayList<>();
 
         List<ActionModel> two = new ArrayList(actions);
         two.remove(action); // Remove the current editable action from the list
@@ -219,9 +229,6 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
         // Set usage limit
         this.inputUsageLimit.setText(String.valueOf(mActionModel.getUsageLimit()));
 
-        // Set Complementary Actions
-//        this.isComplActionToggleBtn.setSelected(mActionModel.getIsComplement() == 0);
-
         // Set initial score lost
         this.inputLostValue.setText((String.valueOf(mActionModel.getScore().getScoreLost())));
 
@@ -234,6 +241,18 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 toggle.setSelected(true);
             }
         });
+
+        // Init Actor Types ComboBox
+        this.actorErrorMsgComboBox.getItems().add(new TypeModel(-1, -1,"NONE"));
+        this.actorErrorMsgComboBox.getItems().addAll(this.mActorTypes);
+
+        if(this.mActionModel.getActorErrorMessage() != null) {
+            this.actorErrorMsgComboBox.setValue(this.mActionModel.getActorErrorMessage().getType());
+            this.actorErrorMsgCustomName.setText(this.mActionModel.getActorErrorMessage().getName());
+        } else {
+
+            this.actorErrorMsgComboBox.getSelectionModel().select(0);
+        }
 
         this.inputErrorMsg.setText(mActionModel.getErrorMessage());
 
@@ -400,9 +419,6 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.setCategory(categoryComboBox.getValue());
                 mActionModel.setResults(mActionSignals);
 
-                // Set the complementary action flag
-//                mActionModel.setIsComplement(isComplActionToggleBtn.isSelected() ? 0 : 1);
-
                 mActionModel.setEffectTime(getCurrentEffectDuration());
                 mActionModel.setAdminTime(getCurrentAdminTime());
 
@@ -414,9 +430,12 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
                 mActionModel.getScore().setScoreLost(getScoreLostValue());
                 mActionModel.getScore().setLossOvertime(getScoreOvertimeLoss());
 
+                // Set Actor and Error Msg
+                mActionModel.setActorErrorMessage(new ActorModel(actorErrorMsgCustomName.getText(),
+                        actorErrorMsgComboBox.getSelectionModel().getSelectedItem()));
                 mActionModel.setErrorMessage(inputErrorMsg.getText());
 
-                mListener.updateComplementaryActions(mActionModel, mPreviousComplementaryActions , mSelectedComplementaryActions);
+                mListener.updateComplementaryActions(mActionModel, mPreviousComplementaryActions, mSelectedComplementaryActions);
                 mListener.onActionEditApplyClicked(mActionModel);
 
                 closeDialogWindow();
@@ -767,8 +786,8 @@ public class EditActionViewController implements NewSignalViewController.OnNewSi
 
             finalActionsList.add(i, new ActionModel(item.getId(), item.getName(), item.getType(), item.getCategory(),
                     item.getSubCategory(), item.getEffectTime(), item.getUsageLimit(), item.getComplementaryActions(),
-                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getErrorMessage(),
-                    item.getScore(), item.getAdminTime()));
+                    item.getBehavior(), item.getStateConditions(), item.getResults(), item.getTransition(), item.getActorErrorMessage(),
+                    item.getErrorMessage(), item.getScore(), item.getAdminTime()));
         }
 
         return finalActionsList;
