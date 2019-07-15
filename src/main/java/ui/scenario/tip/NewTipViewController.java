@@ -21,7 +21,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ui.widgets.JFXDecimalTextField;
-import ui.widgets.JFXNumericTextField;
 import ui.widgets.MultiSelectListController;
 
 import java.io.IOException;
@@ -243,7 +242,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
                 mTipModel.setDuration((durationTime != null &&
                         durationTime.getLength() > 0 ? Float.valueOf(durationTime.getText()) : 0));
 
-                mTipModel.setTime((activationTime != null &&
+                mTipModel.setActivationTime((activationTime != null &&
                         activationTime.getLength() > 0 ? Float.valueOf(activationTime.getText()) : -1));
 
                 mTipModel.setMessage(inputMessage.getText());

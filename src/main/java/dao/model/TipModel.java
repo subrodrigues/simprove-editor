@@ -15,7 +15,7 @@ public class TipModel implements Serializable {
     private String message;
     private ActorModel actor;
     private float duration;
-    private float time; // -1 means that it has no specific time to show
+    private float activationTime; // -1 means that it has no specific activationTime to show
     private List<ActionModel> actionsDone; // Used as logical conditions
     private List<ActionModel> actionsTodo; // Used as logical conditions
 
@@ -24,7 +24,7 @@ public class TipModel implements Serializable {
         this.message = "";
         this.actor = null;
         this.duration = 0;
-        this.time = 0;
+        this.activationTime = 0;
         this.actionsDone = new ArrayList<>();
         this.actionsTodo = new ArrayList<>();
     }
@@ -34,7 +34,7 @@ public class TipModel implements Serializable {
         this.message = message;
         this.actor = actor;
         this.duration = duration;
-        this.time = time;
+        this.activationTime = time;
         this.actionsDone = actionsDone;
         this.actionsTodo = actionsTodo;
     }
@@ -63,12 +63,12 @@ public class TipModel implements Serializable {
         this.duration = duration;
     }
 
-    public float getTime() {
-        return time;
+    public float getActivationTime() {
+        return activationTime;
     }
 
-    public void setTime(float time) {
-        this.time = time;
+    public void setActivationTime(float activationTime) {
+        this.activationTime = activationTime;
     }
 
     public List<ActionModel> getActionsDone() {

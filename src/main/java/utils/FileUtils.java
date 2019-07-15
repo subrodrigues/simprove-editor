@@ -6,10 +6,7 @@ package utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import dao.model.ActionModel;
-import dao.model.ScenarioModel;
-import dao.model.SignalModel;
-import dao.model.StateModel;
+import dao.model.*;
 
 import java.io.*;
 import java.util.Date;
@@ -80,13 +77,13 @@ public class FileUtils {
     }
 
     public static JsonObject getScenarioJSONObject(ScenarioModel scenarioModel){
-        // create the albums object
         JsonObject scenario = new JsonObject();
 
         scenario.addProperty("name", scenarioModel.getName());
-        scenario.addProperty("score", 0);
-        scenario.addProperty("minScore", 0);
+        scenario.addProperty("score", scenarioModel.getScore());
+        scenario.addProperty("minScore", scenarioModel.getMinScore());
         scenario.addProperty("briefing", scenarioModel.getBriefing());
+        scenario.addProperty("defaultActionError", scenarioModel.getDefaultErrorMessage());
 
         // create an array to hold states
         JsonArray states = new JsonArray();
@@ -96,11 +93,13 @@ public class FileUtils {
 
             state.addProperty("id", stateModel.getId());
             state.addProperty("name", stateModel.getName());
+            state.addProperty("startState", stateModel.getIsStartState());
+            state.addProperty("endState", stateModel.getIsEndState());
 
             JsonArray signals = getSignalsJSONArray(stateModel.getSignals());
             state.add("signals", signals);
 
-            JsonArray tips = new JsonArray();
+            JsonArray tips = getTipsJSONArray(stateModel.getTips());
             state.add("tips", tips);
 
             JsonObject transition = null;
@@ -117,7 +116,7 @@ public class FileUtils {
         scenario.add("states", states);
 
 
-        // create an array to hold states
+        // create an array to hold actions
         JsonArray actions = new JsonArray();
         for(ActionModel actionModel: scenarioModel.getActions()){
             JsonObject action = new JsonObject();
@@ -126,9 +125,25 @@ public class FileUtils {
             action.addProperty("name", actionModel.getName());
 
             JsonObject type = new JsonObject();
-            type.addProperty("id", actionModel.getCategory().getTypeId());
-            type.addProperty("name", actionModel.getCategory().getName());
+            type.addProperty("id", actionModel.getType().getTypeId());
+            type.addProperty("name", actionModel.getType().getName());
             action.add("type", type);
+
+            JsonObject category = new JsonObject();
+            category.addProperty("id", actionModel.getCategory().getTypeId());
+            category.addProperty("name", actionModel.getCategory().getName());
+            action.add("category", category);
+
+            JsonObject subcategory = new JsonObject();
+            subcategory.addProperty("id", actionModel.getSubCategory().getTypeId());
+            subcategory.addProperty("name", actionModel.getSubCategory().getName());
+            action.add("subcategory", subcategory);
+
+            JsonArray compActions = new JsonArray();
+            for(ActionModel actModel: actionModel.getComplementaryActions()){
+                compActions.add(actModel.getId());
+            }
+            action.add("compActions", compActions);
 
             action.addProperty("behavior", actionModel.getBehavior());
 
@@ -136,13 +151,11 @@ public class FileUtils {
 
             action.addProperty("usageLimit", actionModel.getUsageLimit());
 
-//            action.addProperty("is_complement", actionModel.getIsComplement());
             JsonArray conditions = new JsonArray();
             for(StateModel stateModel: actionModel.getStateConditions()){
                 conditions.add(stateModel.getId());
             }
             action.add("conditions", conditions);
-
 
             JsonArray resultSignals = getSignalsJSONArray(actionModel.getResults());
             action.add("results", resultSignals);
@@ -155,11 +168,73 @@ public class FileUtils {
             }
             action.add("transition", transition);
 
+            JsonObject score = getActionScoreJsonObj(actionModel.getScore());
+            action.add("score", score);
+
+            JsonObject errorMsg = new JsonObject();
+            errorMsg.addProperty("actorType", actionModel.getActorErrorMessage() == null ?
+                    "" : actionModel.getActorErrorMessage().getType().getName());
+            errorMsg.addProperty("actorName", actionModel.getActorErrorMessage() == null ?
+                    "" : actionModel.getActorErrorMessage().getName());
+
+            errorMsg.addProperty("message", actionModel.getErrorMessage());
+            action.add("errorMsg", errorMsg);
+
             actions.add(action);
         }
         scenario.add("actions", actions);
 
         return scenario;
+    }
+
+    private static JsonObject getActionScoreJsonObj(ScoreModel scoreModel) {
+        JsonObject score = new JsonObject();
+        score.addProperty("lostValue", scoreModel.getScoreLost());
+        score.addProperty("lossOvertime", scoreModel.getLossOvertime());
+
+        JsonArray startStates = new JsonArray();
+        for(StateModel stateModel: scoreModel.getStartStates()){
+            startStates.add(stateModel.getId());
+        }
+        score.add("startStates", startStates);
+
+        JsonArray endStates = new JsonArray();
+        for(StateModel stateModel: scoreModel.getEndStates()){
+            endStates.add(stateModel.getId());
+        }
+        score.add("endStates", endStates);
+
+        return score;
+    }
+
+    private static JsonArray getTipsJSONArray(List<TipModel> tipModels) {
+        JsonArray tips = new JsonArray();
+
+        for(TipModel tipModel: tipModels){
+            JsonObject tip = new JsonObject();
+            tip.addProperty("id", tipModel.getId());
+            tip.addProperty("message", tipModel.getMessage());
+            tip.addProperty("actorName", tipModel.getActor() == null ? "" : tipModel.getActor().getName());
+            tip.addProperty("actorType", tipModel.getActor() == null ? "" : tipModel.getActor().getType().getName());
+            tip.addProperty("activationTime", tipModel.getActivationTime());
+            tip.addProperty("duration", tipModel.getDuration());
+
+            JsonArray actionsDone = new JsonArray();
+            for(ActionModel action: tipModel.getActionsDone()){
+                actionsDone.add(action.getId());
+            }
+            tip.add("actionsDone", actionsDone);
+
+            JsonArray actionsTodo = new JsonArray();
+            for(ActionModel action: tipModel.getActionsTodo()){
+                actionsTodo.add(action.getId());
+            }
+            tip.add("actionsTodo", actionsTodo);
+
+            tips.add(tip);
+        }
+
+        return tips;
     }
 
     private static JsonArray getSignalsJSONArray(List<SignalModel> signalModels) {
@@ -168,6 +243,8 @@ public class FileUtils {
         for(SignalModel signalModel: signalModels){
             JsonObject signal = new JsonObject();
             signal.addProperty("id", signalModel.getId());
+            signal.addProperty("signalTemplateId", signalModel.getTemplate().getId());
+            signal.addProperty("type", signalModel.getType());
             signal.addProperty("name", signalModel.getName());
             signal.addProperty("value", signalModel.getValue());
 

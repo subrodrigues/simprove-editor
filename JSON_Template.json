@@ -12,7 +12,9 @@
 			"endState": int,
 			"signals": [
 				{
-					"id": int,
+					"id": int, // Id of the instance inside State
+					"signalTemplateId": int, // Id of the signal template, from .csv
+					"type": int,
 					"name": String,
 					"value": String
 				}
@@ -21,7 +23,8 @@
 				{
 					"id": int,
 					"message": String,
-					"actor": String,
+					"actorType": String,
+					"actorName": String,
 					"activationTime": float, // percentage [0,1] (related to state duration) / OPTION: -1 means that it has no specific time to show
 					"duration": float,
 					"actionsDone": [int], // action IDs
@@ -44,11 +47,11 @@
 				"name": String // This is the same as action.name
 			},
 			"category": {
-				"id": int, // Category ID accordingly to action_categories.csv
+				"id": int, // Category type ID accordingly to action_categories.csv
 				"name": String
 			},
 			"subcategory": {
-				"id": int, // Subcategory ID accordingly to action_subcategories.csv
+				"id": int, // Subcategory type ID accordingly to action_subcategories.csv
 				"name": String // This is the same as action.name
 			}, // TODO only in JSON: [{category},{subcategory}]
 			"complementaryActions": [int], // Complementary Actions IDs
@@ -59,6 +62,8 @@
 			"results": [ // array signals
 				{
 					"id": int,
+					"signalTemplateId": int, // Id of the signal template, from .csv
+					"type": int,
 					"name": String,
 					"value": String
 				}
@@ -74,7 +79,8 @@
 				"lossOvertime": float // Value that will be lost overtime (until completion...)
 			},
 			"errorMsg": { // TODO
-				"actor": String,
+				"actorType": String,
+				"actorName": String,
 				"message": String
 			}
 		}

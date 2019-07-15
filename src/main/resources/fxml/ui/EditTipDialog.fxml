@@ -78,7 +78,7 @@
                                         </HBox.margin>
                                     </VBox>
                                     <JFXDecimalTextField fx:id="activationTime" labelFloat="true" prefHeight="30.0"
-                                                         promptText="Activation time (seconds)"
+                                                         promptText="Activation activationTime (seconds)"
                                                          styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
                                     </JFXDecimalTextField>
 
@@ -91,7 +91,7 @@
                                         </Text>
                                     </VBox>
                                     <JFXDecimalTextField fx:id="durationTime" labelFloat="true" prefHeight="30.0"
-                                                         promptText="Viewing time (seconds)"
+                                                         promptText="Viewing activationTime (seconds)"
                                                          styleClass="edit-dialog-parameter-input" HBox.hgrow="ALWAYS">
                                     </JFXDecimalTextField>
 

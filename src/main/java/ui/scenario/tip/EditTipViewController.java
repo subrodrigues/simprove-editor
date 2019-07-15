@@ -86,8 +86,8 @@ public class EditTipViewController extends NewTipViewController {
         this.actorCustomName.setText(this.mTipModel.getActor().getName());
         this.durationTime.setText(String.valueOf(this.mTipModel.getDuration()));
 
-        if(this.mTipModel.getTime() != -1)
-            this.activationTime.setText(String.valueOf(this.mTipModel.getTime()));
+        if(this.mTipModel.getActivationTime() != -1)
+            this.activationTime.setText(String.valueOf(this.mTipModel.getActivationTime()));
 
         this.inputMessage.setText(mTipModel.getMessage());
     }
@@ -112,7 +112,7 @@ public class EditTipViewController extends NewTipViewController {
                 mTipModel.setDuration((durationTime != null &&
                         durationTime.getLength() > 0 ? Float.valueOf(durationTime.getText()) : 0));
 
-                mTipModel.setTime((activationTime != null &&
+                mTipModel.setActivationTime((activationTime != null &&
                         activationTime.getLength() > 0 ? Float.valueOf(activationTime.getText()) : -1));
 
                 mTipModel.setMessage(inputMessage.getText());
