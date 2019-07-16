@@ -23,6 +23,7 @@
   ~ Created by Filipe André Rodrigues on 20-02-2019 19:42
   -->
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <StackPane fx:id="scenarioRoot" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <StackPane fx:id="scenarioContent">
@@ -201,14 +202,26 @@
                     <Insets top="24.0" />
                 </VBox.margin>
             </Text>
+
+            <HBox>
+                <JFXComboBox fx:id="actorDefaultErrorMsg" prefHeight="30.0" prefWidth="200.0"
+                             promptText="Select Actor" styleClass="combo-box">
+                    <HBox.margin>
+                        <Insets right="6.0"/>
+                    </HBox.margin>
+                </JFXComboBox>
+
+            </HBox>
+
             <JFXTextArea fx:id="inputDefaultErrorMsg" minHeight="80" prefColumnCount="80" prefRowCount="30" promptText="Message to be shown when something is done wrongly" style="-fx-background-color: #fafafa" styleClass="edit-dialog-parameter-input-black">
                 <VBox.margin>
-                    <Insets top="6.0" />
+                    <Insets top="8.0" />
                 </VBox.margin>
                 <padding>
                     <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                 </padding>
             </JFXTextArea>
+
             <padding>
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>

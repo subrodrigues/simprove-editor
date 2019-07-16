@@ -16,6 +16,7 @@ public class ScenarioModel implements Serializable {
     private String briefing;
     private int score;
     private int minScore;
+    private TypeModel actorDefaultErrorMessage;
     private String defaultErrorMessage;
     private List<StateModel> states;
     private List<ActionModel> actions;
@@ -30,12 +31,13 @@ public class ScenarioModel implements Serializable {
         this.actions = new ArrayList<>();
     }
 
-    public ScenarioModel(int id, String name, String briefing, int score, int minScore, String defaultErrorMessage, List<StateModel> states, List<ActionModel> actions) {
+    public ScenarioModel(int id, String name, String briefing, int score, int minScore, TypeModel actorDefaultErrorMessage, String defaultErrorMessage, List<StateModel> states, List<ActionModel> actions) {
         this.id = id;
         this.name = name;
         this.briefing = briefing;
         this.score = score;
         this.minScore = minScore;
+        this.actorDefaultErrorMessage = actorDefaultErrorMessage;
         this.defaultErrorMessage = defaultErrorMessage;
         this.states = states;
         this.actions = actions;
@@ -95,6 +97,14 @@ public class ScenarioModel implements Serializable {
 
     public void setActions(List<ActionModel> actions) {
         this.actions = actions;
+    }
+
+    public TypeModel getActorDefaultErrorMessage() {
+        return actorDefaultErrorMessage;
+    }
+
+    public void setActorDefaultErrorMessage(TypeModel actorDefaultErrorMessage) {
+        this.actorDefaultErrorMessage = actorDefaultErrorMessage;
     }
 
     public String getDefaultErrorMessage() {

@@ -12,6 +12,8 @@ import dao.model.*;
 import io.datafx.controller.ViewController;
 import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -102,6 +104,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
     @FXML
     private JFXTextArea inputBriefing;
+
+    @FXML
+    private JFXComboBox<TypeModel> actorDefaultErrorMsg;
 
     @FXML
     private JFXTextArea inputDefaultErrorMsg;
@@ -197,6 +202,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             this.mPresenter.updateBriefingContent(newValue);
         });
 
+        actorDefaultErrorMsg.valueProperty().addListener(new ChangeListener<TypeModel>() {
+            @Override public void changed(ObservableValue ov, TypeModel oldActor, TypeModel newActor) {
+                mPresenter.updateGeneralErrorMsgActor(newActor);
+            }
+        });
+
         inputDefaultErrorMsg.textProperty().addListener((observable, oldValue, newValue) -> {
             this.mPresenter.updateGeneralErrorMsg(newValue);
         });
@@ -252,6 +263,10 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         this.inputScenarioName.setText(scenario.getName());
         this.inputBriefing.setText(scenario.getBriefing());
+
+        if(scenario.getActorDefaultErrorMessage() != null)
+            this.actorDefaultErrorMsg.getSelectionModel().select(scenario.getActorDefaultErrorMessage());
+
         this.inputDefaultErrorMsg.setText(scenario.getDefaultErrorMessage());
 
         this.inputScore.setText(String.valueOf(scenario.getScore()));
@@ -798,7 +813,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
-     *  @param actions
+     * @param actions
      * @param states
      * @param actionTypes
      * @param actionCategories
@@ -827,6 +842,19 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
         dialog.show();
+    }
+
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view that the Actor Types are loaded and update the respective combo box.
+     *  @param actorTypes
+     *
+     */
+    void updateActorErrorMsg(List<TypeModel> actorTypes) {
+        // Init Actor Types ComboBox
+        this.actorDefaultErrorMsg.getItems().add(new TypeModel(-1, -1,"NONE"));
+        this.actorDefaultErrorMsg.getItems().addAll(actorTypes);
+        this.actorDefaultErrorMsg.getSelectionModel().select(0);
     }
 
     /**

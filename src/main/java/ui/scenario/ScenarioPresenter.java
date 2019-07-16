@@ -159,6 +159,8 @@ public class ScenarioPresenter {
 
         if (event.isSuccess()) {
             this.mActorTypes = event.getActorTypes();
+
+            this.mView.updateActorErrorMsg(this.mActorTypes);
         } else if (event.isNetworkError()) {
             // TODO: deal with it
         } else {
@@ -570,4 +572,7 @@ public class ScenarioPresenter {
     }
 
 
+    void updateGeneralErrorMsgActor(TypeModel newActor) {
+        this.mScenario.setActorDefaultErrorMessage(newActor);
+    }
 }
