@@ -83,7 +83,12 @@ public class FileUtils {
         scenario.addProperty("score", scenarioModel.getScore());
         scenario.addProperty("minScore", scenarioModel.getMinScore());
         scenario.addProperty("briefing", scenarioModel.getBriefing());
-        scenario.addProperty("defaultActionError", scenarioModel.getDefaultErrorMessage());
+
+        JsonObject errorMsg = new JsonObject();
+        errorMsg.addProperty("actorType", scenarioModel.getActorDefaultErrorMessage().getName());
+        errorMsg.addProperty("actorTypeId", scenarioModel.getActorDefaultErrorMessage().getTypeId());
+        errorMsg.addProperty("message", scenarioModel.getDefaultErrorMessage());
+        scenario.add("defaultActionError", errorMsg);
 
         // create an array to hold states
         JsonArray states = new JsonArray();
@@ -129,15 +134,24 @@ public class FileUtils {
             type.addProperty("name", actionModel.getType().getName());
             action.add("type", type);
 
+
+            /** ACTION CATEGORIES HAMMERED INTO AN ARRAY **/
             JsonObject category = new JsonObject();
             category.addProperty("id", actionModel.getCategory().getTypeId());
             category.addProperty("name", actionModel.getCategory().getName());
-            action.add("category", category);
+//            action.add("category", category); // TODO: Uncomment this when a proper server is implemented
 
             JsonObject subcategory = new JsonObject();
             subcategory.addProperty("id", actionModel.getSubCategory().getTypeId());
             subcategory.addProperty("name", actionModel.getSubCategory().getName());
-            action.add("subcategory", subcategory);
+//            action.add("subcategory", subcategory); // TODO: Uncomment this when a proper server is implemented
+
+            JsonArray categories = new JsonArray();
+            categories.add(category);
+            categories.add(subcategory);
+            action.add("categories", categories);
+            /** ACTION CATEGORIES HAMMERED INTO AN ARRAY **/
+
 
             JsonArray compActions = new JsonArray();
             for(ActionModel actModel: actionModel.getComplementaryActions()){
@@ -171,14 +185,16 @@ public class FileUtils {
             JsonObject score = getActionScoreJsonObj(actionModel.getScore());
             action.add("score", score);
 
-            JsonObject errorMsg = new JsonObject();
-            errorMsg.addProperty("actorType", actionModel.getActorErrorMessage() == null ?
+            JsonObject actionErrorMsg = new JsonObject();
+            actionErrorMsg.addProperty("actorType", actionModel.getActorErrorMessage() == null ?
                     "" : actionModel.getActorErrorMessage().getType().getName());
-            errorMsg.addProperty("actorName", actionModel.getActorErrorMessage() == null ?
+            actionErrorMsg.addProperty("actorTypeId", actionModel.getActorErrorMessage() == null ?
+                    -1 : actionModel.getActorErrorMessage().getType().getTypeId());
+            actionErrorMsg.addProperty("actorName", actionModel.getActorErrorMessage() == null ?
                     "" : actionModel.getActorErrorMessage().getName());
 
-            errorMsg.addProperty("message", actionModel.getErrorMessage());
-            action.add("errorMsg", errorMsg);
+            actionErrorMsg.addProperty("message", actionModel.getErrorMessage());
+            action.add("errorMsg", actionErrorMsg);
 
             actions.add(action);
         }
@@ -216,6 +232,7 @@ public class FileUtils {
             tip.addProperty("message", tipModel.getMessage());
             tip.addProperty("actorName", tipModel.getActor() == null ? "" : tipModel.getActor().getName());
             tip.addProperty("actorType", tipModel.getActor() == null ? "" : tipModel.getActor().getType().getName());
+            tip.addProperty("actorTypeId", tipModel.getActor() == null ? -1 : tipModel.getActor().getType().getTypeId());
             tip.addProperty("activationTime", tipModel.getActivationTime());
             tip.addProperty("duration", tipModel.getDuration());
 
@@ -229,7 +246,7 @@ public class FileUtils {
             for(ActionModel action: tipModel.getActionsTodo()){
                 actionsTodo.add(action.getId());
             }
-            tip.add("actionsTodo", actionsTodo);
+            tip.add("actionsNotDone", actionsTodo);
 
             tips.add(tip);
         }
