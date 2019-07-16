@@ -86,6 +86,7 @@ public class ReadDataUtils {
                             Integer.valueOf(tempArray[4]),
                             Integer.valueOf(tempArray[5]),
                             Float.valueOf(tempArray[6]),
+                            null,
                             null
                     ));
                     break;
@@ -102,7 +103,28 @@ public class ReadDataUtils {
                             -1,
                             -1,
                             .0f,
-                            categoricalOptions
+                            categoricalOptions,
+                            null
+                    ));
+                    break;
+                case 2:
+                    // Parse graphical options as a new list from index 4 onwards
+                    List<String> graphicalOptions = new ArrayList<>(Arrays.asList(tempArray).subList(4, tempArray.length));
+
+                    List<Integer> graphicalOptionsInteger = new ArrayList<>(graphicalOptions.size());
+                    for(int i = 0; i < graphicalOptions.size(); i++) {
+                        graphicalOptionsInteger.add(i, Integer.valueOf(graphicalOptions.get(i)));
+                    }
+
+                    signalsList.add(new SignalTemplateModel(Integer.valueOf(tempArray[0]),
+                            type,
+                            tempArray[2],
+                            tempArray[3],
+                            -1,
+                            -1,
+                            .0f,
+                            null,
+                            graphicalOptionsInteger
                     ));
                     break;
             }

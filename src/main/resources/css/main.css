@@ -1557,3 +1557,40 @@
 .scroll-pane-transparent {
    -fx-background-color: transparent;
 }
+
+.chart-series-line {
+    -fx-stroke-width: 5px;
+    -fx-stroke: #6495ed;
+}
+
+.chart-legend {
+   -fx-background-color: #616161;
+}
+
+.chart-legend-item{
+    -fx-text-fill: #fafafa;
+    -fx-font-size: 16.0;
+    -fx-font-family: "Roboto";
+    -fx-font-weight: BOLD;
+}
+
+.axis {
+    -fx-tick-label-fill: #fafafa;
+    -fx-tick-length: 16;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #fafafa;
+    -fx-stroke-width: 2px;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #fefefe;
+}
+
+.chart-line-symbol{
+    -fx-background-color: #6495ed, #fafafa;
+    -fx-background-insets: 0, 2;
+    -fx-padding: 6px;
+
+}

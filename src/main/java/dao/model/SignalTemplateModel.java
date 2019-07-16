@@ -27,8 +27,10 @@ public class SignalTemplateModel implements Serializable {
      */
     private float granularity;
     private List<String> physicalOptions;
+    private List<Integer> plotY;
 
-    public SignalTemplateModel(int id, int type, String name, String unit, float minRange, float maxRange, float granularity, List<String> physicalOptions) {
+    public SignalTemplateModel(int id, int type, String name, String unit, float minRange,
+                               float maxRange, float granularity, List<String> physicalOptions, List<Integer> plotY) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -37,6 +39,7 @@ public class SignalTemplateModel implements Serializable {
         this.maxRange = maxRange;
         this.granularity = granularity;
         this.physicalOptions = physicalOptions;
+        this.plotY = plotY;
     }
 
     public SignalTemplateModel(int id, String name) {
@@ -108,6 +111,14 @@ public class SignalTemplateModel implements Serializable {
         this.physicalOptions = physicalOptions;
     }
 
+    public List<Integer> getPlotY() {
+        return plotY;
+    }
+
+    public void setPlotY(List<Integer> plotY) {
+        this.plotY = plotY;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -136,5 +147,13 @@ public class SignalTemplateModel implements Serializable {
 
     public boolean isNumericalSignal(){
         return this.type == 0;
+    }
+
+    public boolean isCategoricalSignal(){
+        return this.type == 1;
+    }
+
+    public boolean isGraphicalSignal(){
+        return this.type == 2;
     }
 }

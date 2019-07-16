@@ -15,6 +15,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -53,6 +55,16 @@ public class NewSignalViewController {
     @FXML
     private JFXComboBox<String> physicalOptionComboBox;
 
+    @FXML
+    private StackPane graphicalValueContainer;
+
+    @FXML
+    private LineChart<Number, Number>  signalGraphicalLineChart;
+
+    @FXML
+    private Text valueTag;
+
+
     // Private variables
     private SignalModel mSignalModel;
     private OnNewSignalClickListener mListener;
@@ -61,6 +73,8 @@ public class NewSignalViewController {
     private List<SignalTemplateModel> mSignalTypes;
     private SignalTemplateModel mCurrentItem;
 
+    private double mRootWidth;
+    private double mRootHeight;
 
     public interface OnNewSignalClickListener {
         void onNewSignalAcceptClicked(SignalModel newSignalModel);
@@ -116,8 +130,10 @@ public class NewSignalViewController {
 
                 if (mCurrentItem.isNumericalSignal()) {
                     showNumericSignalUI();
-                } else {
+                } else if(mCurrentItem.isCategoricalSignal()){
                     showCategoricalSignalUI();
+                } else {
+                    showGraphicalSignalUI();
                 }
 
                 //TODO: Check type and create value input
@@ -133,21 +149,57 @@ public class NewSignalViewController {
     }
 
     /**
+     * Method that updates the dialog window to the Graphical interface
+     */
+    private void showGraphicalSignalUI() {
+        this.newSignalRoot.setMinWidth(this.mRootWidth*1.5);
+        this.newSignalRoot.setMinHeight(this.mRootHeight*1.5);
+
+        this.valueTag.setVisible(false);
+        this.numericValueContainer.setVisible(false);
+        this.graphicalValueContainer.setVisible(true);
+        this.physicalOptionComboBox.setVisible(false);
+
+        XYChart.Series<Number, Number>  series = new XYChart.Series<>();
+        series.setName(mCurrentItem.getUnit());
+
+        int xVal = 10;
+        for(int graphicValue : mCurrentItem.getPlotY()) {
+            series.getData().add(new XYChart.Data<>(xVal, graphicValue));
+            xVal += 10;
+        }
+
+        this.signalGraphicalLineChart.getData().clear();
+        this.signalGraphicalLineChart.getData().add(series);
+    }
+
+    /**
      * Method that updates the dialog window to the Categorical interface
      */
     private void showCategoricalSignalUI() {
+        this.newSignalRoot.setMinWidth(this.mRootWidth);
+        this.newSignalRoot.setMinHeight(this.mRootHeight);
+
+        this.valueTag.setVisible(true);
         this.numericValueContainer.setVisible(false);
+        this.graphicalValueContainer.setVisible(false);
         this.physicalOptionComboBox.setVisible(true);
 
         this.physicalOptionComboBox.getItems().clear();
         this.physicalOptionComboBox.getItems().addAll(mCurrentItem.getPhysicalOptions());
+
     }
 
     /**
      * Method that updates the dialog window to the Numerical interface
      */
     private void showNumericSignalUI() {
+        this.newSignalRoot.setMinWidth(this.mRootWidth);
+        this.newSignalRoot.setMinHeight(this.mRootHeight);
+
+        this.valueTag.setVisible(true);
         this.numericValueContainer.setVisible(true);
+        this.graphicalValueContainer.setVisible(false);
         this.physicalOptionComboBox.setVisible(false);
 
         numericValueUnit.setText(" ".concat(mCurrentItem.getUnit()));
@@ -201,6 +253,9 @@ public class NewSignalViewController {
      * @return StacePane (root view)
      */
     public StackPane getNewSignalItemRootDialog(double width, double height) {
+        this.mRootWidth = width;
+        this.mRootHeight = height;
+
         newSignalRoot.setPrefWidth(width);
         newSignalRoot.setPrefHeight(height);
 

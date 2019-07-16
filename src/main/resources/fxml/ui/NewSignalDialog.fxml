@@ -5,6 +5,8 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -48,7 +50,7 @@
                                 <!-- Signal Numeric type -->
                                 <HBox alignment="CENTER_LEFT">
                                     <VBox alignment="CENTER_LEFT" minWidth="84">
-                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
+                                        <Text fx:id="valueTag" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
                                     </VBox>
 
                                     <JFXComboBox fx:id="physicalOptionComboBox" prefHeight="30.0" prefWidth="1920" promptText="Select a Categorical Value" styleClass="combo-box" visible="false" StackPane.alignment="CENTER_LEFT">
@@ -65,47 +67,63 @@
                                 </HBox>
 
                                 <StackPane>
-                                <GridPane fx:id="numericValueContainer" visible="false">
+                                    <GridPane fx:id="numericValueContainer" visible="false">
 
-                                    <Text fx:id="numericValue" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Text fx:id="numericValue" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
-                                    <Text fx:id="numericValueUnit" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Text fx:id="numericValueUnit" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dialog-parameter-subtitle" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                    <JFXSlider fx:id="signalNumericValue" indicatorPosition="LEFT" maxWidth="Infinity" showTickLabels="true" showTickMarks="true" blockIncrement="1" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                        <JFXSlider fx:id="signalNumericValue" blockIncrement="1" indicatorPosition="LEFT" maxWidth="Infinity" showTickLabels="true" showTickMarks="true" styleClass="jfx-slider-colored" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+                                            <VBox.margin>
+                                                <Insets top="16.0" />
+                                            </VBox.margin>
+                                            <GridPane.margin>
+                                                <Insets left="8.0" />
+                                            </GridPane.margin>
+                                        </JFXSlider>
+
                                         <VBox.margin>
-                                            <Insets top="16.0" />
+                                            <Insets top="6.0" />
                                         </VBox.margin>
-                                        <GridPane.margin>
-                                            <Insets left="8.0" />
-                                        </GridPane.margin>
-                                    </JFXSlider>
+                                        <columnConstraints>
+                                            <ColumnConstraints />
+                                            <ColumnConstraints />
+                                            <ColumnConstraints />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
+                                        <StackPane.margin>
+                                            <Insets top="4.0" />
+                                        </StackPane.margin>
+                                    </GridPane>
+                                    <!-- TODO: Signal Categoric type -->
 
                                     <VBox.margin>
                                         <Insets top="6.0" />
                                     </VBox.margin>
-                              <columnConstraints>
-                                 <ColumnConstraints />
-                                 <ColumnConstraints />
-                                 <ColumnConstraints />
-                              </columnConstraints>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
-                              <StackPane.margin>
-                                 <Insets top="4.0" />
-                              </StackPane.margin>
-                                </GridPane>
-                                <!-- TODO: Signal Categoric type -->
-
-                           <VBox.margin>
-                              <Insets top="6.0" />
-                           </VBox.margin>
                                 </StackPane>
                             </children>
                             <StackPane.margin>
                                 <Insets left="22.0" right="22.0" top="46.0" />
                             </StackPane.margin>
                         </VBox>
+
+                        <StackPane fx:id="graphicalValueContainer" visible="false">
+
+                            <LineChart fx:id="signalGraphicalLineChart" >
+                                <xAxis>
+                                    <NumberAxis side="BOTTOM"  tickMarkVisible="false" minorTickVisible="false" tickLabelsVisible="false"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                </yAxis>
+                            </LineChart>
+                            <StackPane.margin>
+                                <Insets bottom="8.0" left="22.0" right="22.0" top="84.0" />
+                            </StackPane.margin>
+                        </StackPane>
+
                     </children>
                 </StackPane>
                 <StackPane style="-fx-background-color: #fafafa;">

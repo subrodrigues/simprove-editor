@@ -173,7 +173,7 @@
                                             </VBox>
                                             <JFXDecimalTextField fx:id="inputAdminTime" labelFloat="true"
                                                                  prefHeight="30.0" prefWidth="300.0"
-                                                                 promptText="Administration activationTime (seconds)"
+                                                                 promptText="Administration time (seconds)"
                                                                  styleClass="edit-dialog-parameter-input"
                                                                  HBox.hgrow="ALWAYS">
                                                 <HBox.margin>

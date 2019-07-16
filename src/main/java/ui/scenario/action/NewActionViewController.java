@@ -497,7 +497,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 2, stage.getHeight()));
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 2, stage.getHeight() / 2));
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
@@ -522,7 +522,7 @@ public class NewActionViewController implements NewSignalViewController.OnNewSig
         // TODO: Set window current size with a vertical/horizontal threshold
         dialog.initModality(Modality.APPLICATION_MODAL);
 
-        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 1.5, stage.getHeight() / 1.5));
+        dialog.setContent(newSignalDialog.getNewSignalItemRootDialog(stage.getWidth() / 2, stage.getHeight() / 2));
 
         dialog.setResizable(true);
         dialog.getDialogPane().setStyle("-fx-background-color: rgba(0, 50, 100, 0.5)");
