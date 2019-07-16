@@ -6,7 +6,7 @@
 	"defaultActionError": {
 		"message": String,
 		"actorType": String,
-		"actorTypeId": int // Type ID accordingly to actor_types.csv
+		"actorTypeId": int // Type ID according to actor_types.csv
 	},
 	"states":[
 		{
@@ -28,7 +28,7 @@
 					"id": int,
 					"message": String,
 					"actorType": String,
-					"actorTypeId": int, // Type ID accordingly to actor_types.csv
+					"actorTypeId": int, // Type ID according to actor_types.csv
 					"actorName": String,
 					"activationTime": float, // percentage [0,1] (related to state duration) / OPTION: -1 means that it has no specific time to show
 					"duration": float,
@@ -48,15 +48,15 @@
 			"id": int,
 			"name": String,
 			"type": {
-				"id": int, // Type ID accordingly to action_types.csv
+				"id": int, // Type ID according to action_types.csv
 				"name": String // This is the same as action.name
 			},
 			"category": {
-				"id": int, // Category type ID accordingly to action_categories.csv
+				"id": int, // Category type ID according to action_categories.csv
 				"name": String
 			},
 			"subcategory": {
-				"id": int, // Subcategory type ID accordingly to action_subcategories.csv
+				"id": int, // Subcategory type ID according to action_subcategories.csv
 				"name": String // This is the same as action.name
 			}, // TODO only in JSON: [{category},{subcategory}]
 			"complementaryActions": [int], // Complementary Actions IDs
@@ -85,7 +85,7 @@
 			},
 			"errorMsg": { // TODO
 				"actorType": String,
-				"actorTypeId": int, // Type ID accordingly to actor_types.csv
+				"actorTypeId": int, // Type ID according to actor_types.csv
 				"actorName": String,
 				"message": String
 			}

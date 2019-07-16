@@ -73,6 +73,7 @@ public class NewTipViewController implements MultiSelectListController.OnMultiSe
     public NewTipViewController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui/NewTipDialog.fxml"));
         fxmlLoader.setController(this);
+
         try {
             newTipRoot = fxmlLoader.load();
         } catch (IOException e) {
