@@ -84,7 +84,7 @@
 
                                     <JFXDecimalTextField fx:id="inputTransitionDuration" labelFloat="true"
                                                          prefHeight="30.0" prefWidth="200.0"
-                                                         promptText="Transition activationTime (seconds)"
+                                                         promptText="Transition Time (seconds)"
                                                          styleClass="edit-dialog-parameter-input">
                                         <validators>
                                             <RequiredFieldValidator message="Input Required!">
