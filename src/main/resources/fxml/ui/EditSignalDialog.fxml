@@ -17,17 +17,15 @@
   ~ Created by Filipe André Rodrigues on 07-05-2019 11:52
   -->
 
-<!--
-  ~ Created by Filipe André Rodrigues on 13-03-2019 19:29
-  -->
-
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <StackPane fx:id="newSignalRoot" maxHeight="300.0" minHeight="100.0" prefWidth="600.0" styleClass="float-window-style" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
                 <StackPane fx:id="headerPane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="New Signal">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-title" text="Edit Signal">
                             <StackPane.margin>
                                 <Insets top="16.0" />
                             </StackPane.margin>
@@ -52,7 +50,7 @@
                                 <!-- Signal Numeric type -->
                                 <HBox alignment="CENTER_LEFT">
                                     <VBox alignment="CENTER_LEFT" minWidth="84">
-                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
+                                        <Text fx:id="valueTag" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="edit-dialog-parameter-title" text="Value:" />
                                     </VBox>
 
                                     <JFXComboBox fx:id="physicalOptionComboBox" prefHeight="30.0" prefWidth="1920" promptText="Select a Categorical Value" styleClass="combo-box" visible="false" StackPane.alignment="CENTER_LEFT">
@@ -110,8 +108,25 @@
                                 <Insets left="22.0" right="22.0" top="46.0" />
                             </StackPane.margin>
                         </VBox>
+
+                        <StackPane fx:id="graphicalValueContainer" visible="false">
+
+                            <LineChart fx:id="signalGraphicalLineChart" >
+                                <xAxis>
+                                    <NumberAxis side="BOTTOM" tickMarkVisible="false" minorTickVisible="false" tickLabelsVisible="false"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                </yAxis>
+                            </LineChart>
+                            <StackPane.margin>
+                                <Insets bottom="8.0" left="22.0" right="22.0" top="84.0" />
+                            </StackPane.margin>
+                        </StackPane>
+
                     </children>
                 </StackPane>
+
                 <StackPane style="-fx-background-color: #fafafa;">
 
                     <HBox alignment="CENTER" StackPane.alignment="CENTER">

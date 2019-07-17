@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
@@ -24,9 +25,13 @@ import javafx.stage.Stage;
 import ui.widgets.AutoCompleteComboBoxListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NewSignalViewController {
+    public static final double GRAPHICAL_WINDOW_MULT_FACTOR = 1.3;
+
     // UI Bind variables
     @FXML
     private StackPane newSignalRoot;
@@ -59,11 +64,10 @@ public class NewSignalViewController {
     private StackPane graphicalValueContainer;
 
     @FXML
-    private LineChart<Number, Number>  signalGraphicalLineChart;
+    private LineChart<Number, Number> signalGraphicalLineChart;
 
     @FXML
     private Text valueTag;
-
 
     // Private variables
     private SignalModel mSignalModel;
@@ -75,6 +79,7 @@ public class NewSignalViewController {
 
     private double mRootWidth;
     private double mRootHeight;
+    private XYChart.Series<Number, Number> mGraphicalSeries;
 
     public interface OnNewSignalClickListener {
         void onNewSignalAcceptClicked(SignalModel newSignalModel);
@@ -130,7 +135,7 @@ public class NewSignalViewController {
 
                 if (mCurrentItem.isNumericalSignal()) {
                     showNumericSignalUI();
-                } else if(mCurrentItem.isCategoricalSignal()){
+                } else if (mCurrentItem.isCategoricalSignal()) {
                     showCategoricalSignalUI();
                 } else {
                     showGraphicalSignalUI();
@@ -152,31 +157,67 @@ public class NewSignalViewController {
      * Method that updates the dialog window to the Graphical interface
      */
     private void showGraphicalSignalUI() {
-        this.newSignalRoot.setMinWidth(this.mRootWidth*1.5);
-        this.newSignalRoot.setMinHeight(this.mRootHeight*1.5);
+        this.signalGraphicalLineChart.setAnimated(true);
+
+        this.newSignalRoot.setMinWidth(this.mRootWidth * GRAPHICAL_WINDOW_MULT_FACTOR);
+        this.newSignalRoot.setMinHeight(this.mRootHeight * GRAPHICAL_WINDOW_MULT_FACTOR);
 
         this.valueTag.setVisible(false);
         this.numericValueContainer.setVisible(false);
         this.graphicalValueContainer.setVisible(true);
         this.physicalOptionComboBox.setVisible(false);
 
-        XYChart.Series<Number, Number>  series = new XYChart.Series<>();
-        series.setName(mCurrentItem.getUnit());
+        this.mGraphicalSeries = new XYChart.Series<>();
+        this.mGraphicalSeries.setName(mCurrentItem.getUnit());
 
         int xVal = 10;
-        for(int graphicValue : mCurrentItem.getPlotY()) {
-            series.getData().add(new XYChart.Data<>(xVal, graphicValue));
+        for (int graphicValue : mCurrentItem.getPlotY()) {
+            this.mGraphicalSeries.getData().add(new XYChart.Data<>(xVal, graphicValue));
             xVal += 10;
         }
 
         this.signalGraphicalLineChart.getData().clear();
-        this.signalGraphicalLineChart.getData().add(series);
+        this.signalGraphicalLineChart.getData().add(this.mGraphicalSeries);
+
+        int maxY = Collections.max(mCurrentItem.getPlotY(), null);
+        int minY = Collections.min(mCurrentItem.getPlotY(), null);
+
+        for (XYChart.Data<Number, Number> point : this.mGraphicalSeries.getData()) {
+            point.getNode().setOnMouseDragged(event -> {
+                Point2D translateXY = point.getNode().screenToLocal(event.getScreenX(), event.getScreenY());
+
+//                point.setXValue((int)translateXY.getX() + point.getXValue().intValue());
+                int value = (int)(point.getYValue().floatValue() + reverseNumberInRange((float)translateXY.getY() +
+                        (maxY - point.getYValue().floatValue()), minY, maxY) * 0.02);
+                if(value > maxY) value = maxY;
+                else if (value < minY) value = minY;
+                point.setYValue(value);
+            });
+        }
+
+        this.signalGraphicalLineChart.setAnimated(false);
+    }
+
+    /**
+     * Aux method for showGraphicalSignalUI().
+     * y0 is top left on screen, and bottom left in chart, need to reverse.
+     * TODO: Refactor this logic into a Linechart helper class
+     *
+     * @param value
+     * @param minVal
+     * @param maxVal
+     * @return
+     */
+    private double reverseNumberInRange(double value, double minVal, double maxVal) {
+        return (maxVal + minVal) - value;
     }
 
     /**
      * Method that updates the dialog window to the Categorical interface
      */
     private void showCategoricalSignalUI() {
+        this.signalGraphicalLineChart.setAnimated(true);
+
         this.newSignalRoot.setMinWidth(this.mRootWidth);
         this.newSignalRoot.setMinHeight(this.mRootHeight);
 
@@ -187,13 +228,14 @@ public class NewSignalViewController {
 
         this.physicalOptionComboBox.getItems().clear();
         this.physicalOptionComboBox.getItems().addAll(mCurrentItem.getPhysicalOptions());
-
     }
 
     /**
      * Method that updates the dialog window to the Numerical interface
      */
     private void showNumericSignalUI() {
+        this.signalGraphicalLineChart.setAnimated(true);
+
         this.newSignalRoot.setMinWidth(this.mRootWidth);
         this.newSignalRoot.setMinHeight(this.mRootHeight);
 
@@ -208,17 +250,17 @@ public class NewSignalViewController {
         signalNumericValue.setMax(mCurrentItem.getMaxRange());
 
         // TODO: Find a not hammered solution
-        if(mCurrentItem.getGranularity() == 0.1f) {
+        if (mCurrentItem.getGranularity() == 0.1f) {
             signalNumericValue.setBlockIncrement(0.1f);
-        } else if(mCurrentItem.getGranularity() == 0.2f) {
+        } else if (mCurrentItem.getGranularity() == 0.2f) {
             signalNumericValue.setBlockIncrement(0.01f);
-        }  else if(mCurrentItem.getGranularity() == 0.3f) {
+        } else if (mCurrentItem.getGranularity() == 0.3f) {
             signalNumericValue.setBlockIncrement(0.001f);
-        } else if(mCurrentItem.getGranularity() == 0.4f) {
+        } else if (mCurrentItem.getGranularity() == 0.4f) {
             signalNumericValue.setBlockIncrement(0.0001f);
-        }  else if(mCurrentItem.getGranularity() == 0.5f) {
+        } else if (mCurrentItem.getGranularity() == 0.5f) {
             signalNumericValue.setBlockIncrement(0.00001f);
-        }  else{
+        } else {
             signalNumericValue.setBlockIncrement(1);
         }
 
@@ -287,10 +329,17 @@ public class NewSignalViewController {
                 mSignalModel.setType(mCurrentItem.getType());
                 mSignalModel.setName(signalTypeComboBox.getEditor().textProperty().getValue());
 
-                if(mCurrentItem.isNumericalSignal()){
+                if (mCurrentItem.isNumericalSignal()) {
                     mSignalModel.setValue(String.valueOf(signalNumericValue.getValue()));
-                } else {
+                } else if(mCurrentItem.isCategoricalSignal()){
                     mSignalModel.setValue(String.valueOf(physicalOptionComboBox.getValue()));
+                } else{
+
+                    List<Integer> yValues = new ArrayList<>(mGraphicalSeries.getData().size());
+                    for(int i = 0; i < mGraphicalSeries.getData().size(); i++){
+                        yValues.add(mGraphicalSeries.getData().get(i).getYValue().intValue());
+                    }
+                    mSignalModel.setPlotYValue(yValues);
                 }
 
                 mSignalModel.setTemplate(mCurrentItem);
