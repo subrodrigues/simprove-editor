@@ -18,9 +18,10 @@
 				{
 					"id": int, // Id of the instance inside State
 					"signalTemplateId": int, // Id of the signal template, from .csv
-					"type": int,
+					"type": int, // 0 - numeric ; 1 - categorical ; 2 - graphical
 					"name": String,
-					"value": String
+					"value": String,
+					"plotYValues": [int] // Y values for the graphical type
 				}
 			],
 			"tips": [
@@ -68,9 +69,10 @@
 				{
 					"id": int,
 					"signalTemplateId": int, // Id of the signal template, from .csv
-					"type": int,
+					"type": int, // 0 - numeric ; 1 - categorical ; 2 - graphical
 					"name": String,
-					"value": String
+					"value": String,
+					"plotYValues": [int] // Y values for the graphical type
 				}
 			],
 			"transition": {

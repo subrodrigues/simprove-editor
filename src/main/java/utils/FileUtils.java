@@ -265,6 +265,14 @@ public class FileUtils {
             signal.addProperty("name", signalModel.getName());
             signal.addProperty("value", signalModel.getValue());
 
+            JsonArray plotYValues = new JsonArray();
+            if(signalModel.getPlotYValue() != null) {
+                for (Integer yVal : signalModel.getPlotYValue()) {
+                    plotYValues.add(yVal);
+                }
+            }
+            signal.add("plotYValues", plotYValues);
+
             signals.add(signal);
         }
 

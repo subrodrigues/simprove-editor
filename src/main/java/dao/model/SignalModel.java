@@ -81,6 +81,10 @@ public class SignalModel implements Serializable {
         this.template = template;
     }
 
+    public boolean isGraphicalSignal(){
+        return type == 2;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
