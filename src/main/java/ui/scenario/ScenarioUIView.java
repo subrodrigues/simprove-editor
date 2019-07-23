@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -117,6 +118,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     @FXML
     private JFXNumericTextField inputMinScore;
 
+    @FXML
+    private JFXButton refreshGraphButton;
+
     private boolean isSlidingContentVisible = true;
 
     /**
@@ -138,10 +142,43 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         Platform.runLater(() -> this.statesScrollPane.requestLayout());
         JFXScrollPane.smoothScrolling(this.statesScrollPane);
 
+        setupRefreshGraphButton();
+
         this.addStateButton.setOnAction(getNewStateClickListener());
         this.addActionButton.setOnAction(getNewActionClickListener());
 
         setupSlidingMenu();
+    }
+
+    /**
+     * Method that:
+     * - Sets the refresh graph button listener and logic.
+     * - Adds animation on interaction to the Refresh Graph Button.
+     *
+     */
+    private void setupRefreshGraphButton() {
+        final RotateTransition rotate = new RotateTransition(Duration.seconds(1.5), this.refreshGraphButton);
+        rotate.setByAngle(360);
+        rotate.setCycleCount(Animation.INDEFINITE);
+        rotate.setInterpolator(Interpolator.EASE_BOTH);
+        this.refreshGraphButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                refreshGraphButton.setButtonType(JFXButton.ButtonType.FLAT);
+                rotate.play();
+            }
+        });
+
+        this.refreshGraphButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                refreshGraphButton.setButtonType(JFXButton.ButtonType.RAISED);
+                rotate.stop();
+                refreshGraphButton.setRotate(0);
+            }
+        });
+
+        this.refreshGraphButton.setOnAction(this.getRefreshGraphButtonClickListener());
     }
 
     /**
@@ -598,6 +635,20 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             @Override
             public void handle(ActionEvent e) {
                 mPresenter.requestLaunchNewActionView();
+            }
+        };
+    }
+
+    /**
+     * Method that implements the Refresh Graph Button click listener behavior
+     *
+     * @return the EventHandler with correspondent behavior
+     */
+    private EventHandler<ActionEvent> getRefreshGraphButtonClickListener() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                mPresenter.requestRefreshGraphView();
             }
         };
     }

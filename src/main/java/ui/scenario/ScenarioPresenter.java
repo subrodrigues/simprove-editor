@@ -581,4 +581,8 @@ public class ScenarioPresenter {
     void updateGeneralErrorMsgActor(TypeModel newActor) {
         this.mScenario.setActorDefaultErrorMessage(newActor);
     }
+
+    public void requestRefreshGraphView() {
+        this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
+    }
 }
