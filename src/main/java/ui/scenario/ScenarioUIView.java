@@ -306,7 +306,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         statesGridView.requestLayout();
         actionsGridView.requestLayout();
 
-        updateStatesGraphView(scenario.getStates(), scenario.getActions());
+        updateGraphView(scenario.getStates(), scenario.getActions());
     }
 
     /**
@@ -315,7 +315,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * @param states
      * @param actions
      */
-    void updateStatesGraphView(List<StateModel> states, List<ActionModel> actions) {
+    void updateGraphView(List<StateModel> states, List<ActionModel> actions) {
         statesGraphPane.getChildren().clear();
 
         Graph graph = new Graph();
@@ -354,7 +354,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     }
 
     /**
-     * Aux method to the updateStatesGraphView().
+     * Aux method to the updateGraphView().
      * It adds Edges to the Model accordingly to the received data.
      *
      * @param model

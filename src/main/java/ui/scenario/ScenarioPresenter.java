@@ -295,7 +295,7 @@ public class ScenarioPresenter {
             this.mScenario.getStates().set(indexToUpdate, stateToUpdate);
             this.mView.updateStateViewItem(indexToUpdate, stateToUpdate, stateToUpdate.getId() == this.mCurrentSelectedStateItem);
 
-            this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
+            this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -314,7 +314,7 @@ public class ScenarioPresenter {
             this.mView.removeStateViewItem(indexToRemove);
             this.cleanSelectedActions();
 
-            this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
+            this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -345,7 +345,7 @@ public class ScenarioPresenter {
         this.mScenario.getStates().add(newStateModel);
         this.mView.addStateViewItem(newStateModel);
 
-        this.mView.updateStatesGraphView(this.mScenario.getStates(), this.mScenario.getActions());
+        this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
 
     }
 
@@ -465,6 +465,8 @@ public class ScenarioPresenter {
         if(indexToUpdate != -1){
             this.mScenario.getActions().set(indexToUpdate, actionToUpdate);
             this.mView.updateActionViewItem(indexToUpdate, actionToUpdate, selectedActions.contains(actionToUpdate.getId()));
+
+            this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -515,6 +517,8 @@ public class ScenarioPresenter {
             this.mScenario.getActions().remove(indexToRemove);
             this.mView.removeActionViewItem(indexToRemove);
 //            this.cleanSelectedActions();
+
+            this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
         }
     }
 
@@ -526,6 +530,8 @@ public class ScenarioPresenter {
     void requestActionCreation(ActionModel newActionModel) {
         this.mScenario.getActions().add(newActionModel);
         this.mView.addActionViewItem(newActionModel);
+
+        this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
     }
 
     void requestScenarioReset(){
