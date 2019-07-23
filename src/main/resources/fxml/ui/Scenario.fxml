@@ -112,10 +112,17 @@
 
                     </StackPane>
 
+                    <fx:define>
+                        <Image fx:id="icRefresh" url="@../../img/ic-refresh.png" />
+                    </fx:define>
                     <JFXButton fx:id="refreshGraphButton"
-                               style="-fx-graphic: url('@../../img/ic-refresh.png')"
                                buttonType="RAISED" maxHeight="60" maxWidth="60" minWidth="60" minHeight="60"
                                ripplerFill="#fafafa" styleClass="add-item-fab" StackPane.alignment="TOP_RIGHT">
+
+                        <graphic>
+                            <ImageView image="$icRefresh" />
+                        </graphic>
+
                         <StackPane.margin>
                             <Insets bottom="22.0" left="22.0" right="22.0" top="22.0" />
                         </StackPane.margin>
