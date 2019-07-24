@@ -155,7 +155,7 @@
                                             </VBox>
                                             <JFXDecimalTextField fx:id="inputEffectTime" labelFloat="true"
                                                                  maxWidth="240.0" prefHeight="30.0" prefWidth="240.0"
-                                                                 promptText="Effect Time (seconds)"
+                                                                 promptText="Effect time (seconds)"
                                                                  styleClass="edit-dialog-parameter-input"
                                                                  HBox.hgrow="ALWAYS">
                                                 <HBox.margin>
