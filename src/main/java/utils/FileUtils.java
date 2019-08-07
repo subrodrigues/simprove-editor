@@ -85,8 +85,12 @@ public class FileUtils {
         scenario.addProperty("briefing", scenarioModel.getBriefing());
 
         JsonObject errorMsg = new JsonObject();
-        errorMsg.addProperty("actorType", scenarioModel.getActorDefaultErrorMessage().getName());
-        errorMsg.addProperty("actorTypeId", scenarioModel.getActorDefaultErrorMessage().getTypeId());
+        errorMsg.addProperty("actorType", scenarioModel.getActorDefaultErrorMessage() != null ?
+                scenarioModel.getActorDefaultErrorMessage().getName() :
+                null);
+        errorMsg.addProperty("actorTypeId", scenarioModel.getActorDefaultErrorMessage() != null ?
+                scenarioModel.getActorDefaultErrorMessage().getTypeId() :
+                -1);
         errorMsg.addProperty("message", scenarioModel.getDefaultErrorMessage());
         scenario.add("defaultActionError", errorMsg);
 
