@@ -249,7 +249,9 @@ public class NewSignalViewController {
 
         this.physicalOptionComboBox.getItems().clear();
         this.physicalOptionComboBox.getItems().addAll(mCurrentItem.getPhysicalOptions());
-    }
+
+        if(mCurrentItem.getPhysicalOptions().size() > 0)
+            this.physicalOptionComboBox.getSelectionModel().select(0);    }
 
     /**
      * Method that updates the dialog window to the Numerical interface

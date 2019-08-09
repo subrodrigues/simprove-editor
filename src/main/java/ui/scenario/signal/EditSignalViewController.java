@@ -234,6 +234,9 @@ public class EditSignalViewController {
 
         this.physicalOptionComboBox.getItems().clear();
         this.physicalOptionComboBox.getItems().addAll(mCurrentItem.getPhysicalOptions());
+
+        if(mCurrentItem.getPhysicalOptions().size() > 0)
+            this.physicalOptionComboBox.getSelectionModel().select(0);
     }
 
     /**
