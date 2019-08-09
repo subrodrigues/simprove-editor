@@ -61,6 +61,9 @@ public class SideMenuUIView {
                         case ("export_scenario"):
                             EventBus.getDefault().post(new SideMenuEvent(ConstantUtils.SideMenuOption.EXPORT_SCENARIO));
                             break;
+                        case ("exit_app"):
+                            Platform.exit();
+                            break;
                     }
                     scheduleClearSelection(1000);
                 });

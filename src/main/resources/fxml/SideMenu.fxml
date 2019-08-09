@@ -9,6 +9,7 @@
   ~ Created by Filipe André Rodrigues on 20-02-2019 19:43
   -->
 
+<?import javafx.scene.control.Separator?>
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
     <styleClass>
         <String fx:value="side-menu"/>
@@ -16,9 +17,14 @@
 
     <JFXListView fx:id="sideList">
         <Label fx:id="new_scenario" styleClass="drawer-item">New Scenario</Label>
-        <Label fx:id="save_scenario" styleClass="drawer-item">Save Scenario</Label>
         <Label fx:id="load_scenario" styleClass="drawer-item">Load Scenario</Label>
+
+        <Separator />
+        <Label fx:id="save_scenario" styleClass="drawer-item">Save Scenario</Label>
         <Label fx:id="export_scenario" styleClass="drawer-item">Export JSON File</Label>
+
+        <Separator />
+        <Label fx:id="exit_app" styleClass="drawer-item">Exit</Label>
 
     </JFXListView>
 </StackPane>

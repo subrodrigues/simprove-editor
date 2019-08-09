@@ -72,15 +72,15 @@ public final class MainApplicationUIView {
             }
         });
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/popup/MainPopup.fxml"));
-        loader.setController(new InputController());
-        toolbarPopup = new JFXPopup(loader.load());
-
-        optionsBurger.setOnMouseClicked(e -> toolbarPopup.show(optionsBurger,
-                                                               PopupVPosition.TOP,
-                                                               PopupHPosition.RIGHT,
-                                                               -12,
-                                                               15));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/popup/MainPopup.fxml"));
+//        loader.setController(new InputController());
+//        toolbarPopup = new JFXPopup(loader.load());
+//
+//        optionsBurger.setOnMouseClicked(e -> toolbarPopup.show(optionsBurger,
+//                                                               PopupVPosition.TOP,
+//                                                               PopupHPosition.RIGHT,
+//                                                               -12,
+//                                                               15));
 
         // create the inner flow and content
         context = new ViewFlowContext();
