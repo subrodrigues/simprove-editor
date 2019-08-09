@@ -371,14 +371,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
             }
 
             // Action transitions
-            boolean isVisible = true;
             String newLineAppend = "";
             for (ActionModel action : actions) {
                 if (action.getStateConditions().contains(state) &&
                         action.getTransition() != null) {
-                    addTransitionEdge(model, state.getId(), action.getTransition(), isVisible,
+                    addTransitionEdge(model, state.getId(), action.getTransition(), true,
                             true, newLineAppend.concat(action.getName()));
-                    isVisible = false;
                     newLineAppend += "\n\n";
                 }
             }
