@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import ui.widgets.AutoCompleteComboBoxListener;
 
 import java.io.IOException;
@@ -132,19 +133,41 @@ public class EditSignalViewController {
         new AutoCompleteComboBoxListener<>(this.signalTypeComboBox);
         this.signalTypeComboBox.setEditable(true);
 
+
         /*
          * Set Listeners and Bindings
          */
-        this.signalTypeComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mCurrentItem = mSignalTypes.get((Integer) newValue);
+        // TODO: Code refactoring and turn this into a Widget
+        this.signalTypeComboBox.setConverter(new StringConverter<SignalTemplateModel>() {
 
-                showSignalValueData(null);
+            @Override
+            public String toString(SignalTemplateModel object) {
+                if (object == null) return null;
+                return object.toString();
+            }
+
+            @Override
+            public SignalTemplateModel fromString(String signalName) {
+                return new SignalTemplateModel(-1, signalName);
+            }
+        });
+
+        this.signalTypeComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SignalTemplateModel>() {
+            @Override
+            public void changed(ObservableValue<? extends SignalTemplateModel> observable, SignalTemplateModel oldValue, SignalTemplateModel newValue) {
+                for (SignalTemplateModel signalTemplate : mSignalTypes) {
+                    if (signalTemplate.getName().equals(newValue.getName())) {
+                        mCurrentItem = signalTemplate;
+                        showSignalValueData(null);
+
+                        break;
+                    }
+                }
 
                 //TODO: Check type and create value input
             }
         });
+        // TODO: Code refactoring and turn this into a Widget
 
         this.applyButton.setDisable(true);
         this.applyButton.disableProperty().bind(

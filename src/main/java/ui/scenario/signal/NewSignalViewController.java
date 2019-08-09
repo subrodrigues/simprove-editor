@@ -22,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import ui.widgets.AutoCompleteComboBoxListener;
 
 import java.io.IOException;
@@ -128,17 +129,37 @@ public class NewSignalViewController {
         /*
          * Set Listeners and Bindings
          */
-        this.signalTypeComboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mCurrentItem = mSignalTypes.get((Integer) newValue);
+        this.signalTypeComboBox.setConverter(new StringConverter<SignalTemplateModel>() {
 
-                if (mCurrentItem.isNumericalSignal()) {
-                    showNumericSignalUI();
-                } else if (mCurrentItem.isCategoricalSignal()) {
-                    showCategoricalSignalUI();
-                } else {
-                    showGraphicalSignalUI();
+            @Override
+            public String toString(SignalTemplateModel object) {
+                if (object == null) return null;
+                return object.toString();
+            }
+
+            @Override
+            public SignalTemplateModel fromString(String signalName) {
+                return new SignalTemplateModel(-1, signalName);
+            }
+        });
+
+        this.signalTypeComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SignalTemplateModel>() {
+            @Override
+            public void changed(ObservableValue<? extends SignalTemplateModel> observable, SignalTemplateModel oldValue, SignalTemplateModel newValue) {
+                for (SignalTemplateModel signalTemplate : mSignalTypes) {
+                    if (signalTemplate.getName().equals(newValue.getName())) {
+                        mCurrentItem = signalTemplate;
+
+                        if (mCurrentItem.isNumericalSignal()) {
+                            showNumericSignalUI();
+                        } else if (mCurrentItem.isCategoricalSignal()) {
+                            showCategoricalSignalUI();
+                        } else {
+                            showGraphicalSignalUI();
+                        }
+
+                        break;
+                    }
                 }
 
                 //TODO: Check type and create value input
@@ -187,9 +208,9 @@ public class NewSignalViewController {
                 Point2D translateXY = point.getNode().screenToLocal(event.getScreenX(), event.getScreenY());
 
 //                point.setXValue((int)translateXY.getX() + point.getXValue().intValue());
-                int value = (int)(point.getYValue().floatValue() + reverseNumberInRange((float)translateXY.getY() +
+                int value = (int) (point.getYValue().floatValue() + reverseNumberInRange((float) translateXY.getY() +
                         (maxY - point.getYValue().floatValue()), minY, maxY) * 0.02);
-                if(value > maxY) value = maxY;
+                if (value > maxY) value = maxY;
                 else if (value < minY) value = minY;
                 point.setYValue(value);
             });
@@ -331,12 +352,12 @@ public class NewSignalViewController {
 
                 if (mCurrentItem.isNumericalSignal()) {
                     mSignalModel.setValue(String.valueOf(signalNumericValue.getValue()));
-                } else if(mCurrentItem.isCategoricalSignal()){
+                } else if (mCurrentItem.isCategoricalSignal()) {
                     mSignalModel.setValue(String.valueOf(physicalOptionComboBox.getValue()));
-                } else{
+                } else {
 
                     List<Integer> yValues = new ArrayList<>(mGraphicalSeries.getData().size());
-                    for(int i = 0; i < mGraphicalSeries.getData().size(); i++){
+                    for (int i = 0; i < mGraphicalSeries.getData().size(); i++) {
                         yValues.add(mGraphicalSeries.getData().get(i).getYValue().intValue());
                     }
                     mSignalModel.setPlotYValue(yValues);
