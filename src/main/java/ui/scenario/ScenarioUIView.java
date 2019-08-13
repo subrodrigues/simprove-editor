@@ -263,7 +263,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         scenarioSetting.valueProperty().addListener(new ChangeListener<TypeModel>() {
             @Override
             public void changed(ObservableValue ov, TypeModel oldSetting, TypeModel newSetting) {
-                mPresenter.updateScenatioSetting(newSetting);
+                mPresenter.updateScenarioSetting(newSetting);
             }
         });
     }
@@ -321,6 +321,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         this.statesGridView.getChildren().clear();
         this.actionsGridView.getChildren().clear();
+
+        if (scenario.getScenarioSettingType() != null)
+            this.scenarioSetting.getSelectionModel().select(scenario.getScenarioSettingType());
 
         // Fill States
         for (int i = 0; i < scenario.getStates().size(); i++) {

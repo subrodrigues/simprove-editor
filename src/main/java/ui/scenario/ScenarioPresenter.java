@@ -608,7 +608,7 @@ public class ScenarioPresenter {
         this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
     }
 
-    void updateScenatioSetting(TypeModel newSetting) {
+    void updateScenarioSetting(TypeModel newSetting) {
         this.mScenario.setScenarioSettingType(newSetting);
 
     }

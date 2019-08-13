@@ -94,6 +94,15 @@ public class FileUtils {
         errorMsg.addProperty("message", scenarioModel.getDefaultErrorMessage());
         scenario.add("defaultActionError", errorMsg);
 
+        JsonObject scenarioSetting = new JsonObject();
+        scenarioSetting.addProperty("id", scenarioModel.getScenarioSettingType() != null ?
+                scenarioModel.getScenarioSettingType().getTypeId() :
+                -1);
+        scenarioSetting.addProperty("name", scenarioModel.getScenarioSettingType() != null ?
+                scenarioModel.getScenarioSettingType().getName() :
+                null);
+        scenario.add("scenarioSetting", scenarioSetting);
+
         // create an array to hold states
         JsonArray states = new JsonArray();
 

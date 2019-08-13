@@ -3,7 +3,10 @@
 	"score": int,
 	"minScore": int,
 	"briefing": String,
-	"scenario_setting": int, // The ID from the 'scenario_setting_types.csv'
+	"scenarioSetting": {
+		"id": int, // The ID from the 'scenario_setting_types.csv'
+		"name": String, // String from the 'scenario_setting_types.csv'
+	},
 	"defaultActionError": {
 		"message": String,
 		"actorType": String,
