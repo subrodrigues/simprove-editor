@@ -604,7 +604,12 @@ public class ScenarioPresenter {
         this.mScenario.setActorDefaultErrorMessage(newActor);
     }
 
-    public void requestRefreshGraphView() {
+    void requestRefreshGraphView() {
         this.mView.updateGraphView(this.mScenario.getStates(), this.mScenario.getActions());
+    }
+
+    void updateScenatioSetting(TypeModel newSetting) {
+        this.mScenario.setScenarioSettingType(newSetting);
+
     }
 }

@@ -259,6 +259,13 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         inputMinScore.textProperty().addListener((observable, oldValue, newValue) -> {
             this.mPresenter.updateMinScoreContent(newValue);
         });
+
+        scenarioSetting.valueProperty().addListener(new ChangeListener<TypeModel>() {
+            @Override
+            public void changed(ObservableValue ov, TypeModel oldSetting, TypeModel newSetting) {
+                mPresenter.updateScenatioSetting(newSetting);
+            }
+        });
     }
 
     /**
@@ -962,7 +969,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     public void updateScenarioSettingTypes(List<TypeModel> settingTypes) {
         // Init Actor Types ComboBox
         this.scenarioSetting.getItems().addAll(settingTypes);
-        
+
         if (settingTypes.size() > 0)
             this.scenarioSetting.getSelectionModel().select(0);
     }
