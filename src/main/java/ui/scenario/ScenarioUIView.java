@@ -119,6 +119,9 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     private JFXNumericTextField inputMinScore;
 
     @FXML
+    private JFXComboBox<TypeModel> scenarioSetting;
+
+    @FXML
     private JFXButton refreshGraphButton;
 
     private boolean isSlidingContentVisible = true;
@@ -154,7 +157,6 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
      * Method that:
      * - Sets the refresh graph button listener and logic.
      * - Adds animation on interaction to the Refresh Graph Button.
-     *
      */
     private void setupRefreshGraphButton() {
         final RotateTransition rotate = new RotateTransition(Duration.seconds(1.5), this.refreshGraphButton);
@@ -240,7 +242,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         });
 
         actorDefaultErrorMsg.valueProperty().addListener(new ChangeListener<TypeModel>() {
-            @Override public void changed(ObservableValue ov, TypeModel oldActor, TypeModel newActor) {
+            @Override
+            public void changed(ObservableValue ov, TypeModel oldActor, TypeModel newActor) {
                 mPresenter.updateGeneralErrorMsgActor(newActor);
             }
         });
@@ -301,7 +304,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         this.inputScenarioName.setText(scenario.getName());
         this.inputBriefing.setText(scenario.getBriefing());
 
-        if(scenario.getActorDefaultErrorMessage() != null)
+        if (scenario.getActorDefaultErrorMessage() != null)
             this.actorDefaultErrorMsg.getSelectionModel().select(scenario.getActorDefaultErrorMessage());
 
         this.inputDefaultErrorMsg.setText(scenario.getDefaultErrorMessage());
@@ -367,7 +370,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
 
         for (StateModel state : states) {
             if (state.getTransition() != null) {
-                addTransitionEdge(model, state.getId(), state.getTransition(), true,false, null);
+                addTransitionEdge(model, state.getId(), state.getTransition(), true, false, null);
             }
 
             // Action transitions
@@ -772,7 +775,8 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of an edit action event.
-     *  @param action
+     *
+     * @param action
      * @param actions
      * @param states
      */
@@ -862,6 +866,7 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view of a new state event.
+     *
      * @param actions
      * @param states
      * @param actionTypes
@@ -896,12 +901,12 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
     /**
      * Invoked by the Presenter.
      * Notifies the view that the Actor Types are loaded and update the respective combo box.
-     *  @param actorTypes
      *
+     * @param actorTypes
      */
     void updateActorErrorMsg(List<TypeModel> actorTypes) {
         // Init Actor Types ComboBox
-        this.actorDefaultErrorMsg.getItems().add(new TypeModel(-1, -1,"NONE"));
+        this.actorDefaultErrorMsg.getItems().add(new TypeModel(-1, -1, "NONE"));
         this.actorDefaultErrorMsg.getItems().addAll(actorTypes);
         this.actorDefaultErrorMsg.getSelectionModel().select(0);
     }
@@ -948,4 +953,17 @@ public class ScenarioUIView implements StateItemViewController.OnScenarioStateCl
         mPresenter.requestActionCreation(newActionModel);
     }
 
+    /**
+     * Invoked by the Presenter.
+     * Notifies the view that the Scenario Setting Types are loaded and update the respective combo box.
+     *
+     * @param settingTypes
+     */
+    public void updateScenarioSettingTypes(List<TypeModel> settingTypes) {
+        // Init Actor Types ComboBox
+        this.scenarioSetting.getItems().addAll(settingTypes);
+        
+        if (settingTypes.size() > 0)
+            this.scenarioSetting.getSelectionModel().select(0);
+    }
 }

@@ -23,6 +23,7 @@ public class ScenarioPresenter {
     private List<TypeModel> mActionCategories = null;
     private List<TypeModel> mActionSubCategories = null;
     private List<TypeModel> mActorTypes = null;
+    private List<TypeModel> mScenarioSettingTypes = null;
     private List<SignalTemplateModel> mSignalTypes = null;
 
     private ScenarioModel mScenario = null;
@@ -41,6 +42,7 @@ public class ScenarioPresenter {
         mDAO.requestDefaultActionTypes();
         mDAO.requestDefaultActionCategories();
         mDAO.requestDefaultActionSubCategories();
+        mDAO.requestDefaultScenarioSettings();
         mDAO.requestDefaultActorTypes();
         mDAO.requestDefaultSignals();
 
@@ -161,6 +163,26 @@ public class ScenarioPresenter {
             this.mActorTypes = event.getActorTypes();
 
             this.mView.updateActorErrorMsg(this.mActorTypes);
+        } else if (event.isNetworkError()) {
+            // TODO: deal with it
+        } else {
+            // TODO: deal with it
+        }
+    };
+
+    /**
+     * Receives a Scenario Setting Event from the DAO
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ScenarioSettingTypesEvent event) {
+        if(this.mView == null) return;
+
+        if (event.isSuccess()) {
+            this.mScenarioSettingTypes = event.getScenarioSettingTypes();
+
+            this.mView.updateScenarioSettingTypes(this.mScenarioSettingTypes);
         } else if (event.isNetworkError()) {
             // TODO: deal with it
         } else {

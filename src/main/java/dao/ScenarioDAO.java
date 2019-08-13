@@ -188,4 +188,21 @@ public class ScenarioDAO {
 
         EventBus.getDefault().post(new ActorTypesEvent(actorTypes));
     }
+
+    /**
+     * Method that accesses the resources and load the Setting Types in the resources setting data file.
+     *
+     * @return List<TypeModel> containing all the TypeModels saved at the local file.
+     */
+    public void requestDefaultScenarioSettings() {
+        List<TypeModel> settingTypes = null;
+
+        try {
+            settingTypes = ReadDataUtils.getDataTypesFromResourceURL(new FileInputStream("raw/scenario_setting_types.csv"));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        EventBus.getDefault().post(new ScenarioSettingTypesEvent(settingTypes));
+    }
 }

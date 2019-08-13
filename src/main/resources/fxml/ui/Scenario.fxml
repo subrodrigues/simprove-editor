@@ -157,6 +157,23 @@
                 </padding>
             </JFXTextField>
 
+            <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                  styleClass="edit-dialog-parameter-title-black" text="Setting">
+                <VBox.margin>
+                    <Insets top="24.0"/>
+                </VBox.margin>
+            </Text>
+
+            <HBox>
+                <JFXComboBox fx:id="scenarioSetting" prefHeight="30.0" prefWidth="200.0"
+                             HBox.hgrow="ALWAYS" maxWidth="Infinity"
+                             promptText="Select Setting" styleClass="combo-box">
+                    <HBox.margin>
+                        <Insets right="6.0"/>
+                    </HBox.margin>
+                </JFXComboBox>
+
+            </HBox>
 
             <HBox>
 
@@ -245,6 +262,7 @@
 
             <HBox>
                 <JFXComboBox fx:id="actorDefaultErrorMsg" prefHeight="30.0" prefWidth="200.0"
+                             HBox.hgrow="ALWAYS" maxWidth="Infinity"
                              promptText="Select Actor" styleClass="combo-box">
                     <HBox.margin>
                         <Insets right="6.0"/>
